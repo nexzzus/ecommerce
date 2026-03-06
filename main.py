@@ -6,6 +6,8 @@ import sys
 import threading
 import time
 
+from src.crud.roles import list_roles, get_role, create_role, delete_role, update_role
+
 # Permitir importar desde src cuando se ejecuta desde la raíz del proyecto
 sys.path.insert(0, ".")
 
@@ -32,6 +34,23 @@ def show_users():
             print("  No se pudo conectar a la API. Espera unos segundos y vuelve a intentar.")
         else:
             print(f"  Error: {e}")
+
+
+def show_roles():
+    try:
+        roles = list_roles()
+        if not roles:
+            print("  No hay roles.")
+            return
+        for r in roles:
+            print(f"  {r['id']} | {r['name']}")
+    except Exception as e:
+        err = str(e)
+        if "10061" in err or "Connection refused" in err or "denegó" in err.lower():
+            print("  No se pudo conectar a la API. Espera unos segundos y vuelve a intentar.")
+        else:
+            print(f"  Error: {e}")
+
 
 def menu_users():
     while True:
@@ -102,6 +121,58 @@ def menu_users():
                 except Exception as e:
                     print(f"  Error: {e}")
 
+
+def menu_roles():
+    while True:
+        print("\n--- Roles ---")
+        print("1. Listar  2. Ver uno  3. Crear  4. Actualizar  5. Eliminar  0. Volver")
+        op = input("Opción: ").strip()
+        if op == "0":
+            break
+        if op == "1":
+            show_roles()
+        elif op == "2":
+            rid = input("ID rol: ").strip()
+            if rid:
+                try:
+                    r = get_role(rid)
+                    print(f"  {r}")
+                except Exception as e:
+                    print(f"  Error: {e}")
+        elif op == "3":
+            name = input("Nombre: ").strip()
+            if name:
+                try:
+                    create_role(name)
+                    print("  Rol creado.")
+                except Exception as e:
+                    print(f"  Error: {e}")
+            else:
+                print("  Faltan datos.")
+        elif op == "4":
+            rid = input("ID rol: ").strip()
+            if not rid:
+                continue
+            name = input("Nombre (vacío=no cambiar): ").strip()
+
+            try:
+                kwargs = {}
+                if name:
+                    kwargs["name"] = name
+                update_role(rid, **kwargs)
+                print("  Rol actualizado.")
+            except Exception as e:
+                print(f"  Error: {e}")
+        elif op == "5":
+            uid = input("ID rol a eliminar: ").strip()
+            if uid:
+                try:
+                    delete_role(uid)
+                    print("  rol eliminado.")
+                except Exception as e:
+                    print(f"  Error: {e}")
+
+
 def _start_api():
     """Ejecuta uvicorn en un hilo en segundo plano."""
     import uvicorn
@@ -109,7 +180,7 @@ def _start_api():
 
 
 def main():
-    print("API Usuarios y Productos - Menú por consola")
+    print("API Usuarios - Menú por consola")
     print("Iniciando API en http://localhost:8000 ...")
     server = threading.Thread(target=_start_api, daemon=True)
     server.start()
@@ -117,13 +188,15 @@ def main():
     print("API lista.\n")
     while True:
         print("\n========== MENÚ ==========")
-        print("1. Usuarios 0. Salir")
+        print("1. Usuarios  2. Roles  0. Salir")
         op = input("Opción: ").strip()
         if op == "0":
             print("Hasta luego.")
             break
         if op == "1":
             menu_users()
+        elif op == "2":
+            menu_roles()
         else:
             print("Opción no válida.")
 
