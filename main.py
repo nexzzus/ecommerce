@@ -6,6 +6,8 @@ import sys
 import threading
 import time
 
+from src.crud.permissions import list_permissions, get_permission, create_permission, update_permission, \
+    delete_permission
 from src.crud.roles import list_roles, get_role, create_role, delete_role, update_role
 
 # Permitir importar desde src cuando se ejecuta desde la raíz del proyecto
@@ -28,6 +30,22 @@ def show_users():
             return
         for u in users:
             print(f"  {u['id']} | {u['first_name']} | {u['last_name']} | {u['email']} | {u['phone']} | {u['address']}")
+    except Exception as e:
+        err = str(e)
+        if "10061" in err or "Connection refused" in err or "denegó" in err.lower():
+            print("  No se pudo conectar a la API. Espera unos segundos y vuelve a intentar.")
+        else:
+            print(f"  Error: {e}")
+
+
+def show_permissions():
+    try:
+        permissions = list_permissions()
+        if not permissions:
+            print("  No hay permisos.")
+            return
+        for p in permissions:
+            print(f"  {p['id']} | {p['name']} | {p['description']}")
     except Exception as e:
         err = str(e)
         if "10061" in err or "Connection refused" in err or "denegó" in err.lower():
@@ -173,6 +191,61 @@ def menu_roles():
                     print(f"  Error: {e}")
 
 
+def menu_permissions():
+    while True:
+        print("\n--- Permisos ---")
+        print("1. Listar  2. Ver uno  3. Crear  4. Actualizar  5. Eliminar  0. Volver")
+        op = input("Opción: ").strip()
+        if op == "0":
+            break
+        if op == "1":
+            show_permissions()
+        elif op == "2":
+            pid = input("ID permiso: ").strip()
+            if pid:
+                try:
+                    r = get_permission(pid)
+                    print(f"  {r}")
+                except Exception as e:
+                    print(f"  Error: {e}")
+        elif op == "3":
+            name = input("Nombre: ").strip()
+            description = input("Description: ").strip()
+            if name and description:
+                try:
+                    create_permission(name, description)
+                    print("  Permiso creado.")
+                except Exception as e:
+                    print(f"  Error: {e}")
+            else:
+                print("  Faltan datos.")
+        elif op == "4":
+            pid = input("ID permiso: ").strip()
+            if not pid:
+                continue
+            name = input("Nombre (vacío=no cambiar): ").strip()
+            description = input("Descripción (vacío=no cambiar): ").strip()
+
+            try:
+                kwargs = {}
+                if name:
+                    kwargs["name"] = name
+                if description:
+                    kwargs["description"] = description
+                update_permission(pid, **kwargs)
+                print("  Permiso actualizado.")
+            except Exception as e:
+                print(f"  Error: {e}")
+        elif op == "5":
+            uid = input("ID permiso a eliminar: ").strip()
+            if uid:
+                try:
+                    delete_permission(uid)
+                    print("  permiso eliminado.")
+                except Exception as e:
+                    print(f"  Error: {e}")
+
+
 def _start_api():
     """Ejecuta uvicorn en un hilo en segundo plano."""
     import uvicorn
@@ -188,7 +261,7 @@ def main():
     print("API lista.\n")
     while True:
         print("\n========== MENÚ ==========")
-        print("1. Usuarios  2. Roles  0. Salir")
+        print("1. Usuarios  2. Roles  3. Permisos  0. Salir")
         op = input("Opción: ").strip()
         if op == "0":
             print("Hasta luego.")
@@ -197,6 +270,8 @@ def main():
             menu_users()
         elif op == "2":
             menu_roles()
+        elif op == "3":
+            menu_permissions()
         else:
             print("Opción no válida.")
 

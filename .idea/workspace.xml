@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="CRUD Users completo">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="aplicar crud en la api Rol">
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/endpoints/roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/roles.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +84,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\apps-web\ecommerce\src\endpoints" />
+      <recent name="C:\apps-web\ecommerce\src\crud" />
+      <recent name="C:\apps-web\ecommerce\src\schemas" />
+      <recent name="C:\apps-web\ecommerce\src\entities" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -106,7 +109,7 @@
       <workItem from="1772383552007" duration="1118000" />
       <workItem from="1772385173826" duration="243000" />
       <workItem from="1772767445274" duration="6373000" />
-      <workItem from="1772773925855" duration="4836000" />
+      <workItem from="1772773925855" duration="6162000" />
     </task>
     <task id="LOCAL-00001" summary="creación y configuración del proyecto">
       <option name="closed" value="true" />
@@ -204,7 +207,47 @@
       <option name="project" value="LOCAL" />
       <updated>1772775121023</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="creación entidad Rol">
+      <option name="closed" value="true" />
+      <created>1772778917779</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1772778917779</updated>
+    </task>
+    <task id="LOCAL-00014" summary="creación schema Rol">
+      <option name="closed" value="true" />
+      <created>1772778927225</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1772778927225</updated>
+    </task>
+    <task id="LOCAL-00015" summary="creación crud Rol">
+      <option name="closed" value="true" />
+      <created>1772778935052</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1772778935052</updated>
+    </task>
+    <task id="LOCAL-00016" summary="creación endpoints Rol">
+      <option name="closed" value="true" />
+      <created>1772778945453</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1772778945453</updated>
+    </task>
+    <task id="LOCAL-00017" summary="aplicar crud en la api Rol">
+      <option name="closed" value="true" />
+      <created>1772778962561</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1772778962561</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,10 +277,15 @@
     <MESSAGE value="creación del app" />
     <MESSAGE value="se corrigen errores de libreria y lógica" />
     <MESSAGE value="CRUD Users completo" />
-    <option name="LAST_COMMIT_MESSAGE" value="CRUD Users completo" />
+    <MESSAGE value="creación entidad Rol" />
+    <MESSAGE value="creación schema Rol" />
+    <MESSAGE value="creación crud Rol" />
+    <MESSAGE value="creación endpoints Rol" />
+    <MESSAGE value="aplicar crud en la api Rol" />
+    <option name="LAST_COMMIT_MESSAGE" value="aplicar crud en la api Rol" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ecommerce$main.coverage" NAME="main Coverage Results" MODIFIED="1772778799042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ecommerce$main.coverage" NAME="main Coverage Results" MODIFIED="1772780129135" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ecommerce$app.coverage" NAME="app Coverage Results" MODIFIED="1772771655195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
   <component name="github-copilot-workspace">

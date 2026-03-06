@@ -4,9 +4,7 @@ from uuid import UUID
 
 from src.database.config import get_db
 from src.entities.roles import Role
-from src.entities.users import User
 from src.schemas.role_schema import RoleResponse, RoleCreate, RoleUpdate
-from src.utils.security import hash_password
 
 router = APIRouter(prefix="/roles", tags=["roles"])
 

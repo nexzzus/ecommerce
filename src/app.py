@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from src.database.config import create_tables
-from src.endpoints import users, roles
+from src.endpoints import users, roles, permissions
 
 # Importar modelos para que Base.metadata los conozca
 import src.entities.users
@@ -28,6 +28,7 @@ app = FastAPI(
 
 app.include_router(users.router)
 app.include_router(roles.router)
+app.include_router(permissions.router)
 
 
 @app.get("/")
