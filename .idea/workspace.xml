@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="creación y configuración del proyecto" />
+    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="estructura del proyecto">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,7 +25,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feat-creacion-proyecto" />
+        <entry key="$PROJECT_DIR$" value="feat-entidad-user" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -33,6 +36,15 @@
     &quot;assignee&quot;: &quot;nexzzus&quot;
   }
 }</component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="dev" />
+        <option value="qa" />
+        <option value="prod" />
+      </list>
+    </option>
+  </component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/nexzzus/ecommerce.git&quot;,
@@ -82,7 +94,9 @@
       <updated>1772380146737</updated>
       <workItem from="1772380148207" duration="102000" />
       <workItem from="1772380273216" duration="2730000" />
-      <workItem from="1772383552007" duration="617000" />
+      <workItem from="1772383552007" duration="1118000" />
+      <workItem from="1772385173826" duration="243000" />
+      <workItem from="1772767445274" duration="599000" />
     </task>
     <task id="LOCAL-00001" summary="creación y configuración del proyecto">
       <option name="closed" value="true" />
@@ -92,15 +106,35 @@
       <option name="project" value="LOCAL" />
       <updated>1772381642079</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="estructura del proyecto">
+      <option name="closed" value="true" />
+      <created>1772384214399</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1772384214399</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="creación y configuración del proyecto" />
-    <option name="LAST_COMMIT_MESSAGE" value="creación y configuración del proyecto" />
+    <MESSAGE value="estructura del proyecto" />
+    <option name="LAST_COMMIT_MESSAGE" value="estructura del proyecto" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
