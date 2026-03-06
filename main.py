@@ -25,7 +25,6 @@ def show_users():
             print("  No hay usuarios.")
             return
         for u in users:
-            # TODO: corregir campos a mostrar
             print(f"  {u['id']} | {u['first_name']} | {u['last_name']} | {u['email']} | {u['phone']} | {u['address']}")
     except Exception as e:
         err = str(e)
