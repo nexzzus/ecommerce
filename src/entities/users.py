@@ -1,6 +1,7 @@
 import uuid
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, DateTime
 from sqlalchemy.dialects.postgresql.base import UUID
+from sqlalchemy.sql.functions import func
 
 from src.database.config import Base
 
@@ -11,6 +12,8 @@ class User(Base):
     first_name = Column(String(100), nullable=False)
     last_name = Column(String(100), unique=True, index=True, nullable=False)
     email = Column(String(150), unique=True, index=True, nullable=False)
-    contraseña_hash = Column(String(255), nullable=False)
+    password = Column(String(255), nullable=False)
     phone = Column(String(20), nullable=True)
     address = Column(String(255), nullable=True)
+    date_created = Column(DateTime(timezone=True), server_default=func.now())
+    date_updated = Column(DateTime(timezone=True), onupdate=func.now())
