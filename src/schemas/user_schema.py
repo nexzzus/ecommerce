@@ -1,9 +1,7 @@
 from datetime import datetime
 
-from pydantic import BaseModel
-from pydantic.v1 import EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from uuid import UUID
-
 
 class UserBase(BaseModel):
     first_name: str
@@ -28,5 +26,4 @@ class UserResponse(UserBase):
     date_created: datetime | None = None
     date_updated: datetime | None = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

@@ -31,4 +31,4 @@ app.include_router(users.router)
 
 @app.get("/")
 def inicio():
-    return {"mensaje": "API Usuarios y Productos", "docs": "/docs"}
+    return {"mensaje": "API Usuarios", "docs": "/docs"}
