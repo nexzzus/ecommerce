@@ -5,6 +5,7 @@ from uuid import UUID
 from src.database.config import get_db
 from src.entities.users import User
 from src.schemas.user_schema import UserResponse, UserCreate, UserUpdate
+from src.utils.security import hash_password
 
 router = APIRouter(prefix="/users", tags=["users"])
 
