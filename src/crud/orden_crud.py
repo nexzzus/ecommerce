@@ -24,3 +24,15 @@ def eliminar_orden(db: Session, orden_id: int):
         db.delete(orden)
         db.commit()
     return orden
+
+def actualizar_orden(db: Session, orden_id: int, datos: OrdenCreate):
+    orden = db.query(Orden).filter(Orden.id == orden_id).first()
+    
+    if orden:
+        orden.fecha = datos.fecha
+        orden.total = datos.total
+        
+        db.commit()
+        db.refresh(orden)
+
+    return orden

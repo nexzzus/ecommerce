@@ -1,12 +1,25 @@
 from fastapi import FastAPI
 from src.database.database import engine, Base
-from src.crud import orden_crud
-from src.schemas.orden_schema import OrdenCreate
-from src.database.database import SessionLocal
+
+# IMPORTAR MODELOS (están en entities)
+from src.entities import orden
+from src.entities import detalle_orden
+from src.entities import pago
+
+# IMPORTAR ROUTERS
+from src.routers import orden_router
+from src.routers import detalle_orden_router
+from src.routers import pago_router
 
 app = FastAPI()
 
+# Crear tablas en Neon
 Base.metadata.create_all(bind=engine)
+
+# Routers
+app.include_router(orden_router.router)
+app.include_router(detalle_orden_router.router)
+app.include_router(pago_router.router)
 
 @app.get("/")
 def inicio():
