@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="implementación del crud permissions en API">
+    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="implementación de las relaciones N:M entre role, permission y user">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/crud/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/crud/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/crud/permissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/crud/permissions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/crud/roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/crud/roles.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/crud/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/crud/users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/endpoints/permissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/permissions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/endpoints/roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/roles.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/endpoints/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/associations.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/associations.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/permissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/permissions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/roles.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/users.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/schemas/permission_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/permission_schema.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/schemas/role_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/role_schema.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/schemas/user_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/user_schema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/security.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/security.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +128,7 @@
       <workItem from="1772767445274" duration="6373000" />
       <workItem from="1772773925855" duration="6266000" />
       <workItem from="1772803276335" duration="21000" />
-      <workItem from="1772847169784" duration="650000" />
+      <workItem from="1772847169784" duration="2608000" />
     </task>
     <task id="LOCAL-00001" summary="creación y configuración del proyecto">
       <option name="closed" value="true" />
@@ -299,7 +306,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772780299187</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="implementación de las relaciones N:M entre role, permission y user">
+      <option name="closed" value="true" />
+      <created>1772848007640</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1772848007640</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,10 +354,11 @@
     <MESSAGE value="creación del crud permission" />
     <MESSAGE value="creación del endpoint permission" />
     <MESSAGE value="implementación del crud permissions en API" />
-    <option name="LAST_COMMIT_MESSAGE" value="implementación del crud permissions en API" />
+    <MESSAGE value="implementación de las relaciones N:M entre role, permission y user" />
+    <option name="LAST_COMMIT_MESSAGE" value="implementación de las relaciones N:M entre role, permission y user" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ecommerce$main.coverage" NAME="main Coverage Results" MODIFIED="1772847741365" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ecommerce$main.coverage" NAME="main Coverage Results" MODIFIED="1772849410451" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ecommerce$app.coverage" NAME="app Coverage Results" MODIFIED="1772771655195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
   <component name="github-copilot-workspace">

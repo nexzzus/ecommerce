@@ -1,7 +1,10 @@
 """
-Configuración de la base de datos PostgreSQL con Neon
-"""
+Configuración de la base de datos PostgreSQL (Neon).
 
+Carga DATABASE_URL desde variables de entorno (.env), crea el motor SQLAlchemy,
+la sesión (SessionLocal), la base declarativa (Base) y proporciona get_db
+para inyección en FastAPI y create_tables para crear las tablas al arranque.
+"""
 import os
 
 from dotenv import load_dotenv
@@ -10,35 +13,30 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 
-# Cargar variables de entorno
 load_dotenv()
 
-# Configuración de la base de datos Neon PostgreSQL
-# Obtener la URL completa de conexión desde las variables de entorno
 DATABASE_URL = os.getenv("DATABASE_URL")
-
 if not DATABASE_URL:
     raise ValueError("Se requiere DATABASE_URL en las variables de entorno")
 
-# Crear el motor de SQLAlchemy
 engine = create_engine(
     DATABASE_URL,
-    echo=False,  # Cambiar a True para ver consultas SQL
-    pool_pre_ping=True,  # Verificar conexión antes de usar
-    pool_recycle=300,  # Reciclar conexiones cada 5 minutos
-    connect_args={"sslmode": "require"},  # Requerir SSL para Neon
+    echo=False,
+    pool_pre_ping=True,
+    pool_recycle=300,
+    connect_args={"sslmode": "require"},
 )
 
-# Crear la sesión
 SessionLocal = sessionmaker[Session](autocommit=False, autoflush=False, bind=engine)
-
-# Base para los modelos
 Base = declarative_base()
 
 
 def get_db():
     """
-    Generador de sesiones de base de datos
+    Generador de sesiones de base de datos para dependencias FastAPI.
+
+    Yields:
+        Session: Sesión de SQLAlchemy. Se cierra al salir del scope.
     """
     db = SessionLocal()
     try:
@@ -47,8 +45,11 @@ def get_db():
         db.close()
 
 
-def create_tables():
+def create_tables() -> None:
     """
-    Crear todas las tablas definidas en los modelos
+    Crea todas las tablas definidas en los modelos registrados en Base.metadata.
+
+    Debe invocarse después de importar todas las entidades y tablas de
+    asociación para que existan en el metadata.
     """
     Base.metadata.create_all(bind=engine)

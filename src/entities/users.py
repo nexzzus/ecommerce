@@ -1,3 +1,9 @@
+"""
+Modelo SQLAlchemy para la entidad User.
+
+Usuario del sistema con datos personales y relación N:M con roles
+a través de la tabla user_roles.
+"""
 import uuid
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.dialects.postgresql.base import UUID
@@ -9,6 +15,10 @@ from src.entities.associations import user_roles
 
 
 class User(Base):
+    """
+    Entidad usuario: datos personales, email, contraseña y roles asignados.
+    """
+
     __tablename__ = "users"
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, index=True)
     first_name = Column(String(100), nullable=False)

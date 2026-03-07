@@ -1,19 +1,33 @@
 """
-Menú por consola que usa el CRUD (cliente de la API).
-Al ejecutar main.py se inicia la API en segundo plano (uvicorn) y luego el menú.
+Menú por consola para la API de usuarios, roles y permisos.
+
+Al ejecutar main.py se inicia la API (uvicorn) en segundo plano y luego
+se muestra el menú interactivo que usa el cliente CRUD contra la API.
+Debe ejecutarse desde la raíz del proyecto.
 """
 import sys
 import threading
 import time
 
-from src.crud.permissions import list_permissions, get_permission, create_permission, update_permission, \
-    delete_permission
-from src.crud.roles import list_roles, get_role, create_role, delete_role, update_role, set_role_permissions
-
-# Permitir importar desde src cuando se ejecuta desde la raíz del proyecto
+# Permitir importar desde src cuando se ejecuta desde la raíz del proyecto.
 sys.path.insert(0, ".")
 
-from src.crud.users import (
+from src.crud.permissions import (  # noqa: E402
+    list_permissions,
+    get_permission,
+    create_permission,
+    update_permission,
+    delete_permission,
+)
+from src.crud.roles import (  # noqa: E402
+    list_roles,
+    get_role,
+    create_role,
+    delete_role,
+    update_role,
+    set_role_permissions,
+)
+from src.crud.users import (  # noqa: E402
     list_users,
     get_user,
     create_user,
@@ -24,13 +38,27 @@ from src.crud.users import (
 
 
 def _format_roles(roles: list) -> str:
-    """Convierte lista de roles (dict con 'name') a texto."""
+    """
+    Convierte una lista de roles (dict con 'name' o 'id') a texto.
+
+    Args:
+        roles: Lista de diccionarios con al menos 'name' o 'id'.
+
+    Returns:
+        Nombres separados por coma, o "—" si la lista está vacía.
+    """
     if not roles:
         return "—"
     return ", ".join(r.get("name", str(r.get("id", ""))) for r in roles)
 
 
-def show_users():
+def show_users() -> None:
+    """
+    Lista todos los usuarios por consola con sus roles.
+
+    Muestra id, nombre, apellido, email y roles. Captura errores de conexión
+    y muestra un mensaje amigable.
+    """
     try:
         users = list_users()
         if not users:
@@ -38,7 +66,10 @@ def show_users():
             return
         for u in users:
             roles_str = _format_roles(u.get("roles", []))
-            print(f"  {u['id']} | {u['first_name']} | {u['last_name']} | {u['email']} | roles: {roles_str}")
+            print(
+                f"  {u['id']} | {u['first_name']} | {u['last_name']} | "
+                f"{u['email']} | roles: {roles_str}"
+            )
     except Exception as e:
         err = str(e)
         if "10061" in err or "Connection refused" in err or "denegó" in err.lower():
@@ -47,7 +78,8 @@ def show_users():
             print(f"  Error: {e}")
 
 
-def show_permissions():
+def show_permissions() -> None:
+    """Lista todos los permisos por consola. Maneja errores de conexión."""
     try:
         permissions = list_permissions()
         if not permissions:
@@ -63,7 +95,8 @@ def show_permissions():
             print(f"  Error: {e}")
 
 
-def show_roles():
+def show_roles() -> None:
+    """Lista todos los roles por consola. Maneja errores de conexión."""
     try:
         roles = list_roles()
         if not roles:
@@ -79,10 +112,18 @@ def show_roles():
             print(f"  Error: {e}")
 
 
-def menu_users():
+def menu_users() -> None:
+    """
+    Menú interactivo de usuarios.
+
+    Opciones: listar, ver uno, crear, actualizar, eliminar, asignar roles.
+    """
     while True:
         print("\n--- Usuarios ---")
-        print("1. Listar  2. Ver uno  3. Crear  4. Actualizar  5. Eliminar  6. Asignar roles  0. Volver")
+        print(
+            "1. Listar  2. Ver uno  3. Crear  4. Actualizar  "
+            "5. Eliminar  6. Asignar roles  0. Volver"
+        )
         op = input("Opción: ").strip()
         if op == "0":
             break
@@ -109,14 +150,21 @@ def menu_users():
             password = input("Contraseña: ").strip()
             phone = input("Teléfono (opcional): ").strip()
             address = input("Dirección (opcional): ").strip()
-            if first_name and last_name and email and password and phone and address:
-                try:
-                    create_user(first_name, last_name, email, password, phone, address)
-                    print("  Usuario creado.")
-                except Exception as e:
-                    print(f"  Error: {e}")
-            else:
-                print("  Faltan datos.")
+            if not (first_name and last_name and email and password):
+                print("  Faltan datos (nombre, apellido, email y contraseña son obligatorios).")
+                continue
+            show_roles()
+            raw_roles = input("IDs de roles (opcional, separados por coma): ").strip()
+            role_ids = [r.strip() for r in raw_roles.split(",") if r.strip()] or None
+            try:
+                create_user(
+                    first_name, last_name, email, password,
+                    phone or None, address or None,
+                    role_ids=role_ids,
+                )
+                print("  Usuario creado.")
+            except Exception as e:
+                print(f"  Error: {e}")
         elif op == "4":
             uid = input("ID usuario: ").strip()
             if not uid:
@@ -170,10 +218,18 @@ def menu_users():
                 print(f"  Error: {e}")
 
 
-def menu_roles():
+def menu_roles() -> None:
+    """
+    Menú interactivo de roles.
+
+    Opciones: listar, ver uno, crear, actualizar, eliminar, asignar permisos.
+    """
     while True:
         print("\n--- Roles ---")
-        print("1. Listar  2. Ver uno  3. Crear  4. Actualizar  5. Eliminar  6. Asignar permisos  0. Volver")
+        print(
+            "1. Listar  2. Ver uno  3. Crear  4. Actualizar  "
+            "5. Eliminar  6. Asignar permisos  0. Volver"
+        )
         op = input("Opción: ").strip()
         if op == "0":
             break
@@ -236,7 +292,8 @@ def menu_roles():
                 print(f"  Error: {e}")
 
 
-def menu_permissions():
+def menu_permissions() -> None:
+    """Menú interactivo de permisos: listar, ver uno, crear, actualizar, eliminar."""
     while True:
         print("\n--- Permisos ---")
         print("1. Listar  2. Ver uno  3. Crear  4. Actualizar  5. Eliminar  0. Volver")
@@ -291,13 +348,14 @@ def menu_permissions():
                     print(f"  Error: {e}")
 
 
-def _start_api():
-    """Ejecuta uvicorn en un hilo en segundo plano."""
+def _start_api() -> None:
+    """Ejecuta uvicorn en un hilo en segundo plano (host 0.0.0.0, puerto 8000)."""
     import uvicorn
     uvicorn.run("src.app:app", host="0.0.0.0", port=8000, log_level="warning")
 
 
-def main():
+def main() -> None:
+    """Punto de entrada: inicia la API en segundo plano y el menú por consola."""
     print("API Usuarios - Menú por consola")
     print("Iniciando API en http://localhost:8000 ...")
     server = threading.Thread(target=_start_api, daemon=True)
