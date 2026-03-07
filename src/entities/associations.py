@@ -1,11 +1,17 @@
 """
+
 Tablas de asociación N:M para roles-permisos y usuarios-roles.
 
 Define role_permissions (rol <-> permisos) y user_roles (usuario <-> roles)
+
 usando Table() de SQLAlchemy. Las entidades User, Role y Permission importan
+
 estas tablas para sus relationship(..., secondary=...).
+
 """
+
 from sqlalchemy import Table, Column, ForeignKey
+
 from sqlalchemy.dialects.postgresql import UUID
 
 from src.database.config import Base
@@ -40,6 +46,23 @@ user_roles = Table(
         "role_id",
         UUID(as_uuid=True),
         ForeignKey("roles.id", ondelete="CASCADE"),
+        primary_key=True,
+    ),
+)
+
+product_categories = Table(
+    "product_categories",
+    Base.metadata,
+    Column(
+        "product_id",
+        UUID(as_uuid=True),
+        ForeignKey("products.id", ondelete="CASCADE"),
+        primary_key=True,
+    ),
+    Column(
+        "category_id",
+        UUID(as_uuid=True),
+        ForeignKey("categories.id", ondelete="CASCADE"),
         primary_key=True,
     ),
 )

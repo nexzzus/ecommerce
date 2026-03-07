@@ -1,10 +1,11 @@
 """
-Menú por consola para la API de usuarios, roles y permisos.
+Menú por consola para la API de usuarios, roles, permisos, producto y categoria.
 
 Al ejecutar main.py se inicia la API (uvicorn) en segundo plano y luego
 se muestra el menú interactivo que usa el cliente CRUD contra la API.
 Debe ejecutarse desde la raíz del proyecto.
 """
+
 import sys
 import threading
 import time
@@ -34,6 +35,28 @@ from src.crud.users import (  # noqa: E402
     update_user,
     delete_user,
     set_user_roles,
+)
+from src.crud.discounts import (  # noqa: E402
+    list_discounts,
+    get_discount,
+    create_discount,
+    update_discount,
+    delete_discount,
+)
+from src.crud.category import (  # noqa: E402
+    list_categories,
+    get_category,
+    create_category,
+    update_category,
+    delete_category,
+)
+from src.crud.products import (  # noqa: E402
+    list_products,
+    get_product,
+    create_product,
+    update_product,
+    delete_product,
+    set_product_categories,
 )
 
 
@@ -73,7 +96,9 @@ def show_users() -> None:
     except Exception as e:
         err = str(e)
         if "10061" in err or "Connection refused" in err or "denegó" in err.lower():
-            print("  No se pudo conectar a la API. Espera unos segundos y vuelve a intentar.")
+            print(
+                "  No se pudo conectar a la API. Espera unos segundos y vuelve a intentar."
+            )
         else:
             print(f"  Error: {e}")
 
@@ -90,7 +115,9 @@ def show_permissions() -> None:
     except Exception as e:
         err = str(e)
         if "10061" in err or "Connection refused" in err or "denegó" in err.lower():
-            print("  No se pudo conectar a la API. Espera unos segundos y vuelve a intentar.")
+            print(
+                "  No se pudo conectar a la API. Espera unos segundos y vuelve a intentar."
+            )
         else:
             print(f"  Error: {e}")
 
@@ -107,7 +134,79 @@ def show_roles() -> None:
     except Exception as e:
         err = str(e)
         if "10061" in err or "Connection refused" in err or "denegó" in err.lower():
-            print("  No se pudo conectar a la API. Espera unos segundos y vuelve a intentar.")
+            print(
+                "  No se pudo conectar a la API. Espera unos segundos y vuelve a intentar."
+            )
+        else:
+            print(f"  Error: {e}")
+
+
+def show_discounts() -> None:
+    """Lista todos los descuentos por consola. Maneja errores de conexión."""
+    try:
+        discounts = list_discounts()
+        if not discounts:
+            print("  No hay descuentos.")
+            return
+        for d in discounts:
+            print(f"  {d['id']} | {d['code']} | value={d['value']} | {d['status']}")
+    except Exception as e:
+        err = str(e)
+        if "10061" in err or "Connection refused" in err or "denegó" in err.lower():
+            print(
+                "  No se pudo conectar a la API. Espera unos segundos y vuelve a intentar."
+            )
+        else:
+            print(f"  Error: {e}")
+
+
+def show_categories() -> None:
+    """Lista todas las categorías por consola. Maneja errores de conexión."""
+    try:
+        categories = list_categories()
+        if not categories:
+            print("  No hay categorías.")
+            return
+        for c in categories:
+            print(f"  {c['id']} | {c['name']}")
+    except Exception as e:
+        err = str(e)
+        if "10061" in err or "Connection refused" in err or "denegó" in err.lower():
+            print(
+                "  No se pudo conectar a la API. Espera unos segundos y vuelve a intentar."
+            )
+        else:
+            print(f"  Error: {e}")
+
+
+def _format_categories(categories: list) -> str:
+    """Convierte lista de categorías (dict con 'name' o 'id') a texto."""
+    if not categories:
+        return "—"
+    return ", ".join(c.get("name", str(c.get("id", ""))) for c in categories)
+
+
+def show_products() -> None:
+    """Lista todos los productos por consola. Maneja errores de conexión."""
+    try:
+        products = list_products()
+        if not products:
+            print("  No hay productos.")
+            return
+        for p in products:
+            cats = _format_categories(p.get("categories", []))
+            disc = p.get("discount")
+            disc_str = disc.get("code", str(disc.get("id", ""))) if disc else "—"
+            print(
+                f"  {p['id']} | {p['name']} | {p['price']} | stock={p['stock']} | "
+                f"discount={disc_str} | categories: {cats}"
+            )
+    except Exception as e:
+        err = str(e)
+        if "10061" in err or "Connection refused" in err or "denegó" in err.lower():
+            print(
+                "  No se pudo conectar a la API. Espera unos segundos y vuelve a intentar."
+            )
         else:
             print(f"  Error: {e}")
 
@@ -151,15 +250,21 @@ def menu_users() -> None:
             phone = input("Teléfono (opcional): ").strip()
             address = input("Dirección (opcional): ").strip()
             if not (first_name and last_name and email and password):
-                print("  Faltan datos (nombre, apellido, email y contraseña son obligatorios).")
+                print(
+                    "  Faltan datos (nombre, apellido, email y contraseña son obligatorios)."
+                )
                 continue
             show_roles()
             raw_roles = input("IDs de roles (opcional, separados por coma): ").strip()
             role_ids = [r.strip() for r in raw_roles.split(",") if r.strip()] or None
             try:
                 create_user(
-                    first_name, last_name, email, password,
-                    phone or None, address or None,
+                    first_name,
+                    last_name,
+                    email,
+                    password,
+                    phone or None,
+                    address or None,
                     role_ids=role_ids,
                 )
                 print("  Usuario creado.")
@@ -348,9 +453,222 @@ def menu_permissions() -> None:
                     print(f"  Error: {e}")
 
 
+def menu_discounts() -> None:
+    """Menú interactivo de descuentos: listar, ver uno, crear, actualizar, eliminar."""
+    while True:
+        print("\n--- Descuentos ---")
+        print("1. Listar  2. Ver uno  3. Crear  4. Actualizar  5. Eliminar  0. Volver")
+        op = input("Opción: ").strip()
+        if op == "0":
+            break
+        if op == "1":
+            show_discounts()
+        elif op == "2":
+            did = input("ID descuento: ").strip()
+            if did:
+                try:
+                    d = get_discount(did)
+                    print(f"  {d}")
+                except Exception as e:
+                    print(f"  Error: {e}")
+        elif op == "3":
+            value = input("Valor: ").strip()
+            code = input("Código: ").strip()
+            status = input("Estado (vacío=active): ").strip() or "active"
+            if value and code:
+                try:
+                    create_discount(value, code, status)
+                    print("  Descuento creado.")
+                except Exception as e:
+                    print(f"  Error: {e}")
+            else:
+                print("  Faltan datos (valor y código).")
+        elif op == "4":
+            did = input("ID descuento: ").strip()
+            if not did:
+                continue
+            value = input("Valor (vacío=no cambiar): ").strip()
+            code = input("Código (vacío=no cambiar): ").strip()
+            status = input("Estado (vacío=no cambiar): ").strip()
+            try:
+                kwargs = {}
+                if value:
+                    kwargs["value"] = value
+                if code:
+                    kwargs["code"] = code
+                if status:
+                    kwargs["status"] = status
+                update_discount(did, **kwargs)
+                print("  Descuento actualizado.")
+            except Exception as e:
+                print(f"  Error: {e}")
+        elif op == "5":
+            did = input("ID descuento a eliminar: ").strip()
+            if did:
+                try:
+                    delete_discount(did)
+                    print("  Descuento eliminado.")
+                except Exception as e:
+                    print(f"  Error: {e}")
+
+
+def menu_categories() -> None:
+    """Menú interactivo de categorías: listar, ver una, crear, actualizar, eliminar."""
+    while True:
+        print("\n--- Categorías ---")
+        print("1. Listar  2. Ver una  3. Crear  4. Actualizar  5. Eliminar  0. Volver")
+        op = input("Opción: ").strip()
+        if op == "0":
+            break
+        if op == "1":
+            show_categories()
+        elif op == "2":
+            cid = input("ID categoría: ").strip()
+            if cid:
+                try:
+                    c = get_category(cid)
+                    print(f"  {c}")
+                except Exception as e:
+                    print(f"  Error: {e}")
+        elif op == "3":
+            name = input("Nombre: ").strip()
+            if name:
+                try:
+                    create_category(name)
+                    print("  Categoría creada.")
+                except Exception as e:
+                    print(f"  Error: {e}")
+            else:
+                print("  Faltan datos.")
+        elif op == "4":
+            cid = input("ID categoría: ").strip()
+            if not cid:
+                continue
+            name = input("Nombre (vacío=no cambiar): ").strip()
+            try:
+                kwargs = {}
+                if name:
+                    kwargs["name"] = name
+                update_category(cid, **kwargs)
+                print("  Categoría actualizada.")
+            except Exception as e:
+                print(f"  Error: {e}")
+        elif op == "5":
+            cid = input("ID categoría a eliminar: ").strip()
+            if cid:
+                try:
+                    delete_category(cid)
+                    print("  Categoría eliminada.")
+                except Exception as e:
+                    print(f"  Error: {e}")
+
+
+def menu_products() -> None:
+    """Menú interactivo de productos: listar, ver uno, crear, actualizar, eliminar, asignar categorías."""
+    while True:
+        print("\n--- Productos ---")
+        print(
+            "1. Listar  2. Ver uno  3. Crear  4. Actualizar  "
+            "5. Eliminar  6. Asignar categorías  0. Volver"
+        )
+        op = input("Opción: ").strip()
+        if op == "0":
+            break
+        if op == "1":
+            show_products()
+        elif op == "2":
+            pid = input("ID producto: ").strip()
+            if pid:
+                try:
+                    p = get_product(pid)
+                    cats = _format_categories(p.get("categories", []))
+                    print(
+                        f"  ID: {p.get('id')} | {p.get('name')} | {p.get('price')} | stock={p.get('stock')}"
+                    )
+                    print(f"  Descripción: {p.get('description') or '—'}")
+                    print(f"  Descuento: {p.get('discount') or '—'}")
+                    print(f"  Categorías: {cats}")
+                except Exception as e:
+                    print(f"  Error: {e}")
+        elif op == "3":
+            name = input("Nombre: ").strip()
+            price = input("Precio: ").strip()
+            description = input("Descripción (opcional): ").strip()
+            stock = input("Stock (vacío=0): ").strip()
+            stock = int(stock) if stock.isdigit() else 0
+            if not (name and price):
+                print("  Faltan datos (nombre y precio son obligatorios).")
+                continue
+            show_discounts()
+            id_discount = input("ID descuento (opcional): ").strip() or None
+            show_categories()
+            raw_cats = input(
+                "IDs de categorías (opcional, separados por coma): "
+            ).strip()
+            category_ids = [c.strip() for c in raw_cats.split(",") if c.strip()] or None
+            try:
+                create_product(
+                    name, price, description or None, stock, id_discount, category_ids
+                )
+                print("  Producto creado.")
+            except Exception as e:
+                print(f"  Error: {e}")
+        elif op == "4":
+            pid = input("ID producto: ").strip()
+            if not pid:
+                continue
+            name = input("Nombre (vacío=no cambiar): ").strip()
+            price = input("Precio (vacío=no cambiar): ").strip()
+            description = input("Descripción (vacío=no cambiar): ").strip()
+            stock = input("Stock (vacío=no cambiar): ").strip()
+            id_discount = input("ID descuento (vacío=no cambiar, 'n'=quitar): ").strip()
+            try:
+                kwargs = {}
+                if name:
+                    kwargs["name"] = name
+                if price:
+                    kwargs["price"] = price
+                if description:
+                    kwargs["description"] = description
+                if stock.isdigit():
+                    kwargs["stock"] = int(stock)
+                if id_discount == "n":
+                    kwargs["id_discount"] = None
+                elif id_discount:
+                    kwargs["id_discount"] = id_discount
+                update_product(pid, **kwargs)
+                print("  Producto actualizado.")
+            except Exception as e:
+                print(f"  Error: {e}")
+        elif op == "5":
+            pid = input("ID producto a eliminar: ").strip()
+            if pid:
+                try:
+                    delete_product(pid)
+                    print("  Producto eliminado.")
+                except Exception as e:
+                    print(f"  Error: {e}")
+        elif op == "6":
+            pid = input("ID producto: ").strip()
+            if not pid:
+                continue
+            show_categories()
+            raw = input("IDs de categorías (separados por coma): ").strip()
+            if not raw:
+                print("  No se indicaron categorías.")
+                continue
+            category_ids = [c.strip() for c in raw.split(",") if c.strip()]
+            try:
+                set_product_categories(pid, category_ids)
+                print("  Categorías asignadas al producto.")
+            except Exception as e:
+                print(f"  Error: {e}")
+
+
 def _start_api() -> None:
     """Ejecuta uvicorn en un hilo en segundo plano (host 0.0.0.0, puerto 8000)."""
     import uvicorn
+
     uvicorn.run("src.app:app", host="0.0.0.0", port=8000, log_level="warning")
 
 
@@ -364,7 +682,10 @@ def main() -> None:
     print("API lista.\n")
     while True:
         print("\n========== MENÚ ==========")
-        print("1. Usuarios  2. Roles  3. Permisos  0. Salir")
+        print(
+            "1. Usuarios  2. Roles  3. Permisos  "
+            "4. Descuentos  5. Categorías  6. Productos  0. Salir"
+        )
         op = input("Opción: ").strip()
         if op == "0":
             print("Hasta luego.")
@@ -375,6 +696,12 @@ def main() -> None:
             menu_roles()
         elif op == "3":
             menu_permissions()
+        elif op == "4":
+            menu_discounts()
+        elif op == "5":
+            menu_categories()
+        elif op == "6":
+            menu_products()
         else:
             print("Opción no válida.")
 

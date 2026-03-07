@@ -5,6 +5,7 @@ Carga DATABASE_URL desde variables de entorno (.env), crea el motor SQLAlchemy,
 la sesión (SessionLocal), la base declarativa (Base) y proporciona get_db
 para inyección en FastAPI y create_tables para crear las tablas al arranque.
 """
+
 import os
 
 from dotenv import load_dotenv
