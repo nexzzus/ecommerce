@@ -18,7 +18,7 @@ class Discount(Base):
     Entidad descuento: valor (porcentaje o monto), código y estado (activo/inactivo).
     """
 
-    _tablename_ = "discounts"
+    __tablename__ = "discounts"
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, index=True)
     value = Column(Numeric(10, 2), nullable=False)
     code = Column(String(50), unique=True, index=True, nullable=False)

@@ -20,7 +20,7 @@ class Product(Base):
     Entidad producto: nombre, precio, descripción, stock; descuento opcional y categorías N:M.
     """
 
-    _tablename_ = "products"
+    __tablename__ = "products"
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, index=True)
     id_discount = Column(
         UUID(as_uuid=True),

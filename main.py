@@ -43,7 +43,7 @@ from src.crud.discounts import (  # noqa: E402
     update_discount,
     delete_discount,
 )
-from src.crud.categories import (  # noqa: E402
+from src.crud.category import (  # noqa: E402
     list_categories,
     get_category,
     create_category,
@@ -706,5 +706,5 @@ def main() -> None:
             print("Opción no válida.")
 
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     main()

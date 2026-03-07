@@ -18,7 +18,7 @@ from src.entities.products import Product
 
 from src.entities.discounts import Discount
 
-from src.entities.categories import Category
+from src.entities.category import Category
 
 from src.schemas.product_schema import (
     ProductResponse,

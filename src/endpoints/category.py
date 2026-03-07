@@ -14,7 +14,7 @@ from uuid import UUID
 
 from src.database.config import get_db
 
-from src.entities.categories import Category
+from src.entities.category import Category
 
 from src.schemas.category_schema import (
     CategoryResponse,

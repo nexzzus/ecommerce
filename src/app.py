@@ -20,7 +20,7 @@ from fastapi import FastAPI
 
 from src.database.config import create_tables
 
-from src.endpoints import users, roles, permissions, discounts, categories, products
+from src.endpoints import users, roles, permissions, discounts, category, products
 
 import src.entities.associations  # noqa: F401
 
@@ -32,7 +32,7 @@ import src.entities.permissions  # noqa: F401
 
 import src.entities.discounts  # noqa: F401
 
-import src.entities.categories  # noqa: F401
+import src.entities.category  # noqa: F401
 
 import src.entities.products  # noqa: F401
 
@@ -68,7 +68,7 @@ app.include_router(permissions.router)
 
 app.include_router(discounts.router)
 
-app.include_router(categories.router)
+app.include_router(category.router)
 
 app.include_router(products.router)
 
