@@ -1,6 +1,7 @@
 import requests
 
-BASE_URL = "http://127.0.0.1:8001"
+BASE_URL = "http://127.0.0.1:8001" #Para abrir el fastApi en funcionamiento http://127.0.0.1:8001//docs,
+#ya que sin el /docs muestra un mensaje de prueba para verificar que la API está en correcto funcionamiento 
 
 
 def listar_ordenes():
