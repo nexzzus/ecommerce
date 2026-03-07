@@ -54,3 +54,8 @@ def update_user(
 
 def delete_user(user_id: str) -> None:
     _delete(f"/users/{user_id}")
+
+
+def set_user_roles(user_id: str, role_ids: list) -> dict:
+    """Asigna los roles a un usuario (reemplaza los actuales)."""
+    return _put(f"/users/{user_id}/roles", json={"role_ids": role_ids})

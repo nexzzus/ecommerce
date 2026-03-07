@@ -30,3 +30,8 @@ def update_role(
 
 def delete_role(role_id: str) -> None:
     _delete(f"/roles/{role_id}")
+
+
+def set_role_permissions(role_id: str, permission_ids: list) -> dict:
+    """Asigna los permisos a un rol (reemplaza los actuales)."""
+    return _put(f"/roles/{role_id}/permissions", json={"permission_ids": permission_ids})

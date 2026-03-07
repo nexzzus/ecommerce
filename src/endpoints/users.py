@@ -1,21 +1,29 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from uuid import UUID
 
 from src.database.config import get_db
 from src.entities.users import User
-from src.schemas.user_schema import UserResponse, UserCreate, UserUpdate
+from src.entities.roles import Role
+from src.schemas.user_schema import UserResponse, UserCreate, UserUpdate, UserRolesUpdate
 from src.utils.security import hash_password
 
 router = APIRouter(prefix="/users", tags=["users"])
 
+
 @router.get("", response_model=list[UserResponse])
 def list_users(db: Session = Depends(get_db)):
-    return db.query(User).all()
+    return db.query(User).options(joinedload(User.roles)).all()
+
 
 @router.get("/{user_id}", response_model=UserResponse)
 def get_user(user_id: UUID, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.id == user_id).first()
+    user = (
+        db.query(User)
+        .options(joinedload(User.roles))
+        .filter(User.id == user_id)
+        .first()
+    )
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user
@@ -59,3 +67,28 @@ def delete_user(user_id: UUID, db: Session = Depends(get_db)):
     db.delete(user)
     db.commit()
     return None
+
+
+@router.put("/{user_id}/roles", response_model=UserResponse)
+def set_user_roles(user_id: UUID, body: UserRolesUpdate, db: Session = Depends(get_db)):
+    """Asigna los roles a un usuario (reemplaza los actuales). N:M."""
+    user = (
+        db.query(User)
+        .options(joinedload(User.roles))
+        .filter(User.id == user_id)
+        .first()
+    )
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    roles = db.query(Role).filter(Role.id.in_(body.role_ids)).all()
+    if len(roles) != len(body.role_ids):
+        found = {r.id for r in roles}
+        missing = set(body.role_ids) - found
+        raise HTTPException(
+            status_code=400,
+            detail=f"Roles no encontrados: {list(missing)}",
+        )
+    user.roles = roles
+    db.commit()
+    db.refresh(user)
+    return user

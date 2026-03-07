@@ -8,7 +8,7 @@ import time
 
 from src.crud.permissions import list_permissions, get_permission, create_permission, update_permission, \
     delete_permission
-from src.crud.roles import list_roles, get_role, create_role, delete_role, update_role
+from src.crud.roles import list_roles, get_role, create_role, delete_role, update_role, set_role_permissions
 
 # Permitir importar desde src cuando se ejecuta desde la raíz del proyecto
 sys.path.insert(0, ".")
@@ -19,7 +19,15 @@ from src.crud.users import (
     create_user,
     update_user,
     delete_user,
+    set_user_roles,
 )
+
+
+def _format_roles(roles: list) -> str:
+    """Convierte lista de roles (dict con 'name') a texto."""
+    if not roles:
+        return "—"
+    return ", ".join(r.get("name", str(r.get("id", ""))) for r in roles)
 
 
 def show_users():
@@ -29,7 +37,8 @@ def show_users():
             print("  No hay usuarios.")
             return
         for u in users:
-            print(f"  {u['id']} | {u['first_name']} | {u['last_name']} | {u['email']} | {u['phone']} | {u['address']}")
+            roles_str = _format_roles(u.get("roles", []))
+            print(f"  {u['id']} | {u['first_name']} | {u['last_name']} | {u['email']} | roles: {roles_str}")
     except Exception as e:
         err = str(e)
         if "10061" in err or "Connection refused" in err or "denegó" in err.lower():
@@ -73,7 +82,7 @@ def show_roles():
 def menu_users():
     while True:
         print("\n--- Usuarios ---")
-        print("1. Listar  2. Ver uno  3. Crear  4. Actualizar  5. Eliminar  0. Volver")
+        print("1. Listar  2. Ver uno  3. Crear  4. Actualizar  5. Eliminar  6. Asignar roles  0. Volver")
         op = input("Opción: ").strip()
         if op == "0":
             break
@@ -84,7 +93,13 @@ def menu_users():
             if uid:
                 try:
                     u = get_user(uid)
-                    print(f"  {u}")
+                    roles_str = _format_roles(u.get("roles", []))
+                    print(f"  ID: {u.get('id')}")
+                    print(f"  Nombre: {u.get('first_name')} {u.get('last_name')}")
+                    print(f"  Email: {u.get('email')}")
+                    print(f"  Teléfono: {u.get('phone') or '—'}")
+                    print(f"  Dirección: {u.get('address') or '—'}")
+                    print(f"  Roles: {roles_str}")
                 except Exception as e:
                     print(f"  Error: {e}")
         elif op == "3":
@@ -138,12 +153,27 @@ def menu_users():
                     print("  Usuario eliminado.")
                 except Exception as e:
                     print(f"  Error: {e}")
+        elif op == "6":
+            uid = input("ID usuario: ").strip()
+            if not uid:
+                continue
+            show_roles()
+            raw = input("IDs de roles (separados por coma): ").strip()
+            if not raw:
+                print("  No se indicaron roles.")
+                continue
+            role_ids = [r.strip() for r in raw.split(",") if r.strip()]
+            try:
+                set_user_roles(uid, role_ids)
+                print("  Roles asignados al usuario.")
+            except Exception as e:
+                print(f"  Error: {e}")
 
 
 def menu_roles():
     while True:
         print("\n--- Roles ---")
-        print("1. Listar  2. Ver uno  3. Crear  4. Actualizar  5. Eliminar  0. Volver")
+        print("1. Listar  2. Ver uno  3. Crear  4. Actualizar  5. Eliminar  6. Asignar permisos  0. Volver")
         op = input("Opción: ").strip()
         if op == "0":
             break
@@ -189,6 +219,21 @@ def menu_roles():
                     print("  rol eliminado.")
                 except Exception as e:
                     print(f"  Error: {e}")
+        elif op == "6":
+            rid = input("ID rol: ").strip()
+            if not rid:
+                continue
+            show_permissions()
+            raw = input("IDs de permisos (separados por coma): ").strip()
+            if not raw:
+                print("  No se indicaron permisos.")
+                continue
+            perm_ids = [p.strip() for p in raw.split(",") if p.strip()]
+            try:
+                set_role_permissions(rid, perm_ids)
+                print("  Permisos asignados al rol.")
+            except Exception as e:
+                print(f"  Error: {e}")
 
 
 def menu_permissions():

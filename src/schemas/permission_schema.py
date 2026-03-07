@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from pydantic import BaseModel, ConfigDict
 from uuid import UUID
 
@@ -20,7 +18,5 @@ class PermissionUpdate(BaseModel):
 
 class PermissionResponse(PermissionBase):
     id: UUID
-    date_created: datetime | None = None
-    date_updated: datetime | None = None
 
     model_config = ConfigDict(from_attributes=True)

@@ -9,8 +9,11 @@ from fastapi import FastAPI
 from src.database.config import create_tables
 from src.endpoints import users, roles, permissions
 
-# Importar modelos para que Base.metadata los conozca
-import src.entities.users
+# Importar modelos y tablas de asociación para que Base.metadata los conozca
+import src.entities.associations  # noqa: F401
+import src.entities.users  # noqa: F401
+import src.entities.roles  # noqa: F401
+import src.entities.permissions  # noqa: F401
 
 
 @asynccontextmanager

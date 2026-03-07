@@ -1,20 +1,28 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from uuid import UUID
 
 from src.database.config import get_db
 from src.entities.roles import Role
-from src.schemas.role_schema import RoleResponse, RoleCreate, RoleUpdate
+from src.entities.permissions import Permission
+from src.schemas.role_schema import RoleResponse, RoleCreate, RoleUpdate, RolePermissionsUpdate
 
 router = APIRouter(prefix="/roles", tags=["roles"])
 
+
 @router.get("", response_model=list[RoleResponse])
 def list_roles(db: Session = Depends(get_db)):
-    return db.query(Role).all()
+    return db.query(Role).options(joinedload(Role.permissions)).all()
+
 
 @router.get("/{role_id}", response_model=RoleResponse)
 def get_role(role_id: UUID, db: Session = Depends(get_db)):
-    role = db.query(Role).filter(Role.id == role_id).first()
+    role = (
+        db.query(Role)
+        .options(joinedload(Role.permissions))
+        .filter(Role.id == role_id)
+        .first()
+    )
     if not role:
         raise HTTPException(status_code=404, detail="Role not found")
     return role
@@ -51,3 +59,30 @@ def delete_role(role_id: UUID, db: Session = Depends(get_db)):
     db.delete(role)
     db.commit()
     return None
+
+
+@router.put("/{role_id}/permissions", response_model=RoleResponse)
+def set_role_permissions(
+    role_id: UUID, body: RolePermissionsUpdate, db: Session = Depends(get_db)
+):
+    """Asigna los permisos a un rol (reemplaza los actuales). N:M."""
+    role = (
+        db.query(Role)
+        .options(joinedload(Role.permissions))
+        .filter(Role.id == role_id)
+        .first()
+    )
+    if not role:
+        raise HTTPException(status_code=404, detail="Role not found")
+    perms = db.query(Permission).filter(Permission.id.in_(body.permission_ids)).all()
+    if len(perms) != len(body.permission_ids):
+        found = {p.id for p in perms}
+        missing = set(body.permission_ids) - found
+        raise HTTPException(
+            status_code=400,
+            detail=f"Permisos no encontrados: {list(missing)}",
+        )
+    role.permissions = perms
+    db.commit()
+    db.refresh(role)
+    return role

@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="aplicar crud en la api Rol">
+    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="implementación del crud permissions en API">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/crud/roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/crud/roles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/crud/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/crud/users.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/endpoints/roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/roles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/endpoints/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/permissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/permissions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/roles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/permission_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/permission_schema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/role_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/role_schema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/user_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/user_schema.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,24 +73,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.app.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "ai.playground.ignore.import.keys.banner.in.settings": "true",
-    "git-widget-placeholder": "feat-entidad-roles-permissions",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/apps-web/ecommerce/src/endpoints",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat-entidad-roles-permissions&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/apps-web/ecommerce/src/endpoints&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\apps-web\ecommerce\src\endpoints" />
@@ -109,7 +119,9 @@
       <workItem from="1772383552007" duration="1118000" />
       <workItem from="1772385173826" duration="243000" />
       <workItem from="1772767445274" duration="6373000" />
-      <workItem from="1772773925855" duration="6162000" />
+      <workItem from="1772773925855" duration="6266000" />
+      <workItem from="1772803276335" duration="21000" />
+      <workItem from="1772847169784" duration="650000" />
     </task>
     <task id="LOCAL-00001" summary="creación y configuración del proyecto">
       <option name="closed" value="true" />
@@ -247,7 +259,47 @@
       <option name="project" value="LOCAL" />
       <updated>1772778962561</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="creación de la entidad permission">
+      <option name="closed" value="true" />
+      <created>1772780255098</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1772780255098</updated>
+    </task>
+    <task id="LOCAL-00019" summary="creación del schema permission">
+      <option name="closed" value="true" />
+      <created>1772780266433</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1772780266433</updated>
+    </task>
+    <task id="LOCAL-00020" summary="creación del crud permission">
+      <option name="closed" value="true" />
+      <created>1772780272156</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1772780272156</updated>
+    </task>
+    <task id="LOCAL-00021" summary="creación del endpoint permission">
+      <option name="closed" value="true" />
+      <created>1772780282711</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1772780282711</updated>
+    </task>
+    <task id="LOCAL-00022" summary="implementación del crud permissions en API">
+      <option name="closed" value="true" />
+      <created>1772780299187</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1772780299187</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -282,10 +334,15 @@
     <MESSAGE value="creación crud Rol" />
     <MESSAGE value="creación endpoints Rol" />
     <MESSAGE value="aplicar crud en la api Rol" />
-    <option name="LAST_COMMIT_MESSAGE" value="aplicar crud en la api Rol" />
+    <MESSAGE value="creación de la entidad permission" />
+    <MESSAGE value="creación del schema permission" />
+    <MESSAGE value="creación del crud permission" />
+    <MESSAGE value="creación del endpoint permission" />
+    <MESSAGE value="implementación del crud permissions en API" />
+    <option name="LAST_COMMIT_MESSAGE" value="implementación del crud permissions en API" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ecommerce$main.coverage" NAME="main Coverage Results" MODIFIED="1772780129135" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ecommerce$main.coverage" NAME="main Coverage Results" MODIFIED="1772847741365" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ecommerce$app.coverage" NAME="app Coverage Results" MODIFIED="1772771655195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
   <component name="github-copilot-workspace">

@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from pydantic import BaseModel, ConfigDict
 from uuid import UUID
 
@@ -16,9 +14,21 @@ class RoleUpdate(BaseModel):
     name: str | None = None
 
 
+class RolePermissionsUpdate(BaseModel):
+    """Body para asignar/actualizar permisos de un rol."""
+    permission_ids: list[UUID]
+
+
+class PermissionRef(BaseModel):
+    """Referencia mínima de permiso para incluir en Role."""
+    id: UUID
+    name: str
+    description: str | None = None
+    model_config = ConfigDict(from_attributes=True)
+
+
 class RoleResponse(RoleBase):
     id: UUID
-    date_created: datetime | None = None
-    date_updated: datetime | None = None
+    permissions: list[PermissionRef] = []
 
     model_config = ConfigDict(from_attributes=True)
