@@ -5,23 +5,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/crud/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/crud/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/crud/permissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/crud/permissions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/crud/roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/crud/roles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/crud/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/crud/users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/endpoints/permissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/permissions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/endpoints/roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/roles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/endpoints/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/associations.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/associations.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/permissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/permissions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/roles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/products.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/products.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/permission_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/permission_schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/role_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/role_schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/user_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/user_schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/security.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/security.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,24 +65,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat-entidad-roles-permissions&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/apps-web/ecommerce/src/endpoints&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.app.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "ai.playground.ignore.import.keys.banner.in.settings": "true",
+    "git-widget-placeholder": "feat-cartItem",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/apps-web/ecommerce/src/endpoints",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\apps-web\ecommerce\src\endpoints" />
