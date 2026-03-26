@@ -219,22 +219,29 @@ jobs:
     permissions:
       contents: read
 
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+      DEPLOY_COMPOSE_DIR: ${{ secrets.DEPLOY_COMPOSE_DIR }}
+      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+
     steps:
       - name: Deploy (SSH) - staging (opcional)
-        if: ${{ secrets.DEPLOY_HOST != '' && secrets.DEPLOY_USER != '' && secrets.DEPLOY_SSH_KEY != '' }}
+        if: env.DEPLOY_HOST != '' && env.DEPLOY_USER != '' && env.DEPLOY_SSH_KEY != ''
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          port: ${{ secrets.DEPLOY_PORT || 22 }}
+          host: ${{ env.DEPLOY_HOST }}
+          username: ${{ env.DEPLOY_USER }}
+          key: ${{ env.DEPLOY_SSH_KEY }}
+          port: ${{ env.DEPLOY_PORT || 22 }}
           script: |
             set -e
             echo "Deploy staging: pull & restart"
             docker login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
             docker pull "ghcr.io/${{ github.repository }}:qa"
-            if [ -n "${{ secrets.DEPLOY_COMPOSE_DIR }}" ] && [ -f "${{ secrets.DEPLOY_COMPOSE_DIR }}/docker-compose.yml" ]; then
-              cd "${{ secrets.DEPLOY_COMPOSE_DIR }}"
+            if [ -n "${{ env.DEPLOY_COMPOSE_DIR }}" ] && [ -f "${{ env.DEPLOY_COMPOSE_DIR }}/docker-compose.yml" ]; then
+              cd "${{ env.DEPLOY_COMPOSE_DIR }}"
               docker compose pull
               docker compose up -d
             else
@@ -242,7 +249,7 @@ jobs:
             fi
 
       - name: Deploy skipped
-        if: ${{ secrets.DEPLOY_HOST == '' || secrets.DEPLOY_USER == '' || secrets.DEPLOY_SSH_KEY == '' }}
+        if: env.DEPLOY_HOST == '' || env.DEPLOY_USER == '' || env.DEPLOY_SSH_KEY == ''
         run: echo "No hay secrets de deploy configurados; se omite."
 
   deploy-production:
@@ -253,22 +260,29 @@ jobs:
     permissions:
       contents: read
 
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+      DEPLOY_COMPOSE_DIR: ${{ secrets.DEPLOY_COMPOSE_DIR }}
+      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+
     steps:
       - name: Deploy (SSH) - production (opcional)
-        if: ${{ secrets.DEPLOY_HOST != '' && secrets.DEPLOY_USER != '' && secrets.DEPLOY_SSH_KEY != '' }}
+        if: env.DEPLOY_HOST != '' && env.DEPLOY_USER != '' && env.DEPLOY_SSH_KEY != ''
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          port: ${{ secrets.DEPLOY_PORT || 22 }}
+          host: ${{ env.DEPLOY_HOST }}
+          username: ${{ env.DEPLOY_USER }}
+          key: ${{ env.DEPLOY_SSH_KEY }}
+          port: ${{ env.DEPLOY_PORT || 22 }}
           script: |
             set -e
             echo "Deploy production: pull & restart"
             docker login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
             docker pull "ghcr.io/${{ github.repository }}:prod"
-            if [ -n "${{ secrets.DEPLOY_COMPOSE_DIR }}" ] && [ -f "${{ secrets.DEPLOY_COMPOSE_DIR }}/docker-compose.yml" ]; then
-              cd "${{ secrets.DEPLOY_COMPOSE_DIR }}"
+            if [ -n "${{ env.DEPLOY_COMPOSE_DIR }}" ] && [ -f "${{ env.DEPLOY_COMPOSE_DIR }}/docker-compose.yml" ]; then
+              cd "${{ env.DEPLOY_COMPOSE_DIR }}"
               docker compose pull
               docker compose up -d
             else
