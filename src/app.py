@@ -20,7 +20,13 @@ from fastapi import FastAPI
 
 from src.database.config import create_tables
 
-from src.endpoints import users, roles, permissions, discounts, category, products
+import src.endpoints.users as users
+import src.endpoints.roles as roles
+import src.endpoints.permissions as permissions
+import src.endpoints.discounts as discounts
+import src.endpoints.category as category
+import src.endpoints.products as products
+import src.endpoints.cart_items as cart_items
 
 import src.entities.associations  # noqa: F401
 
@@ -35,6 +41,8 @@ import src.entities.discounts  # noqa: F401
 import src.entities.category  # noqa: F401
 
 import src.entities.products  # noqa: F401
+
+import src.entities.cart_items  # noqa: F401
 
 
 @asynccontextmanager
@@ -71,6 +79,8 @@ app.include_router(discounts.router)
 app.include_router(category.router)
 
 app.include_router(products.router)
+
+app.include_router(cart_items.router)
 
 
 @app.get("/")

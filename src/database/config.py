@@ -20,12 +20,14 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
     raise ValueError("Se requiere DATABASE_URL en las variables de entorno")
 
+SSL_MODE = os.getenv("SSL_MODE", "require")
+
 engine = create_engine(
     DATABASE_URL,
     echo=False,
     pool_pre_ping=True,
     pool_recycle=300,
-    connect_args={"sslmode": "require"},
+    connect_args={"sslmode": SSL_MODE} if SSL_MODE else {},
 )
 
 SessionLocal = sessionmaker[Session](autocommit=False, autoflush=False, bind=engine)
