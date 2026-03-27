@@ -1,5 +1,45 @@
 """
 Esquemas Pydantic para CartItem.
+"""
+
+from uuid import UUID
+
+from pydantic import BaseModel, ConfigDict, Field, PositiveInt
+
+from src.schemas.product_schema import ProductResponse
+from src.schemas.user_schema import UserResponse
+
+
+class CartItemBase(BaseModel):
+    quantity: PositiveInt = Field(..., description="Cantidad del producto en el carrito")
+
+
+class CartItemCreate(CartItemBase):
+    id_user: UUID | None = Field(None, description="ID del usuario propietario del carrito")
+    id_product: UUID = Field(..., description="ID del producto")
+
+
+class CartItemUpdate(BaseModel):
+    quantity: PositiveInt | None = Field(None, description="Nueva cantidad")
+    id_user: UUID | None = Field(None, description="Usuario propietario (null = anónimo)")
+
+
+class CartItemResponse(CartItemBase):
+    id: UUID = Field(..., description="ID único del artículo del carrito")
+    id_user: UUID | None = Field(None, description="ID del usuario propietario")
+    id_product: UUID = Field(..., description="ID del producto")
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class CartItemDetailResponse(CartItemResponse):
+    user: UserResponse | None = None
+    product: ProductResponse
+
+    model_config = ConfigDict(from_attributes=True)
+
+"""
+Esquemas Pydantic para CartItem.
 
 CartItemCreate, CartItemUpdate, CartItemResponse y CartItemDetailResponse
 (con usuario y producto anidados para lecturas detalladas).

@@ -20,15 +20,13 @@ from fastapi import FastAPI
 
 from src.database.config import create_tables
 
-from src.endpoints import (
-    users,
-    roles,
-    permissions,
-    discounts,
-    category,
-    products,
-    cart_items,
-)
+import src.endpoints.users as users
+import src.endpoints.roles as roles
+import src.endpoints.permissions as permissions
+import src.endpoints.discounts as discounts
+import src.endpoints.category as category
+import src.endpoints.products as products
+import src.endpoints.cart_items as cart_items
 
 import src.entities.associations  # noqa: F401
 

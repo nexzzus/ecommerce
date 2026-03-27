@@ -66,7 +66,7 @@ from src.crud.cart_items import (  # noqa: E402
     delete_cart_item,
 )
 
-
+#
 def _format_roles(roles: list) -> str:
     """
     Convierte una lista de roles (dict con 'name' o 'id') a texto.

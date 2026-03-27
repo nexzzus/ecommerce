@@ -1,4 +1,118 @@
 """
+Endpoints FastAPI para líneas del carrito (cart_items).
+
+CRUD con validación de existencia de usuario (si se envía) y producto.
+"""
+
+from uuid import UUID
+
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session, joinedload
+
+from src.database.config import get_db
+from src.entities.cart_items import CartItem
+from src.entities.products import Product
+from src.entities.users import User
+from src.schemas.cart_item_schema import (
+    CartItemCreate,
+    CartItemDetailResponse,
+    CartItemResponse,
+    CartItemUpdate,
+)
+
+router = APIRouter(prefix="/cart-items", tags=["cart-items"])
+
+
+def _load_cart_item_detail(query):
+    return query.options(
+        joinedload(CartItem.user).joinedload(User.roles),
+        joinedload(CartItem.product).joinedload(Product.discount),
+        joinedload(CartItem.product).joinedload(Product.categories),
+    )
+
+
+@router.get("", response_model=list[CartItemResponse])
+def list_cart_items(db: Session = Depends(get_db)):
+    return db.query(CartItem).all()
+
+
+@router.get("/{cart_item_id}", response_model=CartItemDetailResponse)
+def get_cart_item(cart_item_id: UUID, db: Session = Depends(get_db)):
+    item = (
+        _load_cart_item_detail(db.query(CartItem))
+        .filter(CartItem.id == cart_item_id)
+        .first()
+    )
+    if not item:
+        raise HTTPException(status_code=404, detail="Cart item not found")
+    return item
+
+
+@router.post("", response_model=CartItemDetailResponse, status_code=201)
+def create_cart_item(body: CartItemCreate, db: Session = Depends(get_db)):
+    if body.id_user is not None:
+        user = db.query(User).filter(User.id == body.id_user).first()
+        if not user:
+            raise HTTPException(status_code=400, detail="Usuario no encontrado")
+
+    product = db.query(Product).filter(Product.id == body.id_product).first()
+    if not product:
+        raise HTTPException(status_code=400, detail="Producto no encontrado")
+
+    db_item = CartItem(
+        id_user=body.id_user,
+        id_product=body.id_product,
+        quantity=body.quantity,
+    )
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+
+    return (
+        _load_cart_item_detail(db.query(CartItem))
+        .filter(CartItem.id == db_item.id)
+        .first()
+    )
+
+
+@router.put("/{cart_item_id}", response_model=CartItemDetailResponse)
+def update_cart_item(cart_item_id: UUID, body: CartItemUpdate, db: Session = Depends(get_db)):
+    item = db.query(CartItem).filter(CartItem.id == cart_item_id).first()
+    if not item:
+        raise HTTPException(status_code=404, detail="Cart item not found")
+
+    data = body.model_dump(exclude_unset=True)
+    if not data:
+        raise HTTPException(status_code=400, detail="No hay campos para actualizar")
+
+    if "id_user" in data and data["id_user"] is not None:
+        user = db.query(User).filter(User.id == data["id_user"]).first()
+        if not user:
+            raise HTTPException(status_code=400, detail="Usuario no encontrado")
+
+    for key, value in data.items():
+        setattr(item, key, value)
+
+    db.commit()
+    db.refresh(item)
+
+    return (
+        _load_cart_item_detail(db.query(CartItem))
+        .filter(CartItem.id == cart_item_id)
+        .first()
+    )
+
+
+@router.delete("/{cart_item_id}", status_code=204)
+def delete_cart_item(cart_item_id: UUID, db: Session = Depends(get_db)):
+    item = db.query(CartItem).filter(CartItem.id == cart_item_id).first()
+    if not item:
+        raise HTTPException(status_code=404, detail="Cart item not found")
+    db.delete(item)
+    db.commit()
+    return None
+
+"""
 
 Endpoints FastAPI para líneas del carrito (cart_items).
 

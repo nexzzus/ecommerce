@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.log
+.env
+.venv/
+venv/
+.git/
+.github/
+.idea/
+dist/
+build/
+*.egg-info/
