@@ -5,7 +5,6 @@ from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from src.schemas.product_schema import ProductResponse
 from src.schemas.user_schema import UserResponse
 
-
 """
 Esquemas Pydantic para CartItem.
 
