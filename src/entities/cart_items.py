@@ -8,7 +8,9 @@ y muchos cart_items → un Product (N:1).
 import uuid
 
 from sqlalchemy import Column, ForeignKey, Integer
+
 from sqlalchemy.dialects.postgresql.base import UUID
+
 from sqlalchemy.orm import relationship
 
 from src.database.config import Base
@@ -38,4 +40,5 @@ class CartItem(Base):
     quantity = Column(Integer, nullable=False, default=0)
 
     user = relationship("User", back_populates="cart_items")
+
     product = relationship("Product", back_populates="cart_items")

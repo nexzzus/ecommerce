@@ -10,15 +10,13 @@ No es necesario levantar la API; este script solo aplica el esquema.
 import os
 
 from dotenv import load_dotenv
-
-# Cargar .env desde la carpeta del proyecto (donde está init_db.py)
-load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
-
-from sqlalchemy.exc import OperationalError
-
 import src.entities.producto  # noqa: F401 - registrar modelo
 import src.entities.usuarios  # noqa: F401 - registrar modelo
 from src.database.config import create_tables
+from sqlalchemy.exc import OperationalError
+
+# Cargar .env desde la carpeta del proyecto (donde está init_db.py)
+load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
 
 if __name__ == "__main__":
     try:
