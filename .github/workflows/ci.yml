@@ -112,19 +112,17 @@ jobs:
           exit "${code:-0}"
 
       - name: Crear/actualizar BD (migración)
-        # TODO: Agregar archivo migrate_db.py al proyecto
         run: |
           if [ -f migrate_db.py ]; then
-        #    python migrate_db.py
+            python migrations/env.py
           else
             echo "migrate_db.py no existe, se omite."
           fi
 
       - name: Seed (datos iniciales)
-        # TODO: Agregar seed_db.py al proyecto
         run: |
           if [ -f seed_db.py ]; then
-            python src.database.seed.py
+            python src/database/seed.py
           else
             echo "seed_db.py no existe, se omite."
           fi
