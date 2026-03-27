@@ -31,3 +31,4 @@ class User(Base):
     date_updated = Column(DateTime(timezone=True), onupdate=func.now())
 
     roles = relationship("Role", secondary=user_roles, back_populates="users")
+    cart_items = relationship("CartItem", back_populates="user")
