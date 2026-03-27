@@ -1,5 +1,5 @@
 """
-Menú por consola para la API de usuarios, roles, permisos, producto y categoria.
+Menú por consola para la API de usuarios, roles, permisos, producto, categoría y carrito.
 
 Al ejecutar main.py se inicia la API (uvicorn) en segundo plano y luego
 se muestra el menú interactivo que usa el cliente CRUD contra la API.
@@ -57,6 +57,13 @@ from src.crud.products import (  # noqa: E402
     update_product,
     delete_product,
     set_product_categories,
+)
+from src.crud.cart_items import (  # noqa: E402
+    list_cart_items,
+    get_cart_item,
+    create_cart_item,
+    update_cart_item,
+    delete_cart_item,
 )
 
 
@@ -184,6 +191,95 @@ def _format_categories(categories: list) -> str:
     if not categories:
         return "—"
     return ", ".join(c.get("name", str(c.get("id", ""))) for c in categories)
+
+
+def show_cart_items() -> None:
+    """Lista líneas del carrito por consola."""
+    try:
+        items = list_cart_items()
+        if not items:
+            print("  No hay líneas en el carrito.")
+            return
+        for it in items:
+            uid = it.get("id_user") or "—"
+            print(
+                f"  {it['id']} | user={uid} | product={it['id_product']} | "
+                f"qty={it['quantity']}"
+            )
+    except Exception as e:
+        err = str(e)
+        if "10061" in err or "Connection refused" in err or "denegó" in err.lower():
+            print(
+                "  No se pudo conectar a la API. Espera unos segundos y vuelve a intentar."
+            )
+        else:
+            print(f"  Error: {e}")
+
+
+def menu_cart_items() -> None:
+    """Menú interactivo del carrito: listar, ver una, crear, actualizar, eliminar."""
+    while True:
+        print("\n--- Carrito (cart items) ---")
+        print("1. Listar  2. Ver uno  3. Crear  4. Actualizar  5. Eliminar  0. Volver")
+        op = input("Opción: ").strip()
+        if op == "0":
+            break
+        if op == "1":
+            show_cart_items()
+        elif op == "2":
+            cid = input("ID línea carrito: ").strip()
+            if cid:
+                try:
+                    it = get_cart_item(cid)
+                    print(f"  ID: {it.get('id')}")
+                    print(f"  Usuario: {it.get('user') or '—'}")
+                    print(f"  Producto: {it.get('product')}")
+                    print(f"  Cantidad: {it.get('quantity')}")
+                except Exception as e:
+                    print(f"  Error: {e}")
+        elif op == "3":
+            id_product = input("ID producto: ").strip()
+            qty_raw = input("Cantidad: ").strip()
+            id_user = input("ID usuario (opcional, vacío=anónimo): ").strip() or None
+            if not id_product or not qty_raw.isdigit():
+                print("  Producto y cantidad numérica son obligatorios.")
+                continue
+            try:
+                create_cart_item(id_product, int(qty_raw), id_user)
+                print("  Línea creada.")
+            except Exception as e:
+                print(f"  Error: {e}")
+        elif op == "4":
+            cid = input("ID línea: ").strip()
+            if not cid:
+                continue
+            qty_raw = input("Cantidad (vacío=no cambiar): ").strip()
+            id_user_raw = input(
+                "ID usuario (vacío=no cambiar, 'n'=quitar usuario): "
+            ).strip()
+            try:
+                kwargs: dict = {}
+                if qty_raw.isdigit():
+                    kwargs["quantity"] = int(qty_raw)
+                if id_user_raw == "n":
+                    kwargs["clear_user"] = True
+                elif id_user_raw:
+                    kwargs["id_user"] = id_user_raw
+                if not kwargs:
+                    print("  Indica cantidad o usuario a cambiar.")
+                    continue
+                update_cart_item(cid, **kwargs)
+                print("  Línea actualizada.")
+            except Exception as e:
+                print(f"  Error: {e}")
+        elif op == "5":
+            cid = input("ID línea a eliminar: ").strip()
+            if cid:
+                try:
+                    delete_cart_item(cid)
+                    print("  Línea eliminada.")
+                except Exception as e:
+                    print(f"  Error: {e}")
 
 
 def show_products() -> None:
@@ -683,8 +779,8 @@ def main() -> None:
     while True:
         print("\n========== MENÚ ==========")
         print(
-            "1. Usuarios  2. Roles  3. Permisos  "
-            "4. Descuentos  5. Categorías  6. Productos  0. Salir"
+            "1. Usuarios  2. Roles  3. Permisos  4. Descuentos  "
+            "5. Categorías  6. Productos  7. Carrito  0. Salir"
         )
         op = input("Opción: ").strip()
         if op == "0":
@@ -702,6 +798,8 @@ def main() -> None:
             menu_categories()
         elif op == "6":
             menu_products()
+        elif op == "7":
+            menu_cart_items()
         else:
             print("Opción no válida.")
 
