@@ -8,7 +8,7 @@ from src.crud.orden_crud import (
     crear_orden,
     obtener_orden,
     obtener_ordenes,
-    eliminar_orden
+    eliminar_orden,
 )
 
 router = APIRouter(prefix="/orden", tags=["Orden"])
@@ -40,6 +40,7 @@ def obtener(orden_id: int, db: Session = Depends(get_db)):
 @router.delete("/{orden_id}")
 def eliminar(orden_id: int, db: Session = Depends(get_db)):
     return eliminar_orden(db, orden_id)
+
 
 @router.put("/{orden_id}")
 def actualizar(orden_id: int, datos: OrdenCreate, db: Session = Depends(get_db)):

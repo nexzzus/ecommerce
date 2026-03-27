@@ -3,6 +3,7 @@ Endpoints FastAPI para el recurso de permisos.
 
 CRUD de permisos (sin relaciones adicionales en los endpoints).
 """
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from uuid import UUID
@@ -43,9 +44,7 @@ def create_permission(perm: PermissionCreate, db: Session = Depends(get_db)):
     Crea un permiso. 400 si el nombre ya existe.
     """
     if db.query(Permission).filter(Permission.name == perm.name).first():
-        raise HTTPException(
-            status_code=400, detail="Permission already registered"
-        )
+        raise HTTPException(status_code=400, detail="Permission already registered")
     permission = Permission(
         name=perm.name,
         description=perm.description,

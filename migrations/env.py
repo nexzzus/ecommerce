@@ -4,17 +4,17 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from Alembic import context
 
-# 1. CONFIGURACIÓN DE RUTAS 
+# 1. CONFIGURACIÓN DE RUTAS
 # Agregamos la raíz del proyecto al path de Python
-sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
 # Importar los archivos desde la estructura 'src'
 try:
     from src.database.database import DATABASE_URL
-    from src.entities.user import Base 
+    from src.entities.user import Base
 except ImportError:
     # Si falla, intentamos sin el prefijo 'src' (por si acaso)
-    sys.path.insert(0, os.path.join(os.getcwd(), 'src'))
+    sys.path.insert(0, os.path.join(os.getcwd(), "src"))
     from database.database import DATABASE_URL
     from entities.user import Base
 
@@ -29,6 +29,7 @@ if config.config_file_name is not None:
 target_metadata = Base.metadata
 config.set_main_option("sqlalchemy.url", DATABASE_URL)
 
+
 def run_migrations_offline() -> None:
     """Ejecutar migraciones en modo 'offline'."""
     url = config.get_main_option("sqlalchemy.url")
@@ -42,6 +43,7 @@ def run_migrations_offline() -> None:
     with context.begin_transaction():
         context.run_migrations()
 
+
 def run_migrations_online() -> None:
     """Ejecutar migraciones en modo 'online'."""
     connectable = engine_from_config(
@@ -51,13 +53,11 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, 
-            target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()
+
 
 if context.is_offline_mode():
     run_migrations_offline()

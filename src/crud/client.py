@@ -4,6 +4,7 @@ Cliente HTTP para conectar con los endpoints de la API FastAPI.
 Proporciona funciones _get, _post, _put y _delete que usan httpx contra
 BASE_URL. Todas levantan excepción en respuestas 4xx/5xx (raise_for_status).
 """
+
 import httpx
 
 BASE_URL = "http://localhost:8000"

@@ -3,6 +3,7 @@ Endpoints FastAPI para el recurso de roles.
 
 CRUD de roles y asignación de permisos (PUT /roles/{id}/permissions).
 """
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session, joinedload
 from uuid import UUID
@@ -103,9 +104,7 @@ def set_role_permissions(
     )
     if not role:
         raise HTTPException(status_code=404, detail="Role not found")
-    perms = db.query(Permission).filter(
-        Permission.id.in_(body.permission_ids)
-    ).all()
+    perms = db.query(Permission).filter(Permission.id.in_(body.permission_ids)).all()
     if len(perms) != len(body.permission_ids):
         found = {p.id for p in perms}
         missing = set(body.permission_ids) - found

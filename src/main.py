@@ -16,6 +16,7 @@ app.include_router(orden_router.router)
 app.include_router(detalle_orden_router.router)
 app.include_router(pago_router.router)
 
+
 @app.get("/")
 def inicio():
     return {"mensaje": "API Ecommerce funcionando"}

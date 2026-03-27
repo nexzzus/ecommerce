@@ -17,13 +17,17 @@ CartItemCreate, CartItemUpdate, CartItemResponse y CartItemDetailResponse
 class CartItemBase(BaseModel):
     """Campos comunes: cantidad en el carrito."""
 
-    quantity: PositiveInt = Field(..., description="Cantidad del producto en el carrito")
+    quantity: PositiveInt = Field(
+        ..., description="Cantidad del producto en el carrito"
+    )
 
 
 class CartItemCreate(CartItemBase):
     """Crear línea de carrito; usuario opcional (FK nullable en BD)."""
 
-    id_user: UUID | None = Field(None, description="ID del usuario propietario del carrito")
+    id_user: UUID | None = Field(
+        None, description="ID del usuario propietario del carrito"
+    )
     id_product: UUID = Field(..., description="ID del producto")
 
 
@@ -31,7 +35,9 @@ class CartItemUpdate(BaseModel):
     """Actualización parcial: cantidad y/o usuario asociado."""
 
     quantity: PositiveInt | None = Field(None, description="Nueva cantidad")
-    id_user: UUID | None = Field(None, description="Usuario propietario (null = anónimo)")
+    id_user: UUID | None = Field(
+        None, description="Usuario propietario (null = anónimo)"
+    )
 
 
 class CartItemResponse(CartItemBase):

@@ -81,7 +81,6 @@ def update_category(category_id: str, name: str | None = None) -> dict:
     payload = {}
 
     if name is not None:
-
         payload["name"] = name
 
     return _put(f"/categories/{category_id}", json=payload)

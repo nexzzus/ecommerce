@@ -4,6 +4,7 @@ Cliente CRUD para el recurso de permisos de la API.
 Expone list_permissions, get_permission, create_permission,
 update_permission y delete_permission.
 """
+
 from src.crud.client import _get, _post, _put, _delete
 
 

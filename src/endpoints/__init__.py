@@ -1,2 +1,1 @@
 """Paquete de endpoints FastAPI."""
-

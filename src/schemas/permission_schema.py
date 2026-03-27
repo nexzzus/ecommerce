@@ -3,6 +3,7 @@ Esquemas Pydantic para el recurso de permisos.
 
 Incluye PermissionBase, PermissionCreate, PermissionUpdate y PermissionResponse.
 """
+
 from pydantic import BaseModel, ConfigDict
 from uuid import UUID
 
