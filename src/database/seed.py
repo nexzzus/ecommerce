@@ -3,12 +3,14 @@ import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from src.entities.roles import Role
+from src.entities.users import User
+
 # 1. Asegurar que Python encuentre la carpeta 'src'
 sys.path.append(os.getcwd())
 
 # 2. Importa las cosas 
 from src.database.database import DATABASE_URL
-from src.entities.user import User, Base 
 
 # 3. Configuración de la conexión
 engine = create_engine(DATABASE_URL)
@@ -24,13 +26,21 @@ def run_seed():
         exists = db.query(User).filter(User.email == admin_email).first()
         
         if not exists:
+            # Verificar o crear el rol admin
+            admin_role = db.query(Role).filter(Role.name == "admin").first()
+            if not admin_role:
+                admin_role = Role(name="admin")
+                db.add(admin_role)
+                db.commit()  # Commit para obtener el ID del rol
+
             # Creamos el usuario por defecto 
             new_admin = User(
                 email=admin_email,
-                username="admin",
+                # username="admin",
                 password="123", 
-                is_admin=True
+                # is_admin=True
             )
+            new_admin.roles.append(admin_role) # Asignar el rol
             db.add(new_admin)
             db.commit()
             print(">>> Seeder: Usuario administrador creado con éxito.")
