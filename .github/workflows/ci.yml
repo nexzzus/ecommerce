@@ -124,7 +124,7 @@ jobs:
         # TODO: Agregar seed_db.py al proyecto
         run: |
           if [ -f seed_db.py ]; then
-        #    python seed_db.py
+            python seed_db.py
           else
             echo "seed_db.py no existe, se omite."
           fi
