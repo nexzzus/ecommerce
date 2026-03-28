@@ -115,7 +115,6 @@ jobs:
         env:
           PYTHONPATH: src
         run: alembic upgrade head
-          fi
 
       - name: Seed (datos iniciales)
         run: |
