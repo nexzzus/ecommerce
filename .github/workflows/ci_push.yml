@@ -64,7 +64,7 @@ jobs:
         - name: Seed (datos iniciales)
           env:
             PYTHONPATH: src
-          run: python database/seed.py
+          run: python seed.py
 
         - name: Pruebas (smoke test)
           env:
