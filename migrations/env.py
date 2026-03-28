@@ -5,17 +5,14 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
+from src.database.config import Base
+
 # 1. CONFIGURACIÓN DE RUTAS
-# Agregamos la raíz del proyecto al path de Python
-sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
+# Agregar src al path
+sys.path.insert(0, os.path.abspath("src"))
 
 # Importar los archivos desde la estructura 'src'
-try:
-    from src.database.database import DATABASE_URL
-    from src.entities.user import Base
-except ImportError:
-    # Si falla, intentamos sin el prefijo 'src' (por si acaso)
-    sys.path.insert(0, os.path.join(os.getcwd(), "src"))
+from src.database.database import DATABASE_URL
 
 # 2. CONFIGURACIÓN DE ALEMBIC
 config = context.config
