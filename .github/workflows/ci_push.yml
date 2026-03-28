@@ -4,7 +4,7 @@ name: CI_Push
 
 on:
     push:
-        branches: [dev, qa, prod, fix--pipeline]
+        branches: [dev]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
