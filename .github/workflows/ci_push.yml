@@ -62,7 +62,11 @@ jobs:
           run: alembic upgrade head
 
         - name: Seed (datos iniciales)
+          env:
+            PYTHONPATH: src
           run: python src/database/seed.py
 
         - name: Pruebas (smoke test)
-          run: python -c "from src.app import app; from fastapi.testclient import TestClient; c = TestClient(app); r = c.get('/'); assert r.status_code == 200; b = r.json(); assert b.get('success') is True; assert 'data' in b; print('Smoke test OK')"
+          env:
+            PYTHONPATH: src
+          run: python -c "from app import app; from fastapi.testclient import TestClient; c = TestClient(app); r = c.get('/'); assert r.status_code == 200; b = r.json(); assert b.get('success') is True; assert 'data' in b; print('Smoke test OK')"
