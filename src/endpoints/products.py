@@ -20,12 +20,17 @@ from src.entities.discounts import Discount
 
 from src.entities.category import Category
 
+
 from src.schemas.product_schema import (
     ProductResponse,
     ProductCreate,
     ProductUpdate,
     ProductCategoriesUpdate,
 )
+
+from src.core.responses import success_response
+from src.core.exceptions import NotFoundError
+
 
 router = APIRouter(prefix="/products", tags=["products"])
 
@@ -46,8 +51,11 @@ def list_products(db: Session = Depends(get_db)):
     Lista todos los productos con descuento y categorías.
 
     """
-
-    return _load_product_relations(db.query(Product)).all()
+    productos = _load_product_relations(db.query(Product)).all()
+    data = [
+        ProductResponse.model_validate(p).model_dump(mode="json") for p in productos
+    ]
+    return success_response(data=data, message="listado de productos")
 
 
 @router.get("/{product_id}", response_model=ProductResponse)
@@ -65,9 +73,11 @@ def get_product(product_id: UUID, db: Session = Depends(get_db)):
     )
 
     if not product:
-        raise HTTPException(status_code=404, detail="Product not found")
 
-    return product
+        raise NotFoundError("producto no encontrado")
+
+    data = ProductResponse.model_validate(p).model_dump(mode="json")
+    return success_response(data=data, message="producto obtenido")
 
 
 @router.post("", response_model=ProductResponse, status_code=201)
@@ -86,7 +96,8 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
         discount = db.query(Discount).filter(Discount.id == product.id_discount).first()
 
         if not discount:
-            raise HTTPException(status_code=400, detail="Discount not found")
+
+            raise NotFoundError("descuento no encontrado")
 
     categories_to_assign = []
 
@@ -100,9 +111,8 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
 
             missing = set(product.category_ids) - found
 
-            raise HTTPException(
-                status_code=400,
-                detail=f"Categorías no encontradas: {list(missing)}",
+            raise NotFoundError(
+                f"Categorías no encontradas: {list(missing)}",
             )
 
     db_product = Product(
@@ -125,10 +135,13 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
         db.commit()
 
         db.refresh(db_product)
-
-    return _load_product_relations(
-        db.query(Product).filter(Product.id == db_product.id)
-    ).first()
+    product = (
+        _load_product_relations(db.query(Product))
+        .filter(Product.id == db_product.id)
+        .first()
+    )
+    data = ProductResponse.model_validate(product).model_dump(mode="json")
+    return success_response(data=data, message="producto creado")
 
 
 @router.put("/{product_id}", response_model=ProductResponse)
@@ -150,7 +163,8 @@ def update_product(
     )
 
     if not db_product:
-        raise HTTPException(status_code=404, detail="Product not found")
+
+        raise NotFoundError("Product not found")
 
     update = product.model_dump(exclude_unset=True)
 
@@ -160,7 +174,8 @@ def update_product(
         )
 
         if not discount:
-            raise HTTPException(status_code=400, detail="Discount not found")
+
+            raise NotFoundError("Discount not found")
 
     for key, value in update.items():
         setattr(db_product, key, value)
@@ -168,10 +183,13 @@ def update_product(
     db.commit()
 
     db.refresh(db_product)
-
-    return _load_product_relations(
-        db.query(Product).filter(Product.id == product_id)
-    ).first()
+    product = (
+        _load_product_relations(db.query(Product))
+        .filter(Product.id == db_product.id)
+        .first()
+    )
+    data = ProductResponse.model_validate(product).model_dump(mode="json")
+    return success_response(data=data, message="producto actualizado")
 
 
 @router.delete("/{product_id}", status_code=204)
@@ -185,7 +203,8 @@ def delete_product(product_id: UUID, db: Session = Depends(get_db)):
     product = db.query(Product).filter(Product.id == product_id).first()
 
     if not product:
-        raise HTTPException(status_code=404, detail="Product not found")
+
+        raise NotFoundError("Product not found")
 
     db.delete(product)
 
@@ -213,7 +232,8 @@ def set_product_categories(
     )
 
     if not product:
-        raise HTTPException(status_code=404, detail="Product not found")
+
+        raise NotFoundError("Product not found")
 
     categories = db.query(Category).filter(Category.id.in_(body.category_ids)).all()
 
@@ -222,9 +242,8 @@ def set_product_categories(
 
         missing = set(body.category_ids) - found
 
-        raise HTTPException(
-            status_code=400,
-            detail=f"Categorías no encontradas: {list(missing)}",
+        raise NotFoundError(
+            f"Categorías no encontradas: {list(missing)}",
         )
 
     product.categories = categories
@@ -233,4 +252,5 @@ def set_product_categories(
 
     db.refresh(product)
 
-    return product
+    data = ProductResponse.model_validate(product).model_dump(mode="json")
+    return success_response(data=data, message="categoria de producto")

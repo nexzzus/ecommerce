@@ -44,6 +44,15 @@ import src.entities.products  # noqa: F401
 
 import src.entities.cart_items  # noqa: F401
 
+from src.core.exceptions import AppException
+from src.core.error_handlers import (
+    app_exception_handler,
+    http_exception_handler,
+    validation_exception_handler,
+    generic_exception_handler,
+)
+from fastapi.exceptions import HTTPException, RequestValidationError
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -67,6 +76,12 @@ app = FastAPI(
     description="API con FastAPI, SQLAlchemy y PostgreSQL",
     lifespan=lifespan,
 )
+
+# manejadores globales de excepciones
+app.add_exception_handler(AppException, app_exception_handler)
+app.add_exception_handler(HTTPException, http_exception_handler)
+app.add_exception_handler(RequestValidationError, validation_exception_handler)
+app.add_exception_handler(Exception, generic_exception_handler)
 
 app.include_router(users.router)
 

@@ -21,6 +21,8 @@ from src.schemas.category_schema import (
     CategoryCreate,
     CategoryUpdate,
 )
+from src.core.responses import success_response
+from src.core.exceptions import NotFoundError, BadRequestError
 
 router = APIRouter(prefix="/categories", tags=["categories"])
 
@@ -32,8 +34,11 @@ def list_categories(db: Session = Depends(get_db)):
     Lista todas las categorías.
 
     """
-
-    return db.query(Category).all()
+    categorys = db.query(Category).all()
+    data = [
+        CategoryResponse.model_validate(c).model_dump(mode="json") for c in categorys
+    ]
+    return success_response(data=data, message="listado de categorias")
 
 
 @router.get("/{category_id}", response_model=CategoryResponse)
@@ -47,9 +52,11 @@ def get_category(category_id: UUID, db: Session = Depends(get_db)):
     category = db.query(Category).filter(Category.id == category_id).first()
 
     if not category:
-        raise HTTPException(status_code=404, detail="Category not found")
 
-    return category
+        raise NotFoundError("Category not found")
+
+    data = [CategoryResponse.model_validate(category).model_dump(mode="json")]
+    return success_response(data=data, message="categoria obtenida")
 
 
 @router.post("", response_model=CategoryResponse, status_code=201)
@@ -61,7 +68,10 @@ def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
     """
 
     if db.query(Category).filter(Category.name == category.name).first():
-        raise HTTPException(status_code=400, detail="Category name already registered")
+
+        raise BadRequestError(
+            message="categoria ya existente", detail="Category name already registered"
+        )
 
     db_category = Category(name=category.name)
 
@@ -71,7 +81,8 @@ def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
 
     db.refresh(db_category)
 
-    return db_category
+    data = [CategoryResponse.model_validate(db_category).model_dump(mode="json")]
+    return success_response(data=data, message="categoria creada")
 
 
 @router.put("/{category_id}", response_model=CategoryResponse)
@@ -87,7 +98,8 @@ def update_category(
     db_category = db.query(Category).filter(Category.id == category_id).first()
 
     if not db_category:
-        raise HTTPException(status_code=404, detail="Category not found")
+
+        raise NotFoundError("Category not found")
 
     update = category.model_dump(exclude_unset=True)
 
@@ -98,7 +110,8 @@ def update_category(
 
     db.refresh(db_category)
 
-    return db_category
+    data = [CategoryResponse.model_validate(db_category).model_dump(mode="json")]
+    return success_response(data=data, message="categoria actualizada")
 
 
 @router.delete("/{category_id}", status_code=204)
@@ -112,7 +125,8 @@ def delete_category(category_id: UUID, db: Session = Depends(get_db)):
     category = db.query(Category).filter(Category.id == category_id).first()
 
     if not category:
-        raise HTTPException(status_code=404, detail="Category not found")
+
+        raise NotFoundError("Category not found")
 
     db.delete(category)
 
