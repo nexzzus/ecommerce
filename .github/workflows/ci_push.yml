@@ -67,4 +67,17 @@ jobs:
           run: python seed.py
 
         - name: Pruebas (smoke test)
-          run: python -c "from app import app; from fastapi.testclient import TestClient; c = TestClient(app); r = c.get('/'); assert r.status_code == 200; b = r.json(); assert b.get('success') is True; assert 'data' in b; print('Smoke test OK')"
+          run: |
+            python -c "
+            from src.app import app
+            from fastapi.testclient import TestClient
+            c = TestClient(app)
+            r = c.get('/')
+            print(f'Status: {r.status_code}')
+            print(f'Response: {r.json()}')
+            assert r.status_code == 200
+            b = r.json()
+            assert b.get('success') is True
+            assert 'data' in b
+            print('Smoke test OK')
+            "
