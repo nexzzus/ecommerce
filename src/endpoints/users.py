@@ -4,7 +4,7 @@ Endpoints FastAPI para el recurso de usuarios.
 CRUD de usuarios y asignación de roles (PUT /users/{id}/roles).
 """
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session, joinedload
 from uuid import UUID
 
@@ -24,7 +24,7 @@ from src.core.exceptions import NotFoundError, BadRequestError
 router = APIRouter(prefix="/users", tags=["users"])
 
 
-@router.get("", response_model=list[UserResponse])
+@router.get("")
 def list_users(db: Session = Depends(get_db)):
     """
     Lista todos los usuarios con sus roles cargados.
@@ -34,7 +34,7 @@ def list_users(db: Session = Depends(get_db)):
     return success_response(data=data, message="listado de usuarios")
 
 
-@router.get("/{user_id}", response_model=UserResponse)
+@router.get("/{user_id}")
 def get_user(user_id: UUID, db: Session = Depends(get_db)):
     """
     Devuelve un usuario por ID con sus roles. 404 si no existe.
@@ -47,11 +47,11 @@ def get_user(user_id: UUID, db: Session = Depends(get_db)):
     )
     if not user:
         raise NotFoundError("User not found")
-    data = [UserResponse.model_validate(user).model_dump(mode="json")]
+    data = UserResponse.model_validate(user).model_dump(mode="json")
     return success_response(data=data, message="usuario obtenido")
 
 
-@router.post("", response_model=UserResponse, status_code=201)
+@router.post("", status_code=201)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     """
     Crea un usuario. La contraseña se hashea. Opcionalmente se pueden
@@ -59,9 +59,7 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
     no existe.
     """
     if db.query(User).filter(User.email == user.email).first():
-        raise BadRequestError(
-            menssage="El usuario ya existe", detail="Email already registered"
-        )
+        raise BadRequestError("Email already registered")
     roles_to_assign = None
     if user.role_ids:
         roles_to_assign = db.query(Role).filter(Role.id.in_(user.role_ids)).all()
@@ -86,11 +84,11 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
         db_user.roles = roles_to_assign
         db.commit()
         db.refresh(db_user)
-    data = [UserResponse.model_validate(db_user).model_dump(mode="json")]
+    data = UserResponse.model_validate(db_user).model_dump(mode="json")
     return success_response(data=data, message="usuario creado")
 
 
-@router.put("/{user_id}", response_model=UserResponse)
+@router.put("/{user_id}")
 def update_user(user_id: UUID, user: UserUpdate, db: Session = Depends(get_db)):
     """
     Actualiza un usuario por ID (solo campos enviados). 404 si no existe.
@@ -106,7 +104,7 @@ def update_user(user_id: UUID, user: UserUpdate, db: Session = Depends(get_db)):
         setattr(db_user, key, value)
     db.commit()
     db.refresh(db_user)
-    data = [UserResponse.model_validate(db_user).model_dump(mode="json")]
+    data = UserResponse.model_validate(db_user).model_dump(mode="json")
     return success_response(data=data, message="usuario actualizado")
 
 
@@ -123,7 +121,7 @@ def delete_user(user_id: UUID, db: Session = Depends(get_db)):
     return None
 
 
-@router.put("/{user_id}/roles", response_model=UserResponse)
+@router.put("/{user_id}/roles")
 def set_user_roles(user_id: UUID, body: UserRolesUpdate, db: Session = Depends(get_db)):
     """
     Asigna los roles a un usuario (reemplaza los actuales). N:M.
@@ -147,5 +145,5 @@ def set_user_roles(user_id: UUID, body: UserRolesUpdate, db: Session = Depends(g
     user.roles = roles
     db.commit()
     db.refresh(user)
-    data = [UserResponse.model_validate(user).model_dump(mode="json")]
+    data = UserResponse.model_validate(user).model_dump(mode="json")
     return success_response(data=data, message="usuario actualizado")

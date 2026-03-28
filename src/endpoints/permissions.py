@@ -4,7 +4,7 @@ Endpoints FastAPI para el recurso de permisos.
 CRUD de permisos (sin relaciones adicionales en los endpoints).
 """
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from uuid import UUID
 
@@ -22,7 +22,7 @@ from src.core.exceptions import NotFoundError, BadRequestError
 router = APIRouter(prefix="/permissions", tags=["permissions"])
 
 
-@router.get("", response_model=list[PermissionResponse])
+@router.get("")
 def list_permissions(db: Session = Depends(get_db)):
     """
     Lista todos los permisos.
@@ -35,27 +35,25 @@ def list_permissions(db: Session = Depends(get_db)):
     return success_response(data=data, message="listado de permisos")
 
 
-@router.get("/{perm_id}", response_model=PermissionResponse)
+@router.get("/{perm_id}")
 def get_permission(perm_id: UUID, db: Session = Depends(get_db)):
     """
     Devuelve un permiso por ID. 404 si no existe.
     """
     perm = db.query(Permission).filter(Permission.id == perm_id).first()
     if not perm:
-        raise NotFoundError(status_code=404, detail="Permission not found")
-    data = [PermissionResponse.model_validate(perm).model_dump(mode="json")]
+        raise NotFoundError("Permission not found")
+    data = PermissionResponse.model_validate(perm).model_dump(mode="json")
     return success_response(data=data, message="permiso obtenido")
 
 
-@router.post("", response_model=PermissionResponse, status_code=201)
+@router.post("", status_code=201)
 def create_permission(perm: PermissionCreate, db: Session = Depends(get_db)):
     """
     Crea un permiso. 400 si el nombre ya existe.
     """
     if db.query(Permission).filter(Permission.name == perm.name).first():
-        raise BadRequestError(
-            message="el permiso ya existe", detail="Permission already registered"
-        )
+        raise BadRequestError(message="el permiso ya existe")
     permission = Permission(
         name=perm.name,
         description=perm.description,
@@ -63,11 +61,11 @@ def create_permission(perm: PermissionCreate, db: Session = Depends(get_db)):
     db.add(permission)
     db.commit()
     db.refresh(permission)
-    data = [PermissionResponse.model_validate(permission).model_dump(mode="json")]
+    data = PermissionResponse.model_validate(permission).model_dump(mode="json")
     return success_response(data=data, message="permiso creado")
 
 
-@router.put("/{perm_id}", response_model=PermissionResponse)
+@router.put("/{perm_id}")
 def update_permission(
     perm_id: UUID, permission: PermissionUpdate, db: Session = Depends(get_db)
 ):
@@ -82,7 +80,7 @@ def update_permission(
         setattr(db_perm, key, value)
     db.commit()
     db.refresh(db_perm)
-    data = [PermissionResponse.model_validate(permission).model_dump(mode="json")]
+    data = PermissionResponse.model_validate(permission).model_dump(mode="json")
     return success_response(data=data, message="permiso actualizado")
 
 

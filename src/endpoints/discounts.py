@@ -4,7 +4,7 @@ Endpoints FastAPI para el recurso de descuentos.
 CRUD de descuentos.
 """
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from uuid import UUID
 
@@ -21,7 +21,7 @@ from src.core.exceptions import NotFoundError, BadRequestError
 router = APIRouter(prefix="/discounts", tags=["discounts"])
 
 
-@router.get("", response_model=list[DiscountResponse])
+@router.get("")
 def list_discounts(db: Session = Depends(get_db)):
     """
     Lista todos los descuentos.
@@ -33,7 +33,7 @@ def list_discounts(db: Session = Depends(get_db)):
     return success_response(data=data, message="listado de descuentos")
 
 
-@router.get("/{discount_id}", response_model=DiscountResponse)
+@router.get("/{discount_id}")
 def get_discount(discount_id: UUID, db: Session = Depends(get_db)):
     """
     Devuelve un descuento por ID. 404 si no existe.
@@ -42,11 +42,11 @@ def get_discount(discount_id: UUID, db: Session = Depends(get_db)):
     if not discount:
         raise NotFoundError("discount not found")
 
-    data = [DiscountResponse.model_validate(discount).model_dump(mode="json")]
+    data = DiscountResponse.model_validate(discount).model_dump(mode="json")
     return success_response(data=data, message="descuento obtenido")
 
 
-@router.post("", response_model=DiscountResponse, status_code=201)
+@router.post("", status_code=201)
 def create_discount(discount: DiscountCreate, db: Session = Depends(get_db)):
     """
     Crea un descuento. 400 si el código ya existe.
@@ -63,11 +63,11 @@ def create_discount(discount: DiscountCreate, db: Session = Depends(get_db)):
     db.add(db_discount)
     db.commit()
     db.refresh(db_discount)
-    data = [DiscountResponse.model_validate(db_discount).model_dump(mode="json")]
+    data = DiscountResponse.model_validate(db_discount).model_dump(mode="json")
     return success_response(data=data, message="descuento creado")
 
 
-@router.put("/{discount_id}", response_model=DiscountResponse)
+@router.put("/{discount_id}")
 def update_discount(
     discount_id: UUID, discount: DiscountUpdate, db: Session = Depends(get_db)
 ):
@@ -82,7 +82,7 @@ def update_discount(
         setattr(db_discount, key, value)
     db.commit()
     db.refresh(db_discount)
-    data = [DiscountResponse.model_validate(db_discount).model_dump(mode="json")]
+    data = DiscountResponse.model_validate(db_discount).model_dump(mode="json")
     return success_response(data=data, message="descuento actualizado")
 
 

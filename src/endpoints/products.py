@@ -6,7 +6,7 @@ CRUD de productos y asignación de categorías (PUT /products/{id}/categories).
 
 """
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
 from sqlalchemy.orm import Session, joinedload
 
@@ -31,7 +31,6 @@ from src.schemas.product_schema import (
 from src.core.responses import success_response
 from src.core.exceptions import NotFoundError
 
-
 router = APIRouter(prefix="/products", tags=["products"])
 
 
@@ -44,7 +43,7 @@ def _load_product_relations(query):
     )
 
 
-@router.get("", response_model=list[ProductResponse])
+@router.get("")
 def list_products(db: Session = Depends(get_db)):
     """
 
@@ -58,7 +57,7 @@ def list_products(db: Session = Depends(get_db)):
     return success_response(data=data, message="listado de productos")
 
 
-@router.get("/{product_id}", response_model=ProductResponse)
+@router.get("/{product_id}")
 def get_product(product_id: UUID, db: Session = Depends(get_db)):
     """
 
@@ -73,14 +72,13 @@ def get_product(product_id: UUID, db: Session = Depends(get_db)):
     )
 
     if not product:
-
         raise NotFoundError("producto no encontrado")
 
-    data = ProductResponse.model_validate(p).model_dump(mode="json")
+    data = ProductResponse.model_validate(product).model_dump(mode="json")
     return success_response(data=data, message="producto obtenido")
 
 
-@router.post("", response_model=ProductResponse, status_code=201)
+@router.post("", status_code=201)
 def create_product(product: ProductCreate, db: Session = Depends(get_db)):
     """
 
@@ -96,7 +94,6 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
         discount = db.query(Discount).filter(Discount.id == product.id_discount).first()
 
         if not discount:
-
             raise NotFoundError("descuento no encontrado")
 
     categories_to_assign = []
@@ -144,7 +141,7 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
     return success_response(data=data, message="producto creado")
 
 
-@router.put("/{product_id}", response_model=ProductResponse)
+@router.put("/{product_id}")
 def update_product(
     product_id: UUID, product: ProductUpdate, db: Session = Depends(get_db)
 ):
@@ -163,7 +160,6 @@ def update_product(
     )
 
     if not db_product:
-
         raise NotFoundError("Product not found")
 
     update = product.model_dump(exclude_unset=True)
@@ -174,7 +170,6 @@ def update_product(
         )
 
         if not discount:
-
             raise NotFoundError("Discount not found")
 
     for key, value in update.items():
@@ -203,7 +198,6 @@ def delete_product(product_id: UUID, db: Session = Depends(get_db)):
     product = db.query(Product).filter(Product.id == product_id).first()
 
     if not product:
-
         raise NotFoundError("Product not found")
 
     db.delete(product)
@@ -213,7 +207,7 @@ def delete_product(product_id: UUID, db: Session = Depends(get_db)):
     return None
 
 
-@router.put("/{product_id}/categories", response_model=ProductResponse)
+@router.put("/{product_id}/categories")
 def set_product_categories(
     product_id: UUID, body: ProductCategoriesUpdate, db: Session = Depends(get_db)
 ):
@@ -232,7 +226,6 @@ def set_product_categories(
     )
 
     if not product:
-
         raise NotFoundError("Product not found")
 
     categories = db.query(Category).filter(Category.id.in_(body.category_ids)).all()

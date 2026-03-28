@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="formatear el código con flake8">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/ci_push.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci_push.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="correción de validaciones en los endpoints y crud" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="featpipeline" />
+        <entry key="$PROJECT_DIR$" value="fix-pipelineYML" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -63,30 +60,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;fix-pipeline&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/apps-web/ecommerce/src/endpoints&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.app.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.permissions.executor": "Debug",
+    "Python.text.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "ai.playground.ignore.import.keys.banner.in.settings": "true",
+    "git-widget-placeholder": "fix--pipeline",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/apps-web/ecommerce/src/endpoints",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\apps-web\ecommerce\src\endpoints" />
       <recent name="C:\apps-web\ecommerce\src\crud" />
       <recent name="C:\apps-web\ecommerce\src\schemas" />
       <recent name="C:\apps-web\ecommerce\src\entities" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\apps-web\ecommerce\migrations" />
+      <recent name="C:\apps-web\ecommerce" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -114,183 +117,8 @@
       <workItem from="1772847169784" duration="2608000" />
       <workItem from="1774553253026" duration="844000" />
       <workItem from="1774631401119" duration="308000" />
-      <workItem from="1774654168967" duration="2008000" />
-    </task>
-    <task id="LOCAL-00001" summary="creación y configuración del proyecto">
-      <option name="closed" value="true" />
-      <created>1772381642079</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1772381642079</updated>
-    </task>
-    <task id="LOCAL-00002" summary="estructura del proyecto">
-      <option name="closed" value="true" />
-      <created>1772384214399</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1772384214399</updated>
-    </task>
-    <task id="LOCAL-00003" summary="creación de la entidad User">
-      <option name="closed" value="true" />
-      <created>1772768191449</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1772768191449</updated>
-    </task>
-    <task id="LOCAL-00004" summary="correción de campos entidad User">
-      <option name="closed" value="true" />
-      <created>1772768813727</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1772768813727</updated>
-    </task>
-    <task id="LOCAL-00005" summary="creación schema user">
-      <option name="closed" value="true" />
-      <created>1772768828693</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1772768828693</updated>
-    </task>
-    <task id="LOCAL-00006" summary="creación del cliente http">
-      <option name="closed" value="true" />
-      <created>1772769325559</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1772769325559</updated>
-    </task>
-    <task id="LOCAL-00007" summary="creación del crud user">
-      <option name="closed" value="true" />
-      <created>1772769336324</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1772769336324</updated>
-    </task>
-    <task id="LOCAL-00008" summary="creación del endpoint user">
-      <option name="closed" value="true" />
-      <created>1772770137465</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1772770137465</updated>
-    </task>
-    <task id="LOCAL-00009" summary="creación del hash password">
-      <option name="closed" value="true" />
-      <created>1772770238180</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1772770238180</updated>
-    </task>
-    <task id="LOCAL-00010" summary="creación del app">
-      <option name="closed" value="true" />
-      <created>1772770485328</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1772770485328</updated>
-    </task>
-    <task id="LOCAL-00011" summary="se corrigen errores de libreria y lógica">
-      <option name="closed" value="true" />
-      <created>1772774939722</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1772774939722</updated>
-    </task>
-    <task id="LOCAL-00012" summary="CRUD Users completo">
-      <option name="closed" value="true" />
-      <created>1772775121023</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1772775121023</updated>
-    </task>
-    <task id="LOCAL-00013" summary="creación entidad Rol">
-      <option name="closed" value="true" />
-      <created>1772778917779</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1772778917779</updated>
-    </task>
-    <task id="LOCAL-00014" summary="creación schema Rol">
-      <option name="closed" value="true" />
-      <created>1772778927225</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1772778927225</updated>
-    </task>
-    <task id="LOCAL-00015" summary="creación crud Rol">
-      <option name="closed" value="true" />
-      <created>1772778935052</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1772778935052</updated>
-    </task>
-    <task id="LOCAL-00016" summary="creación endpoints Rol">
-      <option name="closed" value="true" />
-      <created>1772778945453</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1772778945453</updated>
-    </task>
-    <task id="LOCAL-00017" summary="aplicar crud en la api Rol">
-      <option name="closed" value="true" />
-      <created>1772778962561</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1772778962561</updated>
-    </task>
-    <task id="LOCAL-00018" summary="creación de la entidad permission">
-      <option name="closed" value="true" />
-      <created>1772780255098</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1772780255098</updated>
-    </task>
-    <task id="LOCAL-00019" summary="creación del schema permission">
-      <option name="closed" value="true" />
-      <created>1772780266433</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1772780266433</updated>
-    </task>
-    <task id="LOCAL-00020" summary="creación del crud permission">
-      <option name="closed" value="true" />
-      <created>1772780272156</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1772780272156</updated>
-    </task>
-    <task id="LOCAL-00021" summary="creación del endpoint permission">
-      <option name="closed" value="true" />
-      <created>1772780282711</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1772780282711</updated>
-    </task>
-    <task id="LOCAL-00022" summary="implementación del crud permissions en API">
-      <option name="closed" value="true" />
-      <created>1772780299187</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1772780299187</updated>
+      <workItem from="1774654168967" duration="8283000" />
+      <workItem from="1774663719323" duration="6417000" />
     </task>
     <task id="LOCAL-00023" summary="implementación de las relaciones N:M entre role, permission y user">
       <option name="closed" value="true" />
@@ -396,7 +224,295 @@
       <option name="project" value="LOCAL" />
       <updated>1774656105254</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="correción del código del ci_push.yml">
+      <option name="closed" value="true" />
+      <created>1774656219874</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1774656219874</updated>
+    </task>
+    <task id="LOCAL-00037" summary="se arregal el código con flake8">
+      <option name="closed" value="true" />
+      <created>1774656498820</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1774656498820</updated>
+    </task>
+    <task id="LOCAL-00038" summary="se formate el archivo database.py con black">
+      <option name="closed" value="true" />
+      <created>1774656601088</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1774656601088</updated>
+    </task>
+    <task id="LOCAL-00039" summary="cambio de ruta de test_root.py">
+      <option name="closed" value="true" />
+      <created>1774657203898</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1774657203898</updated>
+    </task>
+    <task id="LOCAL-00040" summary="actualización de versiones">
+      <option name="closed" value="true" />
+      <created>1774657734679</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1774657734679</updated>
+    </task>
+    <task id="LOCAL-00041" summary="actualización de pip-audit">
+      <option name="closed" value="true" />
+      <created>1774657934306</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1774657934306</updated>
+    </task>
+    <task id="LOCAL-00042" summary="correción de ruta del ci_push.yml">
+      <option name="closed" value="true" />
+      <created>1774659089361</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1774659089361</updated>
+    </task>
+    <task id="LOCAL-00043" summary="se agrega alembic a requirements.txt">
+      <option name="closed" value="true" />
+      <created>1774659352808</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1774659352808</updated>
+    </task>
+    <task id="LOCAL-00044" summary="se agrega alembic a requirements.txt">
+      <option name="closed" value="true" />
+      <created>1774659389186</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1774659389186</updated>
+    </task>
+    <task id="LOCAL-00045" summary="env.py reformateado">
+      <option name="closed" value="true" />
+      <created>1774659494799</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1774659494799</updated>
+    </task>
+    <task id="LOCAL-00046" summary="env.py reformateado">
+      <option name="closed" value="true" />
+      <created>1774659727401</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1774659727401</updated>
+    </task>
+    <task id="LOCAL-00047" summary="ci_push.yml corregido">
+      <option name="closed" value="true" />
+      <created>1774660251906</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1774660251906</updated>
+    </task>
+    <task id="LOCAL-00048" summary="ci_push.yml corregido">
+      <option name="closed" value="true" />
+      <created>1774660377328</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1774660377328</updated>
+    </task>
+    <task id="LOCAL-00049" summary="correción del env.py">
+      <option name="closed" value="true" />
+      <created>1774663038118</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1774663038118</updated>
+    </task>
+    <task id="LOCAL-00050" summary="correción de rutas">
+      <option name="closed" value="true" />
+      <created>1774663514035</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1774663514035</updated>
+    </task>
+    <task id="LOCAL-00051" summary="correción de rutas">
+      <option name="closed" value="true" />
+      <created>1774663592936</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1774663592936</updated>
+    </task>
+    <task id="LOCAL-00052" summary="correción de rutas">
+      <option name="closed" value="true" />
+      <created>1774664017567</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1774664017567</updated>
+    </task>
+    <task id="LOCAL-00053" summary="correción de rutas">
+      <option name="closed" value="true" />
+      <created>1774664098558</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1774664098559</updated>
+    </task>
+    <task id="LOCAL-00054" summary="correción de rutas en ci_push.yml">
+      <option name="closed" value="true" />
+      <created>1774664190125</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1774664190125</updated>
+    </task>
+    <task id="LOCAL-00055" summary="correción de rutas en ci_push.yml">
+      <option name="closed" value="true" />
+      <created>1774664305619</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1774664305619</updated>
+    </task>
+    <task id="LOCAL-00056" summary="correción del ci_push.yml">
+      <option name="closed" value="true" />
+      <created>1774664450581</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1774664450581</updated>
+    </task>
+    <task id="LOCAL-00057" summary="correción de ruta del ci_push.yml">
+      <option name="closed" value="true" />
+      <created>1774664718656</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1774664718657</updated>
+    </task>
+    <task id="LOCAL-00058" summary="correción de ruta del ci_push.yml">
+      <option name="closed" value="true" />
+      <created>1774664800665</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1774664800665</updated>
+    </task>
+    <task id="LOCAL-00059" summary="test del ci_push.yml">
+      <option name="closed" value="true" />
+      <created>1774665365792</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1774665365792</updated>
+    </task>
+    <task id="LOCAL-00060" summary="test del ci_push.yml">
+      <option name="closed" value="true" />
+      <created>1774665703947</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1774665703947</updated>
+    </task>
+    <task id="LOCAL-00061" summary="se corrigen errores de ruta">
+      <option name="closed" value="true" />
+      <created>1774666712243</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1774666712243</updated>
+    </task>
+    <task id="LOCAL-00062" summary="se formatea el código">
+      <option name="closed" value="true" />
+      <created>1774666808791</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1774666808791</updated>
+    </task>
+    <task id="LOCAL-00063" summary="correción de ruta del app">
+      <option name="closed" value="true" />
+      <created>1774666987968</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1774666987968</updated>
+    </task>
+    <task id="LOCAL-00064" summary="correción de ruta del app">
+      <option name="closed" value="true" />
+      <created>1774667188963</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1774667188963</updated>
+    </task>
+    <task id="LOCAL-00065" summary="correción de ruta del app">
+      <option name="closed" value="true" />
+      <created>1774667334918</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1774667334918</updated>
+    </task>
+    <task id="LOCAL-00066" summary="correción de ruta del schema de cartItem">
+      <option name="closed" value="true" />
+      <created>1774667468512</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1774667468512</updated>
+    </task>
+    <task id="LOCAL-00067" summary="cambio de formato de respuesta">
+      <option name="closed" value="true" />
+      <created>1774667660241</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1774667660243</updated>
+    </task>
+    <task id="LOCAL-00068" summary="código formateado">
+      <option name="closed" value="true" />
+      <created>1774667753839</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1774667753839</updated>
+    </task>
+    <task id="LOCAL-00069" summary="se corrige la sintaxis de ci.yml">
+      <option name="closed" value="true" />
+      <created>1774667940699</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1774667940699</updated>
+    </task>
+    <task id="LOCAL-00070" summary="se corrige la sintaxis de ci.yml">
+      <option name="closed" value="true" />
+      <created>1774668119083</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1774668119083</updated>
+    </task>
+    <task id="LOCAL-00071" summary="correción de validaciones en los endpoints y crud">
+      <option name="closed" value="true" />
+      <created>1774670468289</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1774670468289</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -414,35 +530,37 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="creación del app" />
-    <MESSAGE value="se corrigen errores de libreria y lógica" />
-    <MESSAGE value="CRUD Users completo" />
-    <MESSAGE value="creación entidad Rol" />
-    <MESSAGE value="creación schema Rol" />
-    <MESSAGE value="creación crud Rol" />
-    <MESSAGE value="creación endpoints Rol" />
-    <MESSAGE value="aplicar crud en la api Rol" />
-    <MESSAGE value="creación de la entidad permission" />
-    <MESSAGE value="creación del schema permission" />
-    <MESSAGE value="creación del crud permission" />
-    <MESSAGE value="creación del endpoint permission" />
-    <MESSAGE value="implementación del crud permissions en API" />
-    <MESSAGE value="implementación de las relaciones N:M entre role, permission y user" />
-    <MESSAGE value="creación del Pipeline, para pull y push" />
-    <MESSAGE value="correción de error del pipeline" />
-    <MESSAGE value="correción del pipeline" />
-    <MESSAGE value="correción del seed.py en el yml" />
-    <MESSAGE value="correción en el yml" />
-    <MESSAGE value="correción del seed.py" />
-    <MESSAGE value="correción del endpoint de car_items" />
-    <MESSAGE value="correción del schema de cart_items, detalle_orden.py, ordeny main" />
-    <MESSAGE value="formatear el código con ruff" />
     <MESSAGE value="formatear el código con black" />
     <MESSAGE value="formatear el código con flake8" />
-    <option name="LAST_COMMIT_MESSAGE" value="formatear el código con flake8" />
+    <MESSAGE value="correción del código del ci_push.yml" />
+    <MESSAGE value="se arregal el código con flake8" />
+    <MESSAGE value="se formate el archivo database.py con black" />
+    <MESSAGE value="cambio de ruta de test_root.py" />
+    <MESSAGE value="actualización de versiones" />
+    <MESSAGE value="actualización de pip-audit" />
+    <MESSAGE value="se agrega alembic a requirements.txt" />
+    <MESSAGE value="env.py reformateado" />
+    <MESSAGE value="ci_push.yml corregido" />
+    <MESSAGE value="correción del env.py" />
+    <MESSAGE value="correción de rutas" />
+    <MESSAGE value="correción de rutas en ci_push.yml" />
+    <MESSAGE value="correción del ci_push.yml" />
+    <MESSAGE value="correción de ruta del ci_push.yml" />
+    <MESSAGE value="test del ci_push.yml" />
+    <MESSAGE value="se corrigen errores de ruta" />
+    <MESSAGE value="se formatea el código" />
+    <MESSAGE value="correción de ruta del app" />
+    <MESSAGE value="correción de ruta del schema de cartItem" />
+    <MESSAGE value="cambio de formato de respuesta" />
+    <MESSAGE value="código formateado" />
+    <MESSAGE value="se corrige la sintaxis de ci.yml" />
+    <MESSAGE value="correción de validaciones en los endpoints y crud" />
+    <option name="LAST_COMMIT_MESSAGE" value="correción de validaciones en los endpoints y crud" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ecommerce$main.coverage" NAME="main Coverage Results" MODIFIED="1774487402088" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ecommerce$main.coverage" NAME="main Coverage Results" MODIFIED="1774670113448" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ecommerce$text.coverage" NAME="text Coverage Results" MODIFIED="1774668379401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ecommerce$permissions.coverage" NAME="permissions Coverage Results" MODIFIED="1774670057988" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/endpoints" />
     <SUITE FILE_PATH="coverage/ecommerce$app.coverage" NAME="app Coverage Results" MODIFIED="1772771655195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
   <component name="github-copilot-workspace">

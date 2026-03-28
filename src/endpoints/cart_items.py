@@ -6,16 +6,16 @@ CRUD con validación de existencia de usuario (si se envía) y producto.
 
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session, joinedload
 
+from src.schemas.product_schema import ProductResponse
 from src.database.config import get_db
 from src.entities.cart_items import CartItem
 from src.entities.products import Product
 from src.entities.users import User
 from src.schemas.cart_item_schema import (
     CartItemCreate,
-    CartItemDetailResponse,
     CartItemResponse,
     CartItemUpdate,
 )
@@ -34,7 +34,7 @@ def _load_cart_item_detail(query):
     )
 
 
-@router.get("", response_model=list[CartItemResponse])
+@router.get("")
 def list_cart_items(db: Session = Depends(get_db)):
     """Lista todas las líneas del carrito."""
     items = db.query(CartItem).all()
@@ -44,7 +44,7 @@ def list_cart_items(db: Session = Depends(get_db)):
     return success_response(data=data, message="listado de articulos")
 
 
-@router.get("/{cart_item_id}", response_model=CartItemDetailResponse)
+@router.get("/{cart_item_id}")
 def get_cart_item(cart_item_id: UUID, db: Session = Depends(get_db)):
     """Obtiene una línea por ID con usuario y producto relacionados."""
     item = (
@@ -54,11 +54,11 @@ def get_cart_item(cart_item_id: UUID, db: Session = Depends(get_db)):
     )
     if not item:
         raise NotFoundError("Cart item not found")
-    data = ProductResponse.model_validate(product).model_dump(mode="json")
+    data = ProductResponse.model_validate(item).model_dump(mode="json")
     return success_response(data=data, message="cart item obtenido")
 
 
-@router.post("", response_model=CartItemDetailResponse, status_code=201)
+@router.post("", status_code=201)
 def create_cart_item(body: CartItemCreate, db: Session = Depends(get_db)):
     """Crea una línea. Verifica que el producto (y el usuario si aplica) existan."""
     if body.id_user is not None:
@@ -85,7 +85,7 @@ def create_cart_item(body: CartItemCreate, db: Session = Depends(get_db)):
     return success_response(data=data, message="cart item creado")
 
 
-@router.put("/{cart_item_id}", response_model=CartItemDetailResponse)
+@router.put("/{cart_item_id}")
 def update_cart_item(
     cart_item_id: UUID, body: CartItemUpdate, db: Session = Depends(get_db)
 ):

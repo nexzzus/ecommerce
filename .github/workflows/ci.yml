@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [dev, qa, prod, fix-pipeline]
+    branches: [dev]
   pull_request:
-    branches: [dev, qa, prod]
+    branches: [dev]
 
 # Cancelar ejecuciones obsoletas cuando hay un nuevo push en la misma rama
 concurrency:
@@ -112,23 +112,20 @@ jobs:
           exit "${code:-0}"
 
       - name: Crear/actualizar BD (migración)
-        run: |
-          if [ -f migrate_db.py ]; then
-            python src/migrations/env.py
-          else
-            echo "migrate_db.py no existe, se omite."
-          fi
+        env:
+          PYTHONPATH: src
+        run: alembic upgrade head
 
       - name: Seed (datos iniciales)
         run: |
           if [ -f seed_db.py ]; then
-            python src/database/seed.py
+            python seed.py
           else
             echo "seed_db.py no existe, se omite."
           fi
 
-      - name: Smoke test (FastAPI)
-        run: python -c "from src.app import app; from fastapi.testclient import TestClient; c = TestClient(app); r = c.get('/'); assert r.status_code == 200; b = r.json(); assert b.get('mensaje'); assert b.get('docs') == '/docs'; print('Smoke test OK')"
+      - name: Pruebas (smoke test)
+        run: python -c "from src.app import app; from fastapi.testclient import TestClient; c = TestClient(app); r = c.get('/'); assert r.status_code == 200; b = r.json(); assert b.get('success') is True; assert 'data' in b; assert b['data'].get('mensaje'); assert b['data'].get('docs') == '/docs'; print('Smoke test OK')"
 
   audit:
     timeout-minutes: 10

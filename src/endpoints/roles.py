@@ -4,7 +4,7 @@ Endpoints FastAPI para el recurso de roles.
 CRUD de roles y asignación de permisos (PUT /roles/{id}/permissions).
 """
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session, joinedload
 from uuid import UUID
 
@@ -23,7 +23,7 @@ from src.core.exceptions import NotFoundError, BadRequestError
 router = APIRouter(prefix="/roles", tags=["roles"])
 
 
-@router.get("", response_model=list[RoleResponse])
+@router.get("")
 def list_roles(db: Session = Depends(get_db)):
     """
     Lista todos los roles con sus permisos cargados.
@@ -33,7 +33,7 @@ def list_roles(db: Session = Depends(get_db)):
     return success_response(data=data, message="listado de roles")
 
 
-@router.get("/{role_id}", response_model=RoleResponse)
+@router.get("/{role_id}")
 def get_role(role_id: UUID, db: Session = Depends(get_db)):
     """
     Devuelve un rol por ID con sus permisos. 404 si no existe.
@@ -46,28 +46,26 @@ def get_role(role_id: UUID, db: Session = Depends(get_db)):
     )
     if not role:
         raise NotFoundError("Role not found")
-    data = [RoleResponse.model_validate(role).model_dump(mode="json")]
+    data = RoleResponse.model_validate(role).model_dump(mode="json")
     return success_response(data=data, message="rol obtenido")
 
 
-@router.post("", response_model=RoleResponse, status_code=201)
+@router.post("", status_code=201)
 def create_role(role: RoleCreate, db: Session = Depends(get_db)):
     """
     Crea un rol. 400 si el nombre ya existe.
     """
     if db.query(Role).filter(Role.name == role.name).first():
-        raise BadRequestError(
-            mensaje="el rol ya existe", detail="Role already registered"
-        )
+        raise BadRequestError("el rol ya existe")
     role = Role(name=role.name)
     db.add(role)
     db.commit()
     db.refresh(role)
-    data = [RoleResponse.model_validate(role).model_dump(mode="json")]
+    data = RoleResponse.model_validate(role).model_dump(mode="json")
     return success_response(data=data, message="rol creado")
 
 
-@router.put("/{role_id}", response_model=RoleResponse)
+@router.put("/{role_id}")
 def update_role(role_id: UUID, role: RoleUpdate, db: Session = Depends(get_db)):
     """
     Actualiza un rol por ID. 404 si no existe.
@@ -80,7 +78,7 @@ def update_role(role_id: UUID, role: RoleUpdate, db: Session = Depends(get_db)):
         setattr(db_role, key, value)
     db.commit()
     db.refresh(db_role)
-    data = [RoleResponse.model_validate(db_role).model_dump(mode="json")]
+    data = RoleResponse.model_validate(db_role).model_dump(mode="json")
     return success_response(data=data, message="rol actualizado")
 
 
@@ -97,7 +95,7 @@ def delete_role(role_id: UUID, db: Session = Depends(get_db)):
     return None
 
 
-@router.put("/{role_id}/permissions", response_model=RoleResponse)
+@router.put("/{role_id}/permissions")
 def set_role_permissions(
     role_id: UUID, body: RolePermissionsUpdate, db: Session = Depends(get_db)
 ):
@@ -112,7 +110,8 @@ def set_role_permissions(
         .first()
     )
     if not role:
-        raise NotFoundError(status_code=404, detail="Role not found")
+        raise NotFoundError("Role not found")
+
     perms = db.query(Permission).filter(Permission.id.in_(body.permission_ids)).all()
     if len(perms) != len(body.permission_ids):
         found = {p.id for p in perms}
@@ -123,5 +122,5 @@ def set_role_permissions(
     role.permissions = perms
     db.commit()
     db.refresh(role)
-    data = [RoleResponse.model_validate(role).model_dump(mode="json")]
+    data = RoleResponse.model_validate(role).model_dump(mode="json")
     return success_response(data=data, message="rol actualizado")
