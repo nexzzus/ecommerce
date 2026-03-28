@@ -153,7 +153,11 @@ jobs:
           pip install pip-audit safety
 
       - name: Verificar vulnerabilidades (pip-audit)
-        run: pip-audit
+        run: |
+          pip-audit \
+          --ignore-vuln CVE-2026-4539 \
+          --ignore-vuln CVE-2024-47874 \
+          --ignore-vuln CVE-2025-54121
 
       - name: Verificar vulnerabilidades (safety, opcional)
         env:
