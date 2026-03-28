@@ -10,7 +10,6 @@ from src.database.config import Base
 # Importar los archivos desde la estructura 'src'
 from src.database.database import DATABASE_URL
 
-
 # 1. CONFIGURACIÓN DE RUTAS
 # Agregar src al path
 sys.path.insert(0, os.path.abspath("src"))
