@@ -43,7 +43,7 @@ def get_discount(discount_id: UUID, db: Session = Depends(get_db)):
         raise NotFoundError("discount not found")
 
     data = [DiscountResponse.model_validate(discount).model_dump(mode="json")]
-    return success_response(data=data, message="descuento obtenida")
+    return success_response(data=data, message="descuento obtenido")
 
 
 @router.post("", response_model=DiscountResponse, status_code=201)
@@ -83,7 +83,7 @@ def update_discount(
     db.commit()
     db.refresh(db_discount)
     data = [DiscountResponse.model_validate(db_discount).model_dump(mode="json")]
-    return success_response(data=data, message="descyento actualizado")
+    return success_response(data=data, message="descuento actualizado")
 
 
 @router.delete("/{discount_id}", status_code=204)
