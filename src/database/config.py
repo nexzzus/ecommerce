@@ -39,7 +39,7 @@ def get_db():
     Generador de sesiones de base de datos para dependencias FastAPI.
 
     Yields:
-        Session: Sesión de SQLAlchemy. Se cierra al salir del scope.
+        Sessionn: Sesión de SQLAlchemy. Se cierra al salir del scope.
     """
     db = SessionLocal()
     try:
