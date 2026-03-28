@@ -114,7 +114,7 @@ jobs:
       - name: Crear/actualizar BD (migración)
         run: |
           if [ -f migrate_db.py ]; then
-            python migrations/env.py
+            python src/migrations/env.py
           else
             echo "migrate_db.py no existe, se omite."
           fi
