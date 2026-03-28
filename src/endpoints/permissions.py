@@ -53,9 +53,7 @@ def create_permission(perm: PermissionCreate, db: Session = Depends(get_db)):
     Crea un permiso. 400 si el nombre ya existe.
     """
     if db.query(Permission).filter(Permission.name == perm.name).first():
-        raise BadRequestError(
-            message="el permiso ya existe"
-        )
+        raise BadRequestError(message="el permiso ya existe")
     permission = Permission(
         name=perm.name,
         description=perm.description,

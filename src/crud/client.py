@@ -9,11 +9,17 @@ import httpx
 
 BASE_URL = "http://localhost:8000"
 
+
 def _unwrap(response_json: dict | list) -> dict | list:
     """Extrae el campo 'data' de la respuesta estándar de la API."""
-    if isinstance(response_json, dict) and response_json.get("success") is True and "data" in response_json:
+    if (
+        isinstance(response_json, dict)
+        and response_json.get("success") is True
+        and "data" in response_json
+    ):
         return response_json["data"]
     return response_json
+
 
 def _get(url: str, **kwargs) -> dict | list:
     """

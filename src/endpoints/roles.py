@@ -56,9 +56,7 @@ def create_role(role: RoleCreate, db: Session = Depends(get_db)):
     Crea un rol. 400 si el nombre ya existe.
     """
     if db.query(Role).filter(Role.name == role.name).first():
-        raise BadRequestError(
-            "el rol ya existe"
-        )
+        raise BadRequestError("el rol ya existe")
     role = Role(name=role.name)
     db.add(role)
     db.commit()

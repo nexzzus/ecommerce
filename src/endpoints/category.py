@@ -67,9 +67,7 @@ def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
     """
 
     if db.query(Category).filter(Category.name == category.name).first():
-        raise BadRequestError(
-            "categoria ya existente"
-        )
+        raise BadRequestError("categoria ya existente")
 
     db_category = Category(name=category.name)
 

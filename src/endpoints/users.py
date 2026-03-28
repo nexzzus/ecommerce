@@ -59,9 +59,7 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
     no existe.
     """
     if db.query(User).filter(User.email == user.email).first():
-        raise BadRequestError(
-            "Email already registered"
-        )
+        raise BadRequestError("Email already registered")
     roles_to_assign = None
     if user.role_ids:
         roles_to_assign = db.query(Role).filter(Role.id.in_(user.role_ids)).all()

@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="se corrige la sintaxis de ci.yml">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/crud/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/crud/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/endpoints/cart_items.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/cart_items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/endpoints/category.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/category.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/endpoints/discounts.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/discounts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/endpoints/permissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/permissions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/endpoints/products.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/products.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/endpoints/roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/roles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/endpoints/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/endpoints/users.py" afterDir="false" />
-    </list>
+    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="correción de validaciones en los endpoints y crud" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -128,15 +118,7 @@
       <workItem from="1774553253026" duration="844000" />
       <workItem from="1774631401119" duration="308000" />
       <workItem from="1774654168967" duration="8283000" />
-      <workItem from="1774663719323" duration="6083000" />
-    </task>
-    <task id="LOCAL-00022" summary="implementación del crud permissions en API">
-      <option name="closed" value="true" />
-      <created>1772780299187</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1772780299187</updated>
+      <workItem from="1774663719323" duration="6417000" />
     </task>
     <task id="LOCAL-00023" summary="implementación de las relaciones N:M entre role, permission y user">
       <option name="closed" value="true" />
@@ -522,7 +504,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774668119083</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="correción de validaciones en los endpoints y crud">
+      <option name="closed" value="true" />
+      <created>1774670468289</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1774670468289</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -540,7 +530,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="formatear el código con ruff" />
     <MESSAGE value="formatear el código con black" />
     <MESSAGE value="formatear el código con flake8" />
     <MESSAGE value="correción del código del ci_push.yml" />
@@ -565,7 +554,8 @@
     <MESSAGE value="cambio de formato de respuesta" />
     <MESSAGE value="código formateado" />
     <MESSAGE value="se corrige la sintaxis de ci.yml" />
-    <option name="LAST_COMMIT_MESSAGE" value="se corrige la sintaxis de ci.yml" />
+    <MESSAGE value="correción de validaciones en los endpoints y crud" />
+    <option name="LAST_COMMIT_MESSAGE" value="correción de validaciones en los endpoints y crud" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ecommerce$main.coverage" NAME="main Coverage Results" MODIFIED="1774670113448" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
