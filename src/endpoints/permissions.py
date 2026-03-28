@@ -3,6 +3,7 @@ Endpoints FastAPI para el recurso de permisos.
 
 CRUD de permisos (sin relaciones adicionales en los endpoints).
 """
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from uuid import UUID
@@ -15,6 +16,9 @@ from src.schemas.permission_schema import (
     PermissionUpdate,
 )
 
+from src.core.responses import success_response
+from src.core.exceptions import NotFoundError, BadRequestError
+
 router = APIRouter(prefix="/permissions", tags=["permissions"])
 
 
@@ -23,7 +27,12 @@ def list_permissions(db: Session = Depends(get_db)):
     """
     Lista todos los permisos.
     """
-    return db.query(Permission).all()
+    permissions = db.query(Permission).all()
+    data = [
+        PermissionResponse.model_validate(p).model_dump(mode="json")
+        for p in permissions
+    ]
+    return success_response(data=data, message="listado de permisos")
 
 
 @router.get("/{perm_id}", response_model=PermissionResponse)
@@ -33,8 +42,9 @@ def get_permission(perm_id: UUID, db: Session = Depends(get_db)):
     """
     perm = db.query(Permission).filter(Permission.id == perm_id).first()
     if not perm:
-        raise HTTPException(status_code=404, detail="Permission not found")
-    return perm
+        raise NotFoundError(status_code=404, detail="Permission not found")
+    data = [PermissionResponse.model_validate(perm).model_dump(mode="json")]
+    return success_response(data=data, message="permiso obtenido")
 
 
 @router.post("", response_model=PermissionResponse, status_code=201)
@@ -43,8 +53,8 @@ def create_permission(perm: PermissionCreate, db: Session = Depends(get_db)):
     Crea un permiso. 400 si el nombre ya existe.
     """
     if db.query(Permission).filter(Permission.name == perm.name).first():
-        raise HTTPException(
-            status_code=400, detail="Permission already registered"
+        raise BadRequestError(
+            message="el permiso ya existe", detail="Permission already registered"
         )
     permission = Permission(
         name=perm.name,
@@ -53,7 +63,8 @@ def create_permission(perm: PermissionCreate, db: Session = Depends(get_db)):
     db.add(permission)
     db.commit()
     db.refresh(permission)
-    return permission
+    data = [PermissionResponse.model_validate(permission).model_dump(mode="json")]
+    return success_response(data=data, message="permiso creado")
 
 
 @router.put("/{perm_id}", response_model=PermissionResponse)
@@ -65,13 +76,14 @@ def update_permission(
     """
     db_perm = db.query(Permission).filter(Permission.id == perm_id).first()
     if not db_perm:
-        raise HTTPException(status_code=404, detail="Permission not found")
+        raise NotFoundError("Permission not found")
     update = permission.model_dump(exclude_unset=True)
     for key, value in update.items():
         setattr(db_perm, key, value)
     db.commit()
     db.refresh(db_perm)
-    return db_perm
+    data = [PermissionResponse.model_validate(permission).model_dump(mode="json")]
+    return success_response(data=data, message="permiso actualizado")
 
 
 @router.delete("/{perm_id}", status_code=204)
@@ -81,7 +93,7 @@ def delete_permission(perm_id: UUID, db: Session = Depends(get_db)):
     """
     permission = db.query(Permission).filter(Permission.id == perm_id).first()
     if not permission:
-        raise HTTPException(status_code=404, detail="Permission not found")
+        raise NotFoundError("Permission not found")
     db.delete(permission)
     db.commit()
     return None
