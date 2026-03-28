@@ -9,7 +9,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session, joinedload
 
-from schemas.product_schema import ProductResponse
+from src.schemas.product_schema import ProductResponse
 from src.database.config import get_db
 from src.entities.cart_items import CartItem
 from src.entities.products import Product
