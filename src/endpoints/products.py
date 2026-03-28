@@ -72,7 +72,6 @@ def get_product(product_id: UUID, db: Session = Depends(get_db)):
     )
 
     if not product:
-
         raise NotFoundError("producto no encontrado")
 
     data = ProductResponse.model_validate(product).model_dump(mode="json")
@@ -95,7 +94,6 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
         discount = db.query(Discount).filter(Discount.id == product.id_discount).first()
 
         if not discount:
-
             raise NotFoundError("descuento no encontrado")
 
     categories_to_assign = []
@@ -162,7 +160,6 @@ def update_product(
     )
 
     if not db_product:
-
         raise NotFoundError("Product not found")
 
     update = product.model_dump(exclude_unset=True)
@@ -173,7 +170,6 @@ def update_product(
         )
 
         if not discount:
-
             raise NotFoundError("Discount not found")
 
     for key, value in update.items():
@@ -202,7 +198,6 @@ def delete_product(product_id: UUID, db: Session = Depends(get_db)):
     product = db.query(Product).filter(Product.id == product_id).first()
 
     if not product:
-
         raise NotFoundError("Product not found")
 
     db.delete(product)
@@ -231,7 +226,6 @@ def set_product_categories(
     )
 
     if not product:
-
         raise NotFoundError("Product not found")
 
     categories = db.query(Category).filter(Category.id.in_(body.category_ids)).all()

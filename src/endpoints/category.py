@@ -52,7 +52,6 @@ def get_category(category_id: UUID, db: Session = Depends(get_db)):
     category = db.query(Category).filter(Category.id == category_id).first()
 
     if not category:
-
         raise NotFoundError("Category not found")
 
     data = [CategoryResponse.model_validate(category).model_dump(mode="json")]
@@ -68,7 +67,6 @@ def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
     """
 
     if db.query(Category).filter(Category.name == category.name).first():
-
         raise BadRequestError(
             message="categoria ya existente", detail="Category name already registered"
         )
@@ -98,7 +96,6 @@ def update_category(
     db_category = db.query(Category).filter(Category.id == category_id).first()
 
     if not db_category:
-
         raise NotFoundError("Category not found")
 
     update = category.model_dump(exclude_unset=True)
@@ -125,7 +122,6 @@ def delete_category(category_id: UUID, db: Session = Depends(get_db)):
     category = db.query(Category).filter(Category.id == category_id).first()
 
     if not category:
-
         raise NotFoundError("Category not found")
 
     db.delete(category)
