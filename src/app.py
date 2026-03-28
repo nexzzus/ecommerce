@@ -85,6 +85,7 @@ app.include_router(cart_items.router)
 
 @app.get("/")
 def inicio():
-    """Ruta raíz: mensaje de bienvenida y enlace a la documentación."""
-
-    return {"mensaje": "API Usuarios y E-commerce", "docs": "/docs"}
+    return success_response(
+        data={"mensaje": "API Ecommerce", "docs": "/docs"},
+        message="Bienvenido a la API Ecommerce",
+    )
