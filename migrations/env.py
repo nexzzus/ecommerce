@@ -16,8 +16,6 @@ try:
 except ImportError:
     # Si falla, intentamos sin el prefijo 'src' (por si acaso)
     sys.path.insert(0, os.path.join(os.getcwd(), "src"))
-    from database.database import DATABASE_URL
-    from entities.user import Base
 
 # 2. CONFIGURACIÓN DE ALEMBIC
 config = context.config
