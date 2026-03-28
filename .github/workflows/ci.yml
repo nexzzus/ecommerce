@@ -112,11 +112,9 @@ jobs:
           exit "${code:-0}"
 
       - name: Crear/actualizar BD (migración)
-        run: |
-          if [ -f migrate_db.py ]; then
-            python env.py
-          else
-            echo "migrate_db.py no existe, se omite."
+        env:
+          PYTHONPATH: src
+        run: alembic upgrade head
           fi
 
       - name: Seed (datos iniciales)
