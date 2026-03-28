@@ -1,7 +1,11 @@
 import requests
 
-BASE_URL = "http://127.0.0.1:8001" #Para abrir el fastApi en funcionamiento http://127.0.0.1:8001//docs,
-#ya que sin el /docs muestra un mensaje de prueba para verificar que la API está en correcto funcionamiento 
+BASE_URL = "http://127.0.0.1:8001"
+"""
+Para abrir el fastApi en funcionamiento http://127.0.0.1:8001//docs,
+ya que sin el /docs muestra un mensaje de prueba para verificar que la
+API está en correcto funcionamiento
+"""
 
 
 def listar_ordenes():
@@ -13,10 +17,7 @@ def crear_orden():
     fecha = input("Fecha (YYYY-MM-DD): ")
     total = float(input("Total: "))
 
-    data = {
-        "fecha": fecha,
-        "total": total
-    }
+    data = {"fecha": fecha, "total": total}
 
     r = requests.post(f"{BASE_URL}/orden", json=data)
     print(r.json())
@@ -34,10 +35,7 @@ def actualizar_orden():
     fecha = input("Nueva fecha (YYYY-MM-DD): ")
     total = float(input("Nuevo total: "))
 
-    data = {
-        "fecha": fecha,
-        "total": total
-    }
+    data = {"fecha": fecha, "total": total}
 
     r = requests.put(f"{BASE_URL}/orden/{orden_id}", json=data)
     print(r.json())

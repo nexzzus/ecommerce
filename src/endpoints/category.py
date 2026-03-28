@@ -47,7 +47,6 @@ def get_category(category_id: UUID, db: Session = Depends(get_db)):
     category = db.query(Category).filter(Category.id == category_id).first()
 
     if not category:
-
         raise HTTPException(status_code=404, detail="Category not found")
 
     return category
@@ -62,7 +61,6 @@ def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
     """
 
     if db.query(Category).filter(Category.name == category.name).first():
-
         raise HTTPException(status_code=400, detail="Category name already registered")
 
     db_category = Category(name=category.name)
@@ -89,13 +87,11 @@ def update_category(
     db_category = db.query(Category).filter(Category.id == category_id).first()
 
     if not db_category:
-
         raise HTTPException(status_code=404, detail="Category not found")
 
     update = category.model_dump(exclude_unset=True)
 
     for key, value in update.items():
-
         setattr(db_category, key, value)
 
     db.commit()
@@ -116,7 +112,6 @@ def delete_category(category_id: UUID, db: Session = Depends(get_db)):
     category = db.query(Category).filter(Category.id == category_id).first()
 
     if not category:
-
         raise HTTPException(status_code=404, detail="Category not found")
 
     db.delete(category)

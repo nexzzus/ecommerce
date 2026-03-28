@@ -3,6 +3,7 @@ Endpoints FastAPI para el recurso de usuarios.
 
 CRUD de usuarios y asignación de roles (PUT /users/{id}/roles).
 """
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session, joinedload
 from uuid import UUID
@@ -56,9 +57,7 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
     roles_to_assign = None
     if user.role_ids:
-        roles_to_assign = db.query(Role).filter(
-            Role.id.in_(user.role_ids)
-        ).all()
+        roles_to_assign = db.query(Role).filter(Role.id.in_(user.role_ids)).all()
         if len(roles_to_assign) != len(user.role_ids):
             found = {r.id for r in roles_to_assign}
             missing = set(user.role_ids) - found
@@ -117,9 +116,7 @@ def delete_user(user_id: UUID, db: Session = Depends(get_db)):
 
 
 @router.put("/{user_id}/roles", response_model=UserResponse)
-def set_user_roles(
-    user_id: UUID, body: UserRolesUpdate, db: Session = Depends(get_db)
-):
+def set_user_roles(user_id: UUID, body: UserRolesUpdate, db: Session = Depends(get_db)):
     """
     Asigna los roles a un usuario (reemplaza los actuales). N:M.
     404 si el usuario no existe. 400 si algún role_id no existe.

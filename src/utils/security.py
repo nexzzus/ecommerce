@@ -1,6 +1,7 @@
 """
 Utilidades de seguridad: hashing de contraseñas con bcrypt.
 """
+
 import bcrypt
 
 

@@ -66,6 +66,7 @@ from src.crud.cart_items import (  # noqa: E402
     delete_cart_item,
 )
 
+
 #
 def _format_roles(roles: list) -> str:
     """
@@ -660,7 +661,10 @@ def menu_categories() -> None:
 
 
 def menu_products() -> None:
-    """Menú interactivo de productos: listar, ver uno, crear, actualizar, eliminar, asignar categorías."""
+    """
+    Menú interactivo de productos: listar, ver uno, crear,
+    actualizar, eliminar, asignar categorías.
+    """
     while True:
         print("\n--- Productos ---")
         print(
@@ -679,7 +683,8 @@ def menu_products() -> None:
                     p = get_product(pid)
                     cats = _format_categories(p.get("categories", []))
                     print(
-                        f"  ID: {p.get('id')} | {p.get('name')} | {p.get('price')} | stock={p.get('stock')}"
+                        f"  ID: {p.get('id')} | {p.get('name')} | {p.get('price')} "
+                        f"| stock={p.get('stock')}"
                     )
                     print(f"  Descripción: {p.get('description') or '—'}")
                     print(f"  Descuento: {p.get('discount') or '—'}")

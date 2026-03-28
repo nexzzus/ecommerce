@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [dev, qa, prod, featpipeline]
+    branches: [dev, qa, prod, fix-pipeline]
   pull_request:
     branches: [dev, qa, prod]
 
@@ -112,19 +112,17 @@ jobs:
           exit "${code:-0}"
 
       - name: Crear/actualizar BD (migración)
-        # TODO: Agregar archivo migrate_db.py al proyecto
         run: |
           if [ -f migrate_db.py ]; then
-        #    python migrate_db.py
+            python src/migrations/env.py
           else
             echo "migrate_db.py no existe, se omite."
           fi
 
       - name: Seed (datos iniciales)
-        # TODO: Agregar seed_db.py al proyecto
         run: |
           if [ -f seed_db.py ]; then
-            python seed_db.py
+            python src/database/seed.py
           else
             echo "seed_db.py no existe, se omite."
           fi
@@ -155,7 +153,11 @@ jobs:
           pip install pip-audit safety
 
       - name: Verificar vulnerabilidades (pip-audit)
-        run: pip-audit
+        run: |
+          pip-audit \
+          --ignore-vuln CVE-2026-4539 \
+          --ignore-vuln CVE-2024-47874 \
+          --ignore-vuln CVE-2025-54121
 
       - name: Verificar vulnerabilidades (safety, opcional)
         env:

@@ -65,7 +65,6 @@ def get_product(product_id: UUID, db: Session = Depends(get_db)):
     )
 
     if not product:
-
         raise HTTPException(status_code=404, detail="Product not found")
 
     return product
@@ -84,23 +83,19 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
     discount = None
 
     if product.id_discount:
-
         discount = db.query(Discount).filter(Discount.id == product.id_discount).first()
 
         if not discount:
-
             raise HTTPException(status_code=400, detail="Discount not found")
 
     categories_to_assign = []
 
     if product.category_ids:
-
         categories_to_assign = (
             db.query(Category).filter(Category.id.in_(product.category_ids)).all()
         )
 
         if len(categories_to_assign) != len(product.category_ids):
-
             found = {c.id for c in categories_to_assign}
 
             missing = set(product.category_ids) - found
@@ -125,7 +120,6 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
     db.refresh(db_product)
 
     if categories_to_assign:
-
         db_product.categories = categories_to_assign
 
         db.commit()
@@ -156,23 +150,19 @@ def update_product(
     )
 
     if not db_product:
-
         raise HTTPException(status_code=404, detail="Product not found")
 
     update = product.model_dump(exclude_unset=True)
 
     if "id_discount" in update and update["id_discount"] is not None:
-
         discount = (
             db.query(Discount).filter(Discount.id == update["id_discount"]).first()
         )
 
         if not discount:
-
             raise HTTPException(status_code=400, detail="Discount not found")
 
     for key, value in update.items():
-
         setattr(db_product, key, value)
 
     db.commit()
@@ -195,7 +185,6 @@ def delete_product(product_id: UUID, db: Session = Depends(get_db)):
     product = db.query(Product).filter(Product.id == product_id).first()
 
     if not product:
-
         raise HTTPException(status_code=404, detail="Product not found")
 
     db.delete(product)
@@ -224,13 +213,11 @@ def set_product_categories(
     )
 
     if not product:
-
         raise HTTPException(status_code=404, detail="Product not found")
 
     categories = db.query(Category).filter(Category.id.in_(body.category_ids)).all()
 
     if len(categories) != len(body.category_ids):
-
         found = {c.id for c in categories}
 
         missing = set(body.category_ids) - found

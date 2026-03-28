@@ -4,6 +4,7 @@ Modelo SQLAlchemy para la entidad User.
 Usuario del sistema con datos personales y relación N:M con roles
 a través de la tabla user_roles.
 """
+
 import uuid
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.dialects.postgresql.base import UUID

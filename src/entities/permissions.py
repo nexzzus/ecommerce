@@ -3,6 +3,7 @@ Modelo SQLAlchemy para la entidad Permission.
 
 Permiso con nombre y descripción; relación N:M con roles (role_permissions).
 """
+
 import uuid
 
 from sqlalchemy import Column, String

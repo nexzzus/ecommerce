@@ -94,15 +94,12 @@ def update_discount(
     payload = {}
 
     if value is not None:
-
         payload["value"] = str(value)
 
     if code is not None:
-
         payload["code"] = code
 
     if status is not None:
-
         payload["status"] = status
 
     return _put(f"/discounts/{discount_id}", json=payload)

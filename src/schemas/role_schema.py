@@ -4,6 +4,7 @@ Esquemas Pydantic para el recurso de roles.
 Incluye RoleBase, RoleCreate, RoleUpdate, RoleResponse, RolePermissionsUpdate
 y PermissionRef (referencia mínima de permiso para incluir en respuestas).
 """
+
 from pydantic import BaseModel, ConfigDict
 from uuid import UUID
 

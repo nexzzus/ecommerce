@@ -32,7 +32,7 @@ if __name__ == "__main__":
                 "  - Copia de nuevo la connection string (Connection string) y actualiza .env."
             )
             print(
-                "  - Si la contraseña tiene caracteres especiales (& # @ ?), codifícala en URL (ej. @ → %40)."
+                "  - Si la contraseña tiene caracteres especiales, codifícala en URL."
             )
         else:
             print("Error de conexión a la base de datos:", e)

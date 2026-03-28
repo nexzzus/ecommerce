@@ -4,6 +4,7 @@ Cliente CRUD para el recurso de usuarios de la API.
 Expone list_users, get_user, create_user, update_user, delete_user
 y set_user_roles. Todas las funciones delegan en el cliente HTTP (client.py).
 """
+
 from src.crud.client import _get, _post, _put, _delete
 
 
