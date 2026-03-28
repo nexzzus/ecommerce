@@ -5,12 +5,10 @@ from sqlalchemy.orm import sessionmaker
 
 from src.entities.roles import Role
 from src.entities.users import User
+from src.database.database import DATABASE_URL
 
 # 1. Asegurar que Python encuentre la carpeta 'src'
 sys.path.append(os.getcwd())
-
-# 2. Importa las cosas
-from src.database.database import DATABASE_URL
 
 # 3. Configuración de la conexión
 engine = create_engine(DATABASE_URL)
