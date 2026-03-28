@@ -57,7 +57,7 @@ jobs:
             pip install ruff pip-audit
 
         - name: Crear/actualizar BD (migración)
-          run: python migrate_db.py
+          run: python src/migrations/env.py
 
         - name: Seed (datos iniciales)
           run: python seed_db.py
