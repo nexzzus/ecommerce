@@ -104,7 +104,6 @@ def update_category(
     update = category.model_dump(exclude_unset=True)
 
     for key, value in update.items():
-
         setattr(db_category, key, value)
 
     db.commit()

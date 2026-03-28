@@ -3,6 +3,7 @@ Modelo SQLAlchemy para la entidad Role.
 
 Rol con relación N:M a permisos (role_permissions) y a usuarios (user_roles).
 """
+
 import uuid
 
 from sqlalchemy import Column, String

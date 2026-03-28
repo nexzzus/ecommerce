@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="implementación de las relaciones N:M entre role, permission y user">
+    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="formatear el código con flake8">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/ci_push.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci_push.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/products.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/products.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/users.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,13 +19,14 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="GitHub Workflow" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feat-entidad-user" />
+        <entry key="$PROJECT_DIR$" value="featpipeline" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -65,24 +63,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.app.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "ai.playground.ignore.import.keys.banner.in.settings": "true",
-    "git-widget-placeholder": "feat-cartItem",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/apps-web/ecommerce/src/endpoints",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;fix-pipeline&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/apps-web/ecommerce/src/endpoints&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\apps-web\ecommerce\src\endpoints" />
@@ -114,6 +112,9 @@
       <workItem from="1772773925855" duration="6266000" />
       <workItem from="1772803276335" duration="21000" />
       <workItem from="1772847169784" duration="2608000" />
+      <workItem from="1774553253026" duration="844000" />
+      <workItem from="1774631401119" duration="308000" />
+      <workItem from="1774654168967" duration="2008000" />
     </task>
     <task id="LOCAL-00001" summary="creación y configuración del proyecto">
       <option name="closed" value="true" />
@@ -299,7 +300,103 @@
       <option name="project" value="LOCAL" />
       <updated>1772848007640</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="creación del Pipeline, para pull y push">
+      <option name="closed" value="true" />
+      <created>1774487657478</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1774487657478</updated>
+    </task>
+    <task id="LOCAL-00025" summary="correción de error del pipeline">
+      <option name="closed" value="true" />
+      <created>1774487822278</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1774487822278</updated>
+    </task>
+    <task id="LOCAL-00026" summary="correción del pipeline">
+      <option name="closed" value="true" />
+      <created>1774490876311</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1774490876311</updated>
+    </task>
+    <task id="LOCAL-00027" summary="correción del seed.py en el yml">
+      <option name="closed" value="true" />
+      <created>1774654283458</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1774654283458</updated>
+    </task>
+    <task id="LOCAL-00028" summary="correción del seed.py en el yml">
+      <option name="closed" value="true" />
+      <created>1774654491170</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1774654491170</updated>
+    </task>
+    <task id="LOCAL-00029" summary="correción en el yml">
+      <option name="closed" value="true" />
+      <created>1774654531458</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1774654531458</updated>
+    </task>
+    <task id="LOCAL-00030" summary="correción del seed.py">
+      <option name="closed" value="true" />
+      <created>1774654937514</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1774654937514</updated>
+    </task>
+    <task id="LOCAL-00031" summary="correción del endpoint de car_items">
+      <option name="closed" value="true" />
+      <created>1774655137667</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1774655137667</updated>
+    </task>
+    <task id="LOCAL-00032" summary="correción del schema de cart_items, detalle_orden.py, ordeny main">
+      <option name="closed" value="true" />
+      <created>1774655446550</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1774655446550</updated>
+    </task>
+    <task id="LOCAL-00033" summary="formatear el código con ruff">
+      <option name="closed" value="true" />
+      <created>1774655685538</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1774655685538</updated>
+    </task>
+    <task id="LOCAL-00034" summary="formatear el código con black">
+      <option name="closed" value="true" />
+      <created>1774655890894</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1774655890894</updated>
+    </task>
+    <task id="LOCAL-00035" summary="formatear el código con flake8">
+      <option name="closed" value="true" />
+      <created>1774656105254</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1774656105254</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -317,15 +414,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="creación y configuración del proyecto" />
-    <MESSAGE value="estructura del proyecto" />
-    <MESSAGE value="creación de la entidad User" />
-    <MESSAGE value="correción de campos entidad User" />
-    <MESSAGE value="creación schema user" />
-    <MESSAGE value="creación del cliente http" />
-    <MESSAGE value="creación del crud user" />
-    <MESSAGE value="creación del endpoint user" />
-    <MESSAGE value="creación del hash password" />
     <MESSAGE value="creación del app" />
     <MESSAGE value="se corrigen errores de libreria y lógica" />
     <MESSAGE value="CRUD Users completo" />
@@ -340,10 +428,21 @@
     <MESSAGE value="creación del endpoint permission" />
     <MESSAGE value="implementación del crud permissions en API" />
     <MESSAGE value="implementación de las relaciones N:M entre role, permission y user" />
-    <option name="LAST_COMMIT_MESSAGE" value="implementación de las relaciones N:M entre role, permission y user" />
+    <MESSAGE value="creación del Pipeline, para pull y push" />
+    <MESSAGE value="correción de error del pipeline" />
+    <MESSAGE value="correción del pipeline" />
+    <MESSAGE value="correción del seed.py en el yml" />
+    <MESSAGE value="correción en el yml" />
+    <MESSAGE value="correción del seed.py" />
+    <MESSAGE value="correción del endpoint de car_items" />
+    <MESSAGE value="correción del schema de cart_items, detalle_orden.py, ordeny main" />
+    <MESSAGE value="formatear el código con ruff" />
+    <MESSAGE value="formatear el código con black" />
+    <MESSAGE value="formatear el código con flake8" />
+    <option name="LAST_COMMIT_MESSAGE" value="formatear el código con flake8" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ecommerce$main.coverage" NAME="main Coverage Results" MODIFIED="1772849410451" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ecommerce$main.coverage" NAME="main Coverage Results" MODIFIED="1774487402088" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ecommerce$app.coverage" NAME="app Coverage Results" MODIFIED="1772771655195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
   <component name="github-copilot-workspace">

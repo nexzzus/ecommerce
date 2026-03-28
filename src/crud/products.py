@@ -83,11 +83,9 @@ def create_product(
     }
 
     if id_discount is not None:
-
         payload["id_discount"] = id_discount
 
     if category_ids is not None:
-
         payload["category_ids"] = category_ids
 
     return _post("/products", json=payload)
@@ -128,23 +126,18 @@ def update_product(
     payload = {}
 
     if name is not None:
-
         payload["name"] = name
 
     if price is not None:
-
         payload["price"] = str(price)
 
     if description is not None:
-
         payload["description"] = description
 
     if stock is not None:
-
         payload["stock"] = stock
 
     if id_discount is not None:
-
         payload["id_discount"] = id_discount
 
     return _put(f"/products/{product_id}", json=payload)

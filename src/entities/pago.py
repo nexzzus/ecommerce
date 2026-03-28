@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, Date, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from ..database.database import Base
 
+
 class Pago(Base):
     __tablename__ = "pagos"
 

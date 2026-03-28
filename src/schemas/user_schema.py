@@ -4,6 +4,7 @@ Esquemas Pydantic para el recurso de usuarios.
 Incluye UserBase, UserCreate, UserUpdate, UserResponse, UserRolesUpdate
 y RoleRef (referencia mínima de rol para incluir en respuestas).
 """
+
 from datetime import datetime
 
 from pydantic import BaseModel, EmailStr, ConfigDict

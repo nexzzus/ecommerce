@@ -93,7 +93,6 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
     discount = None
 
     if product.id_discount:
-
         discount = db.query(Discount).filter(Discount.id == product.id_discount).first()
 
         if not discount:
@@ -103,13 +102,11 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
     categories_to_assign = []
 
     if product.category_ids:
-
         categories_to_assign = (
             db.query(Category).filter(Category.id.in_(product.category_ids)).all()
         )
 
         if len(categories_to_assign) != len(product.category_ids):
-
             found = {c.id for c in categories_to_assign}
 
             missing = set(product.category_ids) - found
@@ -133,7 +130,6 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
     db.refresh(db_product)
 
     if categories_to_assign:
-
         db_product.categories = categories_to_assign
 
         db.commit()
@@ -173,7 +169,6 @@ def update_product(
     update = product.model_dump(exclude_unset=True)
 
     if "id_discount" in update and update["id_discount"] is not None:
-
         discount = (
             db.query(Discount).filter(Discount.id == update["id_discount"]).first()
         )
@@ -183,7 +178,6 @@ def update_product(
             raise NotFoundError("Discount not found")
 
     for key, value in update.items():
-
         setattr(db_product, key, value)
 
     db.commit()
@@ -244,7 +238,6 @@ def set_product_categories(
     categories = db.query(Category).filter(Category.id.in_(body.category_ids)).all()
 
     if len(categories) != len(body.category_ids):
-
         found = {c.id for c in categories}
 
         missing = set(body.category_ids) - found

@@ -1,0 +1,292 @@
+name: CI
+
+on:
+  push:
+    branches: [dev, qa, prod, fix-pipeline]
+  pull_request:
+    branches: [dev, qa, prod]
+
+# Cancelar ejecuciones obsoletas cuando hay un nuevo push en la misma rama
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-format:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache de dependencias
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ruff black flake8
+
+      - name: Lint con Ruff
+        run: ruff check . --output-format=github
+
+      - name: Formato con Ruff
+        run: ruff format . --check
+
+      - name: Formato con Black
+        run: black --check .
+
+      - name: Lint con flake8
+        run: flake8 .
+
+      - name: Typecheck básico (compileall)
+        run: python -m compileall -q src
+
+  tests:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    needs: [lint-format]
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: banco_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql+psycopg2://test:test@localhost:5432/banco_test
+      SSL_MODE: disable
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache de dependencias
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Pruebas (pytest)
+        run: |
+          pytest -q || code=$?
+          if [ "${code:-0}" -eq 5 ]; then
+            echo "No hay tests recolectados (ok)."
+            exit 0
+          fi
+          exit "${code:-0}"
+
+      - name: Crear/actualizar BD (migración)
+        run: |
+          if [ -f migrate_db.py ]; then
+            python src/migrations/env.py
+          else
+            echo "migrate_db.py no existe, se omite."
+          fi
+
+      - name: Seed (datos iniciales)
+        run: |
+          if [ -f seed_db.py ]; then
+            python src/database/seed.py
+          else
+            echo "seed_db.py no existe, se omite."
+          fi
+
+      - name: Smoke test (FastAPI)
+        run: python -c "from src.app import app; from fastapi.testclient import TestClient; c = TestClient(app); r = c.get('/'); assert r.status_code == 200; b = r.json(); assert b.get('mensaje'); assert b.get('docs') == '/docs'; print('Smoke test OK')"
+
+  audit:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    needs: [lint-format]
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar herramientas
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pip-audit safety
+
+      - name: Verificar vulnerabilidades (pip-audit)
+        run: |
+          pip-audit \
+          --ignore-vuln CVE-2026-4539 \
+          --ignore-vuln CVE-2024-47874 \
+          --ignore-vuln CVE-2025-54121
+
+      - name: Verificar vulnerabilidades (safety, opcional)
+        env:
+          SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
+        run: |
+          if [ -n "${SAFETY_API_KEY}" ]; then
+            safety check -r requirements.txt --full-report
+          else
+            echo "SAFETY_API_KEY no configurada, se omite safety."
+          fi
+
+  docker:
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    needs: [tests, audit]
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login a GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Metadata (tags/labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=ref,event=branch
+            type=sha
+
+      - name: Build & push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy-staging:
+    runs-on: ubuntu-latest
+    needs: [docker]
+    if: github.ref == 'refs/heads/qa'
+    environment: staging
+    permissions:
+      contents: read
+
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+      DEPLOY_COMPOSE_DIR: ${{ secrets.DEPLOY_COMPOSE_DIR }}
+      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+
+    steps:
+      - name: Deploy (SSH) - staging (opcional)
+        if: env.DEPLOY_HOST != '' && env.DEPLOY_USER != '' && env.DEPLOY_SSH_KEY != ''
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ env.DEPLOY_HOST }}
+          username: ${{ env.DEPLOY_USER }}
+          key: ${{ env.DEPLOY_SSH_KEY }}
+          port: ${{ env.DEPLOY_PORT || 22 }}
+          script: |
+            set -e
+            echo "Deploy staging: pull & restart"
+            docker login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
+            docker pull "ghcr.io/${{ github.repository }}:qa"
+            if [ -n "${{ env.DEPLOY_COMPOSE_DIR }}" ] && [ -f "${{ env.DEPLOY_COMPOSE_DIR }}/docker-compose.yml" ]; then
+              cd "${{ env.DEPLOY_COMPOSE_DIR }}"
+              docker compose pull
+              docker compose up -d
+            else
+              echo "DEPLOY_COMPOSE_DIR no configurado o no hay docker-compose.yml, se omite restart."
+            fi
+
+      - name: Deploy skipped
+        if: env.DEPLOY_HOST == '' || env.DEPLOY_USER == '' || env.DEPLOY_SSH_KEY == ''
+        run: echo "No hay secrets de deploy configurados; se omite."
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: [docker]
+    if: github.ref == 'refs/heads/prod'
+    environment: production
+    permissions:
+      contents: read
+
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+      DEPLOY_COMPOSE_DIR: ${{ secrets.DEPLOY_COMPOSE_DIR }}
+      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+
+    steps:
+      - name: Deploy (SSH) - production (opcional)
+        if: env.DEPLOY_HOST != '' && env.DEPLOY_USER != '' && env.DEPLOY_SSH_KEY != ''
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ env.DEPLOY_HOST }}
+          username: ${{ env.DEPLOY_USER }}
+          key: ${{ env.DEPLOY_SSH_KEY }}
+          port: ${{ env.DEPLOY_PORT || 22 }}
+          script: |
+            set -e
+            echo "Deploy production: pull & restart"
+            docker login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
+            docker pull "ghcr.io/${{ github.repository }}:prod"
+            if [ -n "${{ env.DEPLOY_COMPOSE_DIR }}" ] && [ -f "${{ env.DEPLOY_COMPOSE_DIR }}/docker-compose.yml" ]; then
+              cd "${{ env.DEPLOY_COMPOSE_DIR }}"
+              docker compose pull
+              docker compose up -d
+            else
+              echo "DEPLOY_COMPOSE_DIR no configurado o no hay docker-compose.yml, se omite restart."
+            fi

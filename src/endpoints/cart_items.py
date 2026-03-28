@@ -1,9 +1,7 @@
 """
-
 Endpoints FastAPI para líneas del carrito (cart_items).
 
 CRUD con validación de existencia de usuario (si se envía) y producto.
-
 """
 
 from uuid import UUID
