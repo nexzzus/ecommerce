@@ -55,3 +55,6 @@ El menú permite listar, crear, ver, actualizar y eliminar usuarios y productos 
 ## Documentación API
 
 Con la API en marcha: http://localhost:8000/docs (Swagger UI).
+
+# Videos
+Pipeline: https://youtu.be/0Yvv9t-PgOo
