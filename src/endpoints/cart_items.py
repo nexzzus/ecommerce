@@ -16,7 +16,6 @@ from src.entities.products import Product
 from src.entities.users import User
 from src.schemas.cart_item_schema import (
     CartItemCreate,
-    CartItemDetailResponse,
     CartItemResponse,
     CartItemUpdate,
 )
