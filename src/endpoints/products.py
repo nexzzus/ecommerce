@@ -6,7 +6,7 @@ CRUD de productos y asignación de categorías (PUT /products/{id}/categories).
 
 """
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
 from sqlalchemy.orm import Session, joinedload
 
@@ -30,7 +30,6 @@ from src.schemas.product_schema import (
 
 from src.core.responses import success_response
 from src.core.exceptions import NotFoundError
-
 
 router = APIRouter(prefix="/products", tags=["products"])
 
@@ -76,7 +75,7 @@ def get_product(product_id: UUID, db: Session = Depends(get_db)):
 
         raise NotFoundError("producto no encontrado")
 
-    data = ProductResponse.model_validate(p).model_dump(mode="json")
+    data = ProductResponse.model_validate(product).model_dump(mode="json")
     return success_response(data=data, message="producto obtenido")
 
 

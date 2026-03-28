@@ -4,7 +4,7 @@ Endpoints FastAPI para el recurso de permisos.
 CRUD de permisos (sin relaciones adicionales en los endpoints).
 """
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from uuid import UUID
 

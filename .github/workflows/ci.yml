@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [dev, qa, prod, fix-pipeline]
+    branches: [dev, qa, prod, fix--pipeline]
   pull_request:
     branches: [dev, qa, prod]
 
@@ -114,7 +114,7 @@ jobs:
       - name: Crear/actualizar BD (migración)
         run: |
           if [ -f migrate_db.py ]; then
-            python src/migrations/env.py
+            python env.py
           else
             echo "migrate_db.py no existe, se omite."
           fi
@@ -122,7 +122,7 @@ jobs:
       - name: Seed (datos iniciales)
         run: |
           if [ -f seed_db.py ]; then
-            python src/database/seed.py
+            python seed.py
           else
             echo "seed_db.py no existe, se omite."
           fi

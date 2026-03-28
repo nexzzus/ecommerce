@@ -4,7 +4,7 @@ Endpoints FastAPI para el recurso de roles.
 CRUD de roles y asignación de permisos (PUT /roles/{id}/permissions).
 """
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session, joinedload
 from uuid import UUID
 

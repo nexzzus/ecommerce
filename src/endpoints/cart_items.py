@@ -6,9 +6,10 @@ CRUD con validación de existencia de usuario (si se envía) y producto.
 
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session, joinedload
 
+from schemas.product_schema import ProductResponse
 from src.database.config import get_db
 from src.entities.cart_items import CartItem
 from src.entities.products import Product
@@ -54,7 +55,7 @@ def get_cart_item(cart_item_id: UUID, db: Session = Depends(get_db)):
     )
     if not item:
         raise NotFoundError("Cart item not found")
-    data = ProductResponse.model_validate(product).model_dump(mode="json")
+    data = ProductResponse.model_validate(item).model_dump(mode="json")
     return success_response(data=data, message="cart item obtenido")
 
 
