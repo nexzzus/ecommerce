@@ -59,7 +59,7 @@ jobs:
         - name: Crear/actualizar BD (migración)
           env:
             PYTHONPATH: src
-          run: alembic upgrade head
+          run: python env.py
 
         - name: Seed (datos iniciales)
           env:
