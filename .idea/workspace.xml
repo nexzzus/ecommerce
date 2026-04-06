@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="correción de validaciones en los endpoints y crud" />
+    <list default="true" id="84096a65-c2bc-4d30-9c84-ea2384d824e4" name="Changes" comment="test">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -95,8 +97,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.30387.173" />
-        <option value="bundled-python-sdk-4762d8aabb82-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.30387.173" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.32098.74" />
+        <option value="bundled-python-sdk-1cd77e80b48f-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.32098.74" />
       </set>
     </attachedChunks>
   </component>
@@ -118,63 +120,9 @@
       <workItem from="1774553253026" duration="844000" />
       <workItem from="1774631401119" duration="308000" />
       <workItem from="1774654168967" duration="8283000" />
-      <workItem from="1774663719323" duration="6417000" />
-    </task>
-    <task id="LOCAL-00023" summary="implementación de las relaciones N:M entre role, permission y user">
-      <option name="closed" value="true" />
-      <created>1772848007640</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1772848007640</updated>
-    </task>
-    <task id="LOCAL-00024" summary="creación del Pipeline, para pull y push">
-      <option name="closed" value="true" />
-      <created>1774487657478</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1774487657478</updated>
-    </task>
-    <task id="LOCAL-00025" summary="correción de error del pipeline">
-      <option name="closed" value="true" />
-      <created>1774487822278</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1774487822278</updated>
-    </task>
-    <task id="LOCAL-00026" summary="correción del pipeline">
-      <option name="closed" value="true" />
-      <created>1774490876311</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1774490876311</updated>
-    </task>
-    <task id="LOCAL-00027" summary="correción del seed.py en el yml">
-      <option name="closed" value="true" />
-      <created>1774654283458</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1774654283458</updated>
-    </task>
-    <task id="LOCAL-00028" summary="correción del seed.py en el yml">
-      <option name="closed" value="true" />
-      <created>1774654491170</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1774654491170</updated>
-    </task>
-    <task id="LOCAL-00029" summary="correción en el yml">
-      <option name="closed" value="true" />
-      <created>1774654531458</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1774654531458</updated>
+      <workItem from="1774663719323" duration="6902000" />
+      <workItem from="1774696624985" duration="2285000" />
+      <workItem from="1774716873645" duration="664000" />
     </task>
     <task id="LOCAL-00030" summary="correción del seed.py">
       <option name="closed" value="true" />
@@ -512,7 +460,63 @@
       <option name="project" value="LOCAL" />
       <updated>1774670468289</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="eliminación de import no usado en cart_items.py">
+      <option name="closed" value="true" />
+      <created>1774670660989</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1774670660989</updated>
+    </task>
+    <task id="LOCAL-00073" summary="archivos formateados con ruff">
+      <option name="closed" value="true" />
+      <created>1774670774111</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1774670774111</updated>
+    </task>
+    <task id="LOCAL-00074" summary="se elimina qa y prod del .yml">
+      <option name="closed" value="true" />
+      <created>1774670953023</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1774670953023</updated>
+    </task>
+    <task id="LOCAL-00075" summary="correción de version en el pull_yml">
+      <option name="closed" value="true" />
+      <created>1774696737085</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1774696737086</updated>
+    </task>
+    <task id="LOCAL-00076" summary="correción de variables de entorno">
+      <option name="closed" value="true" />
+      <created>1774697495070</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1774697495070</updated>
+    </task>
+    <task id="LOCAL-00077" summary="se agrega la rama al ci_push.yml para pruebas">
+      <option name="closed" value="true" />
+      <created>1774697997062</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1774697997062</updated>
+    </task>
+    <task id="LOCAL-00078" summary="test">
+      <option name="closed" value="true" />
+      <created>1774698320317</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1774698320317</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -530,13 +534,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="formatear el código con black" />
-    <MESSAGE value="formatear el código con flake8" />
-    <MESSAGE value="correción del código del ci_push.yml" />
-    <MESSAGE value="se arregal el código con flake8" />
-    <MESSAGE value="se formate el archivo database.py con black" />
-    <MESSAGE value="cambio de ruta de test_root.py" />
-    <MESSAGE value="actualización de versiones" />
     <MESSAGE value="actualización de pip-audit" />
     <MESSAGE value="se agrega alembic a requirements.txt" />
     <MESSAGE value="env.py reformateado" />
@@ -555,7 +552,14 @@
     <MESSAGE value="código formateado" />
     <MESSAGE value="se corrige la sintaxis de ci.yml" />
     <MESSAGE value="correción de validaciones en los endpoints y crud" />
-    <option name="LAST_COMMIT_MESSAGE" value="correción de validaciones en los endpoints y crud" />
+    <MESSAGE value="eliminación de import no usado en cart_items.py" />
+    <MESSAGE value="archivos formateados con ruff" />
+    <MESSAGE value="se elimina qa y prod del .yml" />
+    <MESSAGE value="correción de version en el pull_yml" />
+    <MESSAGE value="correción de variables de entorno" />
+    <MESSAGE value="se agrega la rama al ci_push.yml para pruebas" />
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ecommerce$main.coverage" NAME="main Coverage Results" MODIFIED="1774670113448" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
