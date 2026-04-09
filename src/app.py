@@ -17,7 +17,9 @@ se importan para que Base.metadata los conozca al llamar create_tables().
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
+from core.config import get_settings
 from src.core.responses import success_response
 from src.database.config import create_tables
 
@@ -76,6 +78,15 @@ app = FastAPI(
     title="API Usuarios",
     description="API con FastAPI, SQLAlchemy y PostgreSQL",
     lifespan=lifespan,
+)
+
+_settings = get_settings()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=_settings.cors_origins_list(),
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type", "Accept"],
 )
 
 # manejadores globales de excepciones
