@@ -19,8 +19,11 @@ from src.schemas.role_schema import (
 )
 from src.core.responses import success_response
 from src.core.exceptions import NotFoundError, BadRequestError
+from src.core.auth import get_current_user
 
-router = APIRouter(prefix="/roles", tags=["roles"])
+router = APIRouter(
+    prefix="/roles", tags=["roles"], dependecies=[Depends(get_current_user)]
+)
 
 
 @router.get("")

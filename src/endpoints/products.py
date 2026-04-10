@@ -20,6 +20,8 @@ from src.entities.discounts import Discount
 
 from src.entities.category import Category
 
+from src.core.auth import get_current_user
+
 
 from src.schemas.product_schema import (
     ProductResponse,
@@ -31,7 +33,9 @@ from src.schemas.product_schema import (
 from src.core.responses import success_response
 from src.core.exceptions import NotFoundError
 
-router = APIRouter(prefix="/products", tags=["products"])
+router = APIRouter(
+    prefix="/products", tags=["products"], dependecies=[Depends(get_current_user)]
+)
 
 
 def _load_product_relations(query):

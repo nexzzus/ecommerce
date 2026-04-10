@@ -20,11 +20,12 @@ from src.schemas.user_schema import (
 from src.utils.security import hash_password
 from src.core.responses import success_response
 from src.core.exceptions import NotFoundError, BadRequestError
+from src.core.auth import get_current_user
 
 router = APIRouter(prefix="/users", tags=["users"])
 
 
-@router.get("")
+@router.get("", dependecies=[Depends(get_current_user)])
 def list_users(db: Session = Depends(get_db)):
     """
     Lista todos los usuarios con sus roles cargados.
@@ -34,7 +35,7 @@ def list_users(db: Session = Depends(get_db)):
     return success_response(data=data, message="listado de usuarios")
 
 
-@router.get("/{user_id}")
+@router.get("/{user_id}", dependecies=[Depends(get_current_user)])
 def get_user(user_id: UUID, db: Session = Depends(get_db)):
     """
     Devuelve un usuario por ID con sus roles. 404 si no existe.
@@ -88,7 +89,7 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
     return success_response(data=data, message="usuario creado")
 
 
-@router.put("/{user_id}")
+@router.put("/{user_id}", dependecies=[Depends(get_current_user)])
 def update_user(user_id: UUID, user: UserUpdate, db: Session = Depends(get_db)):
     """
     Actualiza un usuario por ID (solo campos enviados). 404 si no existe.
@@ -108,7 +109,7 @@ def update_user(user_id: UUID, user: UserUpdate, db: Session = Depends(get_db)):
     return success_response(data=data, message="usuario actualizado")
 
 
-@router.delete("/{user_id}", status_code=204)
+@router.delete("/{user_id}", status_code=204, dependecies=[Depends(get_current_user)])
 def delete_user(user_id: UUID, db: Session = Depends(get_db)):
     """
     Elimina un usuario por ID. 404 si no existe.
@@ -121,7 +122,7 @@ def delete_user(user_id: UUID, db: Session = Depends(get_db)):
     return None
 
 
-@router.put("/{user_id}/roles")
+@router.put("/{user_id}/roles", dependecies=[Depends(get_current_user)])
 def set_user_roles(user_id: UUID, body: UserRolesUpdate, db: Session = Depends(get_db)):
     """
     Asigna los roles a un usuario (reemplaza los actuales). N:M.
