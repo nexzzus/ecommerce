@@ -8,6 +8,19 @@ BASE_URL. Todas levantan excepción en respuestas 4xx/5xx (raise_for_status).
 import httpx
 
 BASE_URL = "http://localhost:8000"
+_auth_token: str | None = None
+
+
+def set_auth_token(token: str | None) -> None:
+    """Guarda el jwt para enviarlo como bearer en las siguientes peticiones"""
+    global _auth_token
+    _auth_token = token
+
+
+def _auth_headers() -> dict[str, str]:
+    if _auth_token:
+        return {"Authorization": f"Bearer {_auth_token}"}
+    return {}
 
 
 def _unwrap(response_json: dict | list) -> dict | list:
