@@ -5,7 +5,7 @@ En producción: JWT_SECRET_KEY debe ser una cadena larga y aleatoria (p. ej. ope
 
 from functools import lru_cache
 
-from pydantic import Field
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -21,6 +21,7 @@ class Settings(BaseSettings):
         description="Clave HMAC para firmar JWT; obligatoria en entornos reales.",
         validation_alias="JWT_SECRET_KEY",
     )
+
     jwt_algorithm: str = Field(default="HS256", validation_alias="JWT_ALGORITHM")
     access_token_expire_minutes: int = Field(
         default=60,
@@ -36,9 +37,6 @@ class Settings(BaseSettings):
         validation_alias="CORS_ORIGINS",
     )
 
-    def cors_origins_list(self) -> list[str]:
-        return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
-
     @field_validator("jwt_secret_key")
     @classmethod
     def jwt_secret_not_empty(cls, v: str) -> str:
@@ -47,6 +45,8 @@ class Settings(BaseSettings):
             return "dev-insecure-jwt-secret-replace-with-JWT_SECRET_KEY-in-env"
         return v.strip()
 
+    def cors_origins_list(self) -> list[str]:
+        return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
 
 @lru_cache
 def get_settings() -> Settings:

@@ -21,8 +21,10 @@ from src.schemas.cart_item_schema import (
 )
 from src.core.responses import success_response
 from src.core.exceptions import NotFoundError
+from src.core.auth import get_current_user
 
-router = APIRouter(prefix="/cart-items", tags=["cart-items"])
+
+router = APIRouter(prefix="/cart-items", tags=["cart-items"], dependencies=[Depends(get_current_user)])
 
 
 def _load_cart_item_detail(query):

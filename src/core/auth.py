@@ -24,7 +24,7 @@ from src.core.config import Settings, get_settings
 
 from src.database.config import get_db
 
-from src.entities.usuarios import Usuario
+from src.entities.users import User
 
 bearer_scheme = HTTPBearer(auto_error=False)
 
@@ -109,7 +109,7 @@ async def get_current_user(
             detail="Token inválido o expirado",
         ) from None
 
-    user = db.query(Usuario).filter(Usuario.id_usuario == user_id).first()
+    user = db.query(User).filter(User.id == user_id).first()
 
     if not user:
 
