@@ -58,3 +58,4 @@ Con la API en marcha: http://localhost:8000/docs (Swagger UI).
 
 # Videos
 Pipeline: https://youtu.be/0Yvv9t-PgOo
+Creacion de un nuevo campo: https://youtu.be/j49cRnlyHy0
