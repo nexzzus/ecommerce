@@ -89,6 +89,38 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
     return success_response(data=data, message="usuario creado")
 
 
+@router.post("/register", status_code=201)
+def register_user(user: UserCreate, db: Session = Depends(get_db)):
+    """
+    Registro de un usuario. La contraseña se hashea.
+    400 si el email ya existe
+    """
+    if db.query(User).filter(User.email == user.email).first():
+        raise BadRequestError("Email already registered")
+    default_rol = db.query(Role).filter(Role.name == "USER").first()
+    if not default_rol:
+        raise NotFoundError("Default role 'USER' not found")
+
+    db_user = User(
+        first_name=user.first_name,
+        last_name=user.last_name,
+        email=user.email,
+        password=hash_password(user.password),
+        phone=user.phone,
+        address=user.address,
+    )
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+
+    db_user.roles = [default_rol]
+    db.commit()
+    db.refresh(db_user)
+
+    data = UserResponse.model_validate(db_user).model_dump(mode="json")
+    return success_response(data=data, message="usuario registrado")
+
+
 @router.put("/{user_id}", dependencies=[Depends(get_current_user)])
 def update_user(user_id: UUID, user: UserUpdate, db: Session = Depends(get_db)):
     """

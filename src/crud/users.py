@@ -68,6 +68,38 @@ def create_user(
     return _post("/users", json=payload)
 
 
+def register_user(
+    first_name: str,
+    last_name: str,
+    email: str,
+    password: str,
+    phone: str | None = None,
+    address: str | None = None,
+) -> dict:
+    """
+    Registra un nuevo usuario..
+
+    Args:
+        first_name: Nombre.
+        last_name: Apellido.
+        email: Email (válido).
+        password: Contraseña en texto plano (se hashea en el servidor).
+        phone: Teléfono opcional.
+        address: Dirección opcional.
+    Returns:
+        Usuario creado tal como lo devuelve la API.
+    """
+    payload = {
+        "first_name": first_name,
+        "last_name": last_name,
+        "email": email,
+        "password": password,
+        "phone": phone,
+        "address": address,
+    }
+    return _post("/users/register", json=payload)
+
+
 def update_user(
     user_id: str,
     first_name: str | None = None,

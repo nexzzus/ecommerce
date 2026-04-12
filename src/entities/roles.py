@@ -23,7 +23,7 @@ class Role(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, index=True)
     name = Column(String(50), unique=True, index=True, nullable=False)
 
-    #permissions = relationship(
-    # "Permission", secondary=role_permissions, back_populates="roles"
-    #)
+    permissions = relationship(
+        "Permission", secondary=role_permissions, back_populates="roles"
+    )
     users = relationship("User", secondary=user_roles, back_populates="roles")

@@ -23,6 +23,8 @@ from src.core.config import get_settings
 from src.core.responses import success_response
 from src.database.config import create_tables
 
+from src.api import auth
+
 import src.endpoints.users as users
 import src.endpoints.roles as roles
 import src.endpoints.permissions as permissions
@@ -108,6 +110,8 @@ app.include_router(category.router)
 app.include_router(products.router)
 
 app.include_router(cart_items.router)
+
+app.include_router(auth.router)
 
 
 @app.get("/")

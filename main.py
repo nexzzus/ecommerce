@@ -34,7 +34,7 @@ from src.crud.users import (  # noqa: E402
     create_user,
     update_user,
     delete_user,
-    set_user_roles,
+    set_user_roles, register_user,
 )
 from src.crud.discounts import (  # noqa: E402
     list_discounts,
@@ -318,7 +318,7 @@ def menu_users() -> None:
         print("\n--- Usuarios ---")
         print(
             "1. Listar  2. Ver uno  3. Crear  4. Actualizar  "
-            "5. Eliminar  6. Asignar roles  0. Volver"
+            "5. Eliminar  6. Asignar roles  7. Registro 0. Volver"
         )
         op = input("Opción: ").strip()
         if op == "0":
@@ -344,8 +344,8 @@ def menu_users() -> None:
             last_name = input("Apellido: ").strip()
             email = input("Email: ").strip()
             password = input("Contraseña: ").strip()
-            phone = input("Teléfono (opcional): ").strip()
-            address = input("Dirección (opcional): ").strip()
+            phone = input("Teléfono: ").strip()
+            address = input("Dirección: ").strip()
             if not (first_name and last_name and email and password):
                 print(
                     "  Faltan datos (nombre, apellido, email y contraseña son obligatorios)."
@@ -416,6 +416,30 @@ def menu_users() -> None:
             try:
                 set_user_roles(uid, role_ids)
                 print("  Roles asignados al usuario.")
+            except Exception as e:
+                print(f"  Error: {e}")
+        elif op == "7":
+            first_name = input("Nombre: ").strip()
+            last_name = input("Apellido: ").strip()
+            email = input("Email: ").strip()
+            password = input("Contraseña: ").strip()
+            phone = input("Teléfono: ").strip()
+            address = input("Dirección: ").strip()
+            if not (first_name and last_name and email and password):
+                print(
+                    "  Faltan datos (nombre, apellido, email y contraseña son obligatorios)."
+                )
+                continue
+            try:
+                register_user(
+                    first_name,
+                    last_name,
+                    email,
+                    password,
+                    phone or None,
+                    address or None,
+                )
+                print("  Usuario registrado.")
             except Exception as e:
                 print(f"  Error: {e}")
 
