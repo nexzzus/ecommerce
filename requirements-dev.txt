@@ -1,6 +1,0 @@
-pytest>=8.0.0
-ruff
-black
-flake8
-pip-audit
-safety
