@@ -18,8 +18,12 @@ from src.schemas.permission_schema import (
 
 from src.core.responses import success_response
 from src.core.exceptions import NotFoundError, BadRequestError
+from src.core.auth import get_current_user
 
-router = APIRouter(prefix="/permissions", tags=["permissions"])
+
+router = APIRouter(
+    prefix="/permissions", tags=["permissions"], dependencies=[Depends(get_current_user)]
+)
 
 
 @router.get("")

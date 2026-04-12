@@ -17,9 +17,9 @@ se importan para que Base.metadata los conozca al llamar create_tables().
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware  
 
-from core.config import get_settings
+from src.core.config import get_settings
 from src.core.responses import success_response
 from src.database.config import create_tables
 
