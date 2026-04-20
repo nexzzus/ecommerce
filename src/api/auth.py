@@ -1,11 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+from src.core.auth import create_access_token
+from src.core.security import verify_password
 from src.database.database import get_db
 from src.entities.users import User
-from src.core.security import create_access_token, verify_password
+from src.core.config import get_settings
 
 router = APIRouter()
+
+settings = get_settings()
 
 
 @router.post("/login")
@@ -28,10 +32,10 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 
     # 3. Generación del JWT Token real usando el email del usuario
     access_token = create_access_token(
-        data={
-            "sub": user.email,
-            "roles": [role.name for role in user.roles]
-        }
+        subject = user.id,
+        nombre_usuario=f"{user.first_name} {user.last_name}",
+        rol=user.roles[0].name if user.roles else "USER",
+        settings=settings
     )
 
     return {
