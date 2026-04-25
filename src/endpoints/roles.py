@@ -77,6 +77,8 @@ def update_role(role_id: UUID, role: RoleUpdate, db: Session = Depends(get_db)):
     db_role = db.query(Role).filter(Role.id == role_id).first()
     if not db_role:
         raise NotFoundError("Role not found")
+    if db.query(Role).filter(Role.name == role.name).first():
+        raise BadRequestError("El rol ya existe")
     update = role.model_dump(exclude_unset=True)
     for key, value in update.items():
         setattr(db_role, key, value)
