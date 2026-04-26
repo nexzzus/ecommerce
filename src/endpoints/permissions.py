@@ -84,7 +84,7 @@ def update_permission(
         setattr(db_perm, key, value)
     db.commit()
     db.refresh(db_perm)
-    data = PermissionResponse.model_validate(permission).model_dump(mode="json")
+    data = PermissionResponse.model_validate(db_perm).model_dump(mode="json")
     return success_response(data=data, message="permiso actualizado")
 
 
