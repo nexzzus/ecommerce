@@ -1,6 +1,8 @@
+
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.database.database import engine, Base
+from src.database.config import engine, Base
 
 from src.entities.users import User
 from src.entities.roles import Role
@@ -10,7 +12,9 @@ from src.entities.category import Category
 from src.entities.discounts import Discount
 from src.entities.associations import role_permissions, user_roles, product_categories
 
-from src.routers import orden_router, detalle_orden_router, pago_router
+import src.routers.orden_router as ord_router
+import src.routers.detalle_orden_router as det_router
+import src.routers.pago_router as pag_router
 from src.api import auth  
 from src.core.config import get_settings
 
@@ -30,10 +34,10 @@ app.add_middleware(
 # 2. Crear tablas en Neon 
 Base.metadata.create_all(bind=engine)
 
-# 3. ROUTERS 
-app.include_router(orden_router.router)
-app.include_router(detalle_orden_router.router)
-app.include_router(pago_router.router)
+# 3. ROUTERS  
+app.include_router(ord_router.router)
+app.include_router(det_router.router)
+app.include_router(pag_router.router)
 app.include_router(auth.router, tags=["Autenticación"])
 
 @app.get("/")

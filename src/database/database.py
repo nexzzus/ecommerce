@@ -1,23 +1,5 @@
-import os
+from src.database.config import engine, SessionLocal, Base, get_db
 
-from dotenv import load_dotenv
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+# This module re-exports the database objects from `src.database.config`
+# to maintain backward-compatible imports used across the codebase.
 
-load_dotenv()
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-engine = create_engine(DATABASE_URL)
-
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-Base = declarative_base()
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()

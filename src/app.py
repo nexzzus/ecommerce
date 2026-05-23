@@ -1,18 +1,4 @@
-"""
-
-Aplicación FastAPI: API de usuarios, roles y permisos.
-
-Ejecutar con:
-
-  uvicorn src.app:app --reload --host 0.0.0.0 --port 8000
-
-En el lifespan se crean las tablas en la base de datos. Se registran los
-
-routers de users, roles y permissions. Los modelos y tablas de asociación
-
-se importan para que Base.metadata los conozca al llamar create_tables().
-
-"""
+from src import entities
 
 from contextlib import asynccontextmanager
 
@@ -33,21 +19,27 @@ import src.endpoints.category as category
 import src.endpoints.products as products
 import src.endpoints.cart_items as cart_items
 
+
+try:
+    import src.routers.orden_router as orden_router
+    import src.routers.detalle_orden_router as detalle_router
+    import src.routers.pago_router as pago_router
+    TUS_ROUTERS_OK = True
+except Exception as e:
+    print(f"\n❌ ERROR IMPORTANDO TUS ROUTERS: {e}\n")
+    TUS_ROUTERS_OK = False
+
 import src.entities.associations  # noqa: F401
-
 import src.entities.users  # noqa: F401
-
 import src.entities.roles  # noqa: F401
-
 import src.entities.permissions  # noqa: F401
-
 import src.entities.discounts  # noqa: F401
-
 import src.entities.category  # noqa: F401
-
 import src.entities.products  # noqa: F401
-
 import src.entities.cart_items  # noqa: F401
+
+
+import src.entities.orden  # noqa: F401        
 
 from src.core.exceptions import AppException
 from src.core.error_handlers import (
@@ -61,18 +53,8 @@ from fastapi.exceptions import HTTPException, RequestValidationError
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """
-
-    Context manager del ciclo de vida de la app.
-
-    Al iniciar crea las tablas en la base de datos. Al cerrar podría
-
-    ejecutarse lógica de shutdown si fuera necesaria.
-
-    """
-
+    # Esto crea las tablas en Neon al iniciar
     create_tables()
-
     yield
 
 
@@ -91,27 +73,26 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type", "Accept"],
 )
 
-# manejadores globales de excepciones
 app.add_exception_handler(AppException, app_exception_handler)
 app.add_exception_handler(HTTPException, http_exception_handler)
 app.add_exception_handler(RequestValidationError, validation_exception_handler)
 app.add_exception_handler(Exception, generic_exception_handler)
 
+# Routers base del proyecto
 app.include_router(users.router)
-
 app.include_router(roles.router)
-
 app.include_router(permissions.router)
-
 app.include_router(discounts.router)
-
 app.include_router(category.router)
-
 app.include_router(products.router)
-
 app.include_router(cart_items.router)
-
 app.include_router(auth.router)
+
+
+if TUS_ROUTERS_OK:
+    app.include_router(orden_router.router)
+    app.include_router(detalle_router.router)
+    app.include_router(pago_router.router)
 
 
 @app.get("/")
