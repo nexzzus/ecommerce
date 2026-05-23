@@ -10,9 +10,9 @@ class Orden(Base):
     fecha = Column(Date, nullable=False) # Mantenlo como Date si tus compañeros ya lo tenían así
     total = Column(Float, nullable=False)
     
-    # 🌟 AQUÍ QUEDA TU NUEVA COLUMNA PERFECTA PARA EL PROFE
+    
     estado = Column(String, default="Pendiente", nullable=False) 
 
-    # 🔗 ¡MANTENEMOS LAS RELACIONES PARA QUE NO SE ROMPA NADA!
+
     detalles = relationship("DetalleOrden", back_populates="orden")
     pago = relationship("Pago", back_populates="orden", uselist=False)
