@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from src.crud import orden_crud
 
-from src.database.database import SessionLocal
+from src.database.config import get_db
 from src.schemas.orden_schema import OrdenCreate
 from src.crud.orden_crud import (
     crear_orden,
@@ -14,12 +14,7 @@ from src.crud.orden_crud import (
 router = APIRouter(prefix="/orden", tags=["Orden"])
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+
 
 
 @router.post("/")

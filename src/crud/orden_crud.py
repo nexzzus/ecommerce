@@ -2,9 +2,13 @@ from sqlalchemy.orm import Session
 from src.entities.orden import Orden
 from src.schemas.orden_schema import OrdenCreate
 
-
 def crear_orden(db: Session, orden: OrdenCreate):
-    nueva_orden = Orden(fecha=orden.fecha, total=orden.total)
+    # Le sumamos el campo estado="Pendiente" al crearla en la base de datos
+    nueva_orden = Orden(
+        fecha=orden.fecha, 
+        total=orden.total, 
+        estado="Pendiente"  
+    )
     db.add(nueva_orden)
     db.commit()
     db.refresh(nueva_orden)
