@@ -11,8 +11,8 @@ from src.database.config import Base
 from src.database.database import DATABASE_URL
 
 # 1. CONFIGURACIÓN DE RUTAS
-# Agregar src al path
-sys.path.insert(0, os.path.abspath("../src"))
+# Asegurar que la raíz del proyecto esté en el path para resolver "src.*"
+sys.path.insert(0, os.path.abspath("."))
 
 # 2. CONFIGURACIÓN DE ALEMBIC
 config = context.config

@@ -57,13 +57,9 @@ jobs:
             pip install ruff pip-audit
 
         - name: Crear/actualizar BD (migración)
-          env:
-            PYTHONPATH: src
           run: alembic upgrade head
 
         - name: Seed (datos iniciales)
-          env:
-            PYTHONPATH: src
           run: python seed.py
 
         - name: Pruebas (smoke test)
