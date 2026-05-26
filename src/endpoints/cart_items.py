@@ -24,8 +24,9 @@ from src.core.responses import success_response
 from src.core.exceptions import NotFoundError
 from src.core.auth import get_current_user
 
-
-router = APIRouter(prefix="/cart-items", tags=["cart-items"], dependencies=[Depends(get_current_user)])
+router = APIRouter(
+    prefix="/cart-items", tags=["cart-items"], dependencies=[Depends(get_current_user)]
+)
 
 
 def _load_cart_item_detail(query):
@@ -42,7 +43,8 @@ def list_cart_items(db: Session = Depends(get_db)):
     """Lista todas las líneas del carrito."""
     items = _load_cart_item_detail(db.query(CartItem)).all()
     data = [
-        CartItemDetailResponse.model_validate(item).model_dump(mode="json") for item in items
+        CartItemDetailResponse.model_validate(item).model_dump(mode="json")
+        for item in items
     ]
     return success_response(data=data, message="listado de articulos")
 

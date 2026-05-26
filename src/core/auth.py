@@ -95,7 +95,6 @@ async def get_current_user(
         payload = _decode_token(token, settings)
 
         sub = payload.get("sub")
-        
 
         if not sub:
 
@@ -115,7 +114,6 @@ async def get_current_user(
     if not user:
 
         raise HTTPException(status_code=401, detail="Usuario no encontrado")
-    
 
     return CurrentUser(
         id_usuario=user.id,

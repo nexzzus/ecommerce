@@ -21,7 +21,6 @@ from src.core.responses import success_response
 from src.core.exceptions import NotFoundError, BadRequestError
 from src.core.auth import get_current_user
 
-
 router = APIRouter(
     prefix="/roles", tags=["roles"], dependencies=[Depends(get_current_user)]
 )
@@ -78,12 +77,11 @@ def update_role(role_id: UUID, role: RoleUpdate, db: Session = Depends(get_db)):
 
     if not db_role:
         raise NotFoundError("Role not found")
-    
+
     if role.name:
-        existing = db.query(Role).filter(
-            Role.name == role.name,
-            Role.id != role_id
-        ).first()
+        existing = (
+            db.query(Role).filter(Role.name == role.name, Role.id != role_id).first()
+        )
 
         if existing:
             raise BadRequestError("El rol ya existe")

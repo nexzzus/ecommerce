@@ -33,7 +33,6 @@ from src.schemas.product_schema import (
 from src.core.responses import success_response
 from src.core.exceptions import NotFoundError
 
-
 router = APIRouter(
     prefix="/products", tags=["products"], dependencies=[Depends(get_current_user)]
 )

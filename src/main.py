@@ -11,11 +11,10 @@ from src.entities.discounts import Discount
 from src.entities.associations import role_permissions, user_roles, product_categories
 
 from src.routers import orden_router, detalle_orden_router, pago_router
-from src.api import auth  
+from src.api import auth
 from src.core.config import get_settings
 
-
-app = FastAPI() 
+app = FastAPI()
 settings = get_settings()
 
 # 1. CONFIGURACIÓN DE CORS
@@ -27,14 +26,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 2. Crear tablas en Neon 
+# 2. Crear tablas en Neon
 Base.metadata.create_all(bind=engine)
 
-# 3. ROUTERS 
+# 3. ROUTERS
 app.include_router(orden_router.router)
 app.include_router(detalle_orden_router.router)
 app.include_router(pago_router.router)
 app.include_router(auth.router, tags=["Autenticación"])
+
 
 @app.get("/")
 def inicio():

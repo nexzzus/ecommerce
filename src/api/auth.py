@@ -13,7 +13,9 @@ settings = get_settings()
 
 
 @router.post("/login")
-def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+def login(
+    form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
+):
     """
     Autenticación de usuario para obtener un access token.
     Compatible con flujos de seguridad OAuth2.
@@ -32,13 +34,10 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 
     # 3. Generación del JWT Token real usando el email del usuario
     access_token = create_access_token(
-        subject = user.id,
+        subject=user.id,
         nombre_usuario=f"{user.first_name} {user.last_name}",
         rol=user.roles[0].name if user.roles else "USER",
-        settings=settings
+        settings=settings,
     )
 
-    return {
-        "access_token": access_token,
-        "token_type": "bearer"
-    }
+    return {"access_token": access_token, "token_type": "bearer"}
