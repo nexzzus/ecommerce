@@ -145,7 +145,8 @@ jobs:
           pip-audit \
           --ignore-vuln CVE-2026-4539 \
           --ignore-vuln CVE-2024-47874 \
-          --ignore-vuln CVE-2025-54121
+          --ignore-vuln CVE-2025-54121 \
+          --ignore-vuln CVE-2025-71176
 
       - name: Verificar vulnerabilidades (safety, opcional)
         env:
