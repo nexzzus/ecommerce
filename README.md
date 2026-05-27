@@ -58,3 +58,6 @@ Con la API en marcha: http://localhost:8000/docs (Swagger UI).
 
 # Videos
 Pipeline: https://youtu.be/0Yvv9t-PgOo
+
+# Video CRUD Final
+https://youtu.be/1pKFBwP4SsA
