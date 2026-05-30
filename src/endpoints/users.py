@@ -52,7 +52,7 @@ def get_user(user_id: UUID, db: Session = Depends(get_db)):
     return success_response(data=data, message="usuario obtenido")
 
 
-@router.post("", status_code=201)
+@router.post("", status_code=201, dependencies=[Depends(get_current_user)])
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     """
     Crea un usuario. La contraseña se hashea. Opcionalmente se pueden

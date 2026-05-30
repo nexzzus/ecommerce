@@ -16,6 +16,7 @@ from src.entities.products import Product
 from src.entities.users import User
 from src.schemas.cart_item_schema import (
     CartItemCreate,
+    CartItemDetailResponse,
     CartItemResponse,
     CartItemUpdate,
 )
@@ -23,8 +24,9 @@ from src.core.responses import success_response
 from src.core.exceptions import NotFoundError
 from src.core.auth import get_current_user
 
-
-router = APIRouter(prefix="/cart-items", tags=["cart-items"], dependencies=[Depends(get_current_user)])
+router = APIRouter(
+    prefix="/cart-items", tags=["cart-items"], dependencies=[Depends(get_current_user)]
+)
 
 
 def _load_cart_item_detail(query):
@@ -39,9 +41,10 @@ def _load_cart_item_detail(query):
 @router.get("")
 def list_cart_items(db: Session = Depends(get_db)):
     """Lista todas las líneas del carrito."""
-    items = db.query(CartItem).all()
+    items = _load_cart_item_detail(db.query(CartItem)).all()
     data = [
-        CartItemResponse.model_validate(item).model_dump(mode="json") for item in items
+        CartItemDetailResponse.model_validate(item).model_dump(mode="json")
+        for item in items
     ]
     return success_response(data=data, message="listado de articulos")
 
@@ -56,7 +59,7 @@ def get_cart_item(cart_item_id: UUID, db: Session = Depends(get_db)):
     )
     if not item:
         raise NotFoundError("Cart item not found")
-    data = ProductResponse.model_validate(item).model_dump(mode="json")
+    data = CartItemResponse.model_validate(item).model_dump(mode="json")
     return success_response(data=data, message="cart item obtenido")
 
 

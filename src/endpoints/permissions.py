@@ -20,9 +20,10 @@ from src.core.responses import success_response
 from src.core.exceptions import NotFoundError, BadRequestError
 from src.core.auth import get_current_user
 
-
 router = APIRouter(
-    prefix="/permissions", tags=["permissions"], dependencies=[Depends(get_current_user)]
+    prefix="/permissions",
+    tags=["permissions"],
+    dependencies=[Depends(get_current_user)],
 )
 
 
@@ -84,7 +85,7 @@ def update_permission(
         setattr(db_perm, key, value)
     db.commit()
     db.refresh(db_perm)
-    data = PermissionResponse.model_validate(permission).model_dump(mode="json")
+    data = PermissionResponse.model_validate(db_perm).model_dump(mode="json")
     return success_response(data=data, message="permiso actualizado")
 
 

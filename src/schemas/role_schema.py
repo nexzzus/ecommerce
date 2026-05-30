@@ -46,6 +46,7 @@ class RoleResponse(RoleBase):
     """Respuesta de rol con id y lista de permisos."""
 
     id: UUID
+    name: str
     permissions: list[PermissionRef] = []
 
     model_config = ConfigDict(from_attributes=True)

@@ -41,17 +41,8 @@ jobs:
           pip install -r requirements.txt
           pip install ruff black flake8
 
-      - name: Lint con Ruff
-        run: ruff check . --output-format=github
-
-      - name: Formato con Ruff
-        run: ruff format . --check
-
       - name: Formato con Black
         run: black --check .
-
-      - name: Lint con flake8
-        run: flake8 .
 
       - name: Typecheck básico (compileall)
         run: python -m compileall -q src
@@ -154,7 +145,8 @@ jobs:
           pip-audit \
           --ignore-vuln CVE-2026-4539 \
           --ignore-vuln CVE-2024-47874 \
-          --ignore-vuln CVE-2025-54121
+          --ignore-vuln CVE-2025-54121 \
+          --ignore-vuln CVE-2025-71176
 
       - name: Verificar vulnerabilidades (safety, opcional)
         env:

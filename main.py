@@ -34,7 +34,8 @@ from src.crud.users import (  # noqa: E402
     create_user,
     update_user,
     delete_user,
-    set_user_roles, register_user,
+    set_user_roles,
+    register_user,
 )
 from src.crud.discounts import (  # noqa: E402
     list_discounts,
