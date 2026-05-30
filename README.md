@@ -60,5 +60,5 @@ Con la API en marcha: http://localhost:8000/docs (Swagger UI).
 Pipeline: https://youtu.be/0Yvv9t-PgOo
 
 # Video entrega final
-CRUD: https://youtu.be/1pKFBwP4SsA
-PYTEST: https://youtu.be/72VxZaDr3F4?si=TJlVetrPtCyDOCs4
+- CRUD: https://youtu.be/1pKFBwP4SsA
+- PYTEST: https://youtu.be/72VxZaDr3F4?si=TJlVetrPtCyDOCs4
